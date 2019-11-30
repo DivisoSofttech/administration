@@ -1,0 +1,40 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.diviso.graeshoppe",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "5.8.1",
+    "applicationType": "microservice",
+    "baseName": "Administration",
+    "packageName": "com.diviso.graeshoppe",
+    "packageFolder": "com/diviso/graeshoppe",
+    "serverPort": "8081",
+    "authenticationType": "oauth2",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "messageBroker": "kafka",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MzA1YTQwZDQ2ZTU3MTMwYWMyNjNlMzUzNWJmYzIxMWEyYjBhMzhmNmFiNmQ5OTJkNTcxMGI3NjIwYzNlYWYxNmUxMDg5MjA1OTc1MGJiYWQ2NTdhZGFjNDMwOGVjMWQ4NjAxNzQxMjgwZGM2ZjMxMjNmMjQ1OWZlYWIwNWVkNDE=",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "clientPackageManager": "npm",
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
