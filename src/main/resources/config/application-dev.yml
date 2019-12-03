@@ -25,6 +25,7 @@ eureka:
     client:
         service-url:
             defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+        enabled: false
 
 spring:
     profiles:
@@ -45,8 +46,8 @@ spring:
         stream:
             kafka:
                 binder:
-                    brokers: localhost
-                    zk-nodes: localhost
+                    #brokers: localhost
+                    #zk-nodes: localhost
             bindings:
                 output:
                     destination: topic-jhipster
@@ -54,7 +55,7 @@ spring:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/Administration?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
         username: root
-        password:
+        password: root
         hikari:
             poolName: Hikari
             auto-commit: false

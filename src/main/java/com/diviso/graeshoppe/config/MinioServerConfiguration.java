@@ -1,9 +1,12 @@
 package com.diviso.graeshoppe.config;
 
-import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.diviso.graeshoppe.service.ImageService;
 
 import io.minio.MinioClient;
 import io.minio.errors.InvalidEndpointException;
@@ -11,6 +14,8 @@ import io.minio.errors.InvalidPortException;
 
 @Configuration
 public class MinioServerConfiguration {
+	private final Logger log = LoggerFactory.getLogger(ImageService.class);
+
 
 	@Value("${minio.server.url}")
 	private String url;
@@ -34,17 +39,17 @@ public class MinioServerConfiguration {
 			boolean productBucketFound = minioClient.bucketExists(productBucketName);
 			boolean categoryBucketFound = minioClient.bucketExists(categoryBucketName);
 			if (productBucketFound) {
-				Log.info("ProductBucket already exists " + productBucketName);
+				log.info("ProductBucket already exists " + productBucketName);
 			} else {
 				minioClient.makeBucket(productBucketName);
-				Log.info("ProductBucket created " + productBucketName);
+				log.info("ProductBucket created " + productBucketName);
 			}
 
 			if (categoryBucketFound) {
-				Log.info("CategoryBucket already exists " + categoryBucketName);
+				log.info("CategoryBucket already exists " + categoryBucketName);
 			} else {
 				minioClient.makeBucket(categoryBucketName);
-				Log.info("CategoryBucket created " + categoryBucketName);
+				log.info("CategoryBucket created " + categoryBucketName);
 			}
 
 		} catch (Exception e) {

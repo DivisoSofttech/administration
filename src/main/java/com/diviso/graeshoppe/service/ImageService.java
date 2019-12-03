@@ -19,11 +19,8 @@ public class ImageService {
 	@Autowired
 	private MinioClient minioClient;
 
-	@Value("${minio.buckets.product}")
-	private String productBucketName;
-
-	@Value("${minio.buckets.category}")
-	private String categoryBucketName;
+	@Value("${minio.buckets.premium-banner}")
+	private String premiumBannerBucket;
 
 	@Value("${minio.configuration.contentType}")
 	private String contentType;
@@ -38,16 +35,11 @@ public class ImageService {
 		String bucket = null;
 		String imageName = null; 
 		String imageLink = url;
-		if (type.equals("product")) {
-			bucket = productBucketName;
-			imageName = entityId+"-product-image.png";
+		if (type.equals("banner")) {
+			bucket = premiumBannerBucket;
+			imageName = entityId+"-premium-banner-image.png";
 			imageLink = url+"/"+bucket+"/"+imageName;
-			log.info("Saving the product Image in bucket "+bucket+" imagename is "+imageName+" image link is "+imageLink);
-		} else if (type.equals("category")) {
-			bucket = categoryBucketName;
-			imageName = entityId+"-category-image.png";
-			imageLink = url+"/"+bucket+"/"+imageName;
-			log.info("Saving the category Image in bucket "+bucket+" imagename is "+imageName+"  image link is "+imageLink);
+			log.info("Saving the premium banner Image in bucket "+bucket+" imagename is "+imageName+" image link is "+imageLink);
 		}
 		try {
 			minioClient.putObject(bucket, imageName, streamData, contentType);
