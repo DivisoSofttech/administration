@@ -150,10 +150,13 @@ spring:
 security:
     oauth2:
         client:
-            client-id: internal
-            client-secret: internal
+            access-token-uri: https://dev.servers.divisosofttech.com/auth/realms/graeshoppe/protocol/openid-connect/token
+            user-authorization-uri: https://dev.servers.divisosofttech.com/auth/realms/graeshoppe/protocol/openid-connect/auth
+            client-id: account
+            client-secret: d4f03412-cdad-45b0-9ccc-beddd8399ac5
+            scope: openid profile email
         resource:
-            user-info-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/userinfo
+            user-info-uri: https://dev.servers.divisosofttech.com/auth/realms/graeshoppe/protocol/openid-connect/userinfo
 
 server:
     servlet:
@@ -215,7 +218,6 @@ minio:
       accessKey: R0WPNXCYE0OUI134W1GD
       secretKey: E7jCb+99h1xYy84QoDpqm1aITTGt7gRJp8gv73uw
    buckets:
-      product: graeshoppe-product-images
-      category: graeshoppe-category-images
+      premium-banner: graeshoppe-premium-banners
    configuration:
       contentType: images/png

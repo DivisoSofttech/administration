@@ -26,30 +26,20 @@ public class MinioServerConfiguration {
 	@Value("${minio.server.secretKey}")
 	private String secretKey;
 
-	@Value("${minio.buckets.product}")
-	private String productBucketName;
+	@Value("${minio.buckets.premium-banner}")
+	private String premiumBannerBucket;
 
-	@Value("${minio.buckets.category}")
-	private String categoryBucketName;
 
 	@Bean
 	public MinioClient getMinioClient() throws InvalidEndpointException, InvalidPortException {
 		MinioClient minioClient = new MinioClient(url, accesskey, secretKey);
 		try {
-			boolean productBucketFound = minioClient.bucketExists(productBucketName);
-			boolean categoryBucketFound = minioClient.bucketExists(categoryBucketName);
-			if (productBucketFound) {
-				log.info("ProductBucket already exists " + productBucketName);
+			boolean premiumBannerBucketFound = minioClient.bucketExists(premiumBannerBucket);
+			if (premiumBannerBucketFound) {
+				log.info("premiumBannerBucket already exists " + premiumBannerBucket);
 			} else {
-				minioClient.makeBucket(productBucketName);
-				log.info("ProductBucket created " + productBucketName);
-			}
-
-			if (categoryBucketFound) {
-				log.info("CategoryBucket already exists " + categoryBucketName);
-			} else {
-				minioClient.makeBucket(categoryBucketName);
-				log.info("CategoryBucket created " + categoryBucketName);
+				minioClient.makeBucket(premiumBannerBucket);
+				log.info("premiumBannerBucket created " + premiumBannerBucket);
 			}
 
 		} catch (Exception e) {
