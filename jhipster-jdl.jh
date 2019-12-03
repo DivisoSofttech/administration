@@ -10,6 +10,31 @@ entity Banner {
     cost Double
     
 }
+
+entity CancellationRequest {
+	status String,
+	orderId String,
+	paymentId String,
+	customerEmail String,
+	customerPhone Long,
+    storeEmail String,
+    storePhone Long,
+    date Instant
+}
+
+entity RefoundDetails{
+
+refundId String,
+status String,
+
+}
+
+relationship OneToOne {
+
+    CancellationRequest{refoundDetails} to RefoundDetails
+
+}
+
 service all with serviceImpl
 dto all with mapstruct
 paginate all with pagination

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity CancellationRequest.
+    -->
+    <changeSet id="20191203094340-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="refound_details_id"
+                                 baseTableName="cancellation_request"
+                                 constraintName="fk_cancellation_request_refound_details_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="refound_details"/>
+
+    </changeSet>
+</databaseChangeLog>
