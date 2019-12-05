@@ -36,5 +36,11 @@
     ],
     "skipClient": true,
     "skipUserManagement": true
+  },
+  "generator-jhipster-swagger-cli": {
+    "promptValues": {
+      "inputSpec": "E:\\softwares\\apache-tomcat-9.0.27\\apache-tomcat-9.0.27\\webapps\\activiti-rest\\docs\\activiti.json",
+      "cliName": "activiti"
+    }
   }
 }

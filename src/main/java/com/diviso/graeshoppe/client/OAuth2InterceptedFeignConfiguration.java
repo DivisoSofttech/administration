@@ -8,6 +8,7 @@ import feign.RequestInterceptor;
 
 import com.diviso.graeshoppe.security.oauth2.AuthorizationHeaderUtil;
 
+@ExcludeFromComponentScan
 public class OAuth2InterceptedFeignConfiguration {
 
     @Bean(name = "oauth2RequestInterceptor")

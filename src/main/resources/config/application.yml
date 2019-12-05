@@ -42,7 +42,7 @@ ribbon:
         enabled: true
 feign:
     hystrix:
-        enabled: true
+        enabled: false
 #    client:
 #        config:
 #            default:
@@ -212,6 +212,7 @@ jhipster:
 # ===================================================================
 
 # application:
+application:
 minio:
    server:
       url: http://dev.servers.divisosofttech.com:9000
@@ -221,3 +222,11 @@ minio:
       premium-banner: graeshoppe-premium-banners
    configuration:
       contentType: images/png
+
+
+activiti:
+  url: http://localhost:8080/activiti-rest/service
+  security:
+    basicAuth:
+       username: kermit
+       password: kermit

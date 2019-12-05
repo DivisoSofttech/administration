@@ -1,22 +1,41 @@
 package com.diviso.graeshoppe.service.impl;
 
-import com.diviso.graeshoppe.service.CancellationRequestService;
-import com.diviso.graeshoppe.domain.CancellationRequest;
-import com.diviso.graeshoppe.repository.CancellationRequestRepository;
-import com.diviso.graeshoppe.repository.search.CancellationRequestSearchRepository;
-import com.diviso.graeshoppe.service.dto.CancellationRequestDTO;
-import com.diviso.graeshoppe.service.mapper.CancellationRequestMapper;
+
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import com.diviso.graeshoppe.client.activiti.api.FormsApi;
+import com.diviso.graeshoppe.client.activiti.api.ProcessInstancesApi;
+import com.diviso.graeshoppe.client.activiti.api.TasksApi;
+import com.diviso.graeshoppe.client.activiti.custom.InitiateCancelation;
+import com.diviso.graeshoppe.client.activiti.model.DataResponse;
+import com.diviso.graeshoppe.client.activiti.model.ProcessInstanceCreateRequest;
+import com.diviso.graeshoppe.client.activiti.model.ProcessInstanceResponse;
+import com.diviso.graeshoppe.client.activiti.model.RestFormProperty;
+import com.diviso.graeshoppe.client.activiti.model.RestVariable;
+import com.diviso.graeshoppe.client.activiti.model.SubmitFormRequest;
+import com.diviso.graeshoppe.client.activiti.model.TaskActionRequest;
+import com.diviso.graeshoppe.client.activiti.model.TaskRequest;
+import com.diviso.graeshoppe.domain.CancellationRequest;
+import com.diviso.graeshoppe.repository.CancellationRequestRepository;
+import com.diviso.graeshoppe.repository.search.CancellationRequestSearchRepository;
+import com.diviso.graeshoppe.service.CancellationRequestService;
+import com.diviso.graeshoppe.service.dto.CancellationRequestDTO;
+import com.diviso.graeshoppe.service.mapper.CancellationRequestMapper;
 
 /**
  * Service Implementation for managing CancellationRequest.
@@ -25,6 +44,19 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 @Transactional
 public class CancellationRequestServiceImpl implements CancellationRequestService {
 
+	@Autowired
+	TasksApi tasksApi;
+	
+	@Autowired
+	FormsApi formsApi;
+	
+	
+	
+	
+	
+	
+	@Autowired
+	ProcessInstancesApi	processInstanceApi;
     private final Logger log = LoggerFactory.getLogger(CancellationRequestServiceImpl.class);
 
     private final CancellationRequestRepository cancellationRequestRepository;
@@ -110,4 +142,178 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
         return cancellationRequestSearchRepository.search(queryStringQuery(query), pageable)
             .map(cancellationRequestMapper::toDto);
     }
+
+
+	//////////////////////////////activiti//////////////////////////////
+	
+
+
+	@Override
+	public String initiate() {
+	
+		ProcessInstanceCreateRequest processInstanceCreateRequest=new ProcessInstanceCreateRequest();
+   		List<RestVariable> variables=new ArrayList<RestVariable>();
+   		
+
+   		processInstanceCreateRequest.setProcessDefinitionId("oderCancel:1:43");
+   		log.info("*****************************************************"+processInstanceCreateRequest.getProcessDefinitionId());
+   		RestVariable cancellationRequestRestVariable=new RestVariable();
+   		cancellationRequestRestVariable.setName("cancellationRequestRestVariable");
+   		cancellationRequestRestVariable.setType("string");
+   		cancellationRequestRestVariable.setValue("cancellationRequestRestVariable");
+   		variables.add(cancellationRequestRestVariable);
+//   		
+//   		RestVariable driverRestVariable=new RestVariable();
+//   		driverRestVariable.setName("driver");
+//   		driverRestVariable.setType("string");
+//   		driverRestVariable.setValue("driver");
+//   		
+//   		variables.add(driverRestVariable);
+   	
+   		
+   		
+   		log.info("*****************************************************"+variables.size());
+   		processInstanceCreateRequest.setVariables(variables);
+   		log.info("*****************************************************"+processInstanceCreateRequest.getVariables());
+   		
+   		ResponseEntity<ProcessInstanceResponse> processInstanceResponse = processInstanceApi
+				.createProcessInstance(processInstanceCreateRequest);
+		String processInstanceId = processInstanceResponse.getBody().getId();
+		String processDefinitionId = processInstanceCreateRequest.getProcessDefinitionId();
+		log.info("++++++++++++++++processDefinitionId++++++++++++++++++"+ processDefinitionId);
+		log.info("++++++++++++++++ProcessInstanceId is+++++++++++++ " + processInstanceId);
+		
+   		processInstanceApi.createProcessInstance(processInstanceCreateRequest);
+   		
+		
+		return processInstanceId;
+		
+	}
+	
+	@Override
+	public void initiateCancelation(InitiateCancelation initiateCancelation ,String taskId) {
+		
+		log.debug("###########################################taskid="+taskId);
+		log.debug("###########################################initiateCancelation="+initiateCancelation);
+
+
+		TaskActionRequest taskActionRequest=new TaskActionRequest();
+		
+	
+		
+		
+		List<RestVariable> restVariables=new ArrayList<RestVariable>();
+		
+		RestVariable variable=new RestVariable();
+		variable.setName("cancellation");
+		variable.setValue(initiateCancelation);
+		restVariables.add(variable);
+		taskActionRequest.setVariables(restVariables);
+		taskActionRequest.setAction("complete");
+		
+
+		
+		 tasksApi.executeTaskAction(taskId, taskActionRequest);
+		
+		
+		
+		
+	}
+
+	@Override
+	public ResponseEntity<DataResponse> getTasks(String name, String nameLike, String description, String priority,
+			String minimumPriority, String maximumPriority, String assignee, String assigneeLike, String owner,
+			String ownerLike, String unassigned, String delegationState, String candidateUser, String candidateGroup,
+			String candidateGroups, String involvedUser, String taskDefinitionKey, String taskDefinitionKeyLike,
+			String processInstanceId, String processInstanceBusinessKey, String processInstanceBusinessKeyLike,
+			@Valid String processDefinitionId, @Valid String processDefinitionKey,
+			@Valid String processDefinitionKeyLike, @Valid String processDefinitionName,
+			@Valid String processDefinitionNameLike, @Valid String executionId, @Valid String createdOn,
+			@Valid String createdBefore, @Valid String createdAfter, @Valid String dueOn, @Valid String dueBefore,
+			@Valid String dueAfter, @Valid Boolean withoutDueDate, @Valid Boolean excludeSubTasks,
+			@Valid Boolean active, @Valid Boolean includeTaskLocalVariables, @Valid Boolean includeProcessVariables,
+			@Valid String tenantId, @Valid String tenantIdLike, @Valid Boolean withoutTenantId,
+			@Valid String candidateOrAssigned, @Valid String category) {
+		// TODO Auto-generated method stub
+		
+		log.debug("########################################### processs instance id="+processInstanceId);
+
+		
+		return tasksApi.getTasks(name, nameLike, description, priority, minimumPriority, maximumPriority, assignee, assigneeLike, owner, ownerLike, unassigned, delegationState, candidateUser, candidateGroup, candidateGroups, involvedUser, taskDefinitionKey, taskDefinitionKeyLike, processInstanceId, processInstanceBusinessKey, processInstanceBusinessKeyLike, processDefinitionId, processDefinitionKey, processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, executionId, createdOn, createdBefore, createdAfter, dueOn, dueBefore, dueAfter, withoutDueDate, excludeSubTasks, active, includeTaskLocalVariables, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId, candidateOrAssigned, category);
+	}
+
+	@Override
+	public void refundPending(String taskId) {
+	
+
+		log.debug("###########################################taskid="+taskId);
+
+
+		TaskActionRequest taskActionRequest=new TaskActionRequest();
+		
+	
+		
+		
+		List<RestVariable> restVariables=new ArrayList<RestVariable>();
+		
+		RestVariable variable=new RestVariable();
+		taskActionRequest.setVariables(restVariables);
+		taskActionRequest.setAction("complete");
+		
+
+		
+		 tasksApi.executeTaskAction(taskId, taskActionRequest);
+		
+		
+		
+	}
+
+	@Override
+	public void initiateRefund(String taskId) {
+		
+		log.debug("###########################################taskid="+taskId);
+
+
+		TaskActionRequest taskActionRequest=new TaskActionRequest();
+		
+	
+		
+		
+		List<RestVariable> restVariables=new ArrayList<RestVariable>();
+		
+		RestVariable variable=new RestVariable();
+		taskActionRequest.setVariables(restVariables);
+		taskActionRequest.setAction("complete");
+		
+
+		
+		 tasksApi.executeTaskAction(taskId, taskActionRequest);
+		
+	}
+
+	@Override
+	public void refundCompleted(String taskId) {
+	
+		log.debug("###########################################taskid="+taskId);
+
+
+		TaskActionRequest taskActionRequest=new TaskActionRequest();
+		
+	
+		
+		
+		List<RestVariable> restVariables=new ArrayList<RestVariable>();
+		
+		RestVariable variable=new RestVariable();
+		taskActionRequest.setVariables(restVariables);
+		taskActionRequest.setAction("complete");
+		
+
+		
+		 tasksApi.executeTaskAction(taskId, taskActionRequest);
+		
+	}
+	
+	
+	
 }
