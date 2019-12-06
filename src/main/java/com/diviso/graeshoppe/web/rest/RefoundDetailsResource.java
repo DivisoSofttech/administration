@@ -47,13 +47,13 @@ public class RefoundDetailsResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new refoundDetailsDTO, or with status 400 (Bad Request) if the refoundDetails has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/refound-details")
-    public ResponseEntity<RefoundDetailsDTO> createRefoundDetails(@RequestBody RefoundDetailsDTO refoundDetailsDTO) throws URISyntaxException {
+    @PostMapping("/refound-details/{orderId}")
+    public ResponseEntity<RefoundDetailsDTO> createRefoundDetails(@RequestBody RefoundDetailsDTO refoundDetailsDTO,@PathVariable String orderId) throws URISyntaxException {
         log.debug("REST request to save RefoundDetails : {}", refoundDetailsDTO);
         if (refoundDetailsDTO.getId() != null) {
             throw new BadRequestAlertException("A new refoundDetails cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RefoundDetailsDTO result = refoundDetailsService.save(refoundDetailsDTO);
+        RefoundDetailsDTO result = refoundDetailsService.save(refoundDetailsDTO,orderId);
         return ResponseEntity.created(new URI("/api/refound-details/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

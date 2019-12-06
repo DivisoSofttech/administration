@@ -1,0 +1,27 @@
+{
+    "name": "CancelledOrderLine",
+    "fields": [
+        {
+            "fieldName": "oderLineId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "cancellationRequest",
+            "otherEntityName": "cancellationRequest",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206100118",
+    "entityTableName": "cancelled_order_line",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}

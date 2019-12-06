@@ -4,6 +4,7 @@ package com.diviso.graeshoppe.service.impl;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ import com.diviso.graeshoppe.client.activiti.model.SubmitFormRequest;
 import com.diviso.graeshoppe.client.activiti.model.TaskActionRequest;
 import com.diviso.graeshoppe.client.activiti.model.TaskRequest;
 import com.diviso.graeshoppe.domain.CancellationRequest;
+import com.diviso.graeshoppe.domain.RefoundDetails;
 import com.diviso.graeshoppe.repository.CancellationRequestRepository;
 import com.diviso.graeshoppe.repository.search.CancellationRequestSearchRepository;
 import com.diviso.graeshoppe.service.CancellationRequestService;
@@ -80,10 +82,30 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
     @Override
     public CancellationRequestDTO save(CancellationRequestDTO cancellationRequestDTO) {
         log.debug("Request to save CancellationRequest : {}", cancellationRequestDTO);
+        
+        /*initiating workflow and setting processInstance id into the reference variable */
+        String processInstanceId= initiate(); 
+        cancellationRequestDTO.setReference(processInstanceId);
+        
+       
         CancellationRequest cancellationRequest = cancellationRequestMapper.toEntity(cancellationRequestDTO);
         cancellationRequest = cancellationRequestRepository.save(cancellationRequest);
         CancellationRequestDTO result = cancellationRequestMapper.toDto(cancellationRequest);
         cancellationRequestSearchRepository.save(cancellationRequest);
+        
+        
+        /*initiating workflow and setting processInstance id into the reference variable */
+
+        ResponseEntity<DataResponse> dataResponse=tasksApi.getTasks(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, processInstanceId, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        List<LinkedHashMap<String, String>> myTasks = (List<LinkedHashMap<String, String>>)  dataResponse.getBody().getData();
+    	
+		log.debug(" \n \n XXXXXXXXXXXXXXXXXXXXProcessInstanceIDXXXXXXXXXXXXXXXXXXX"+processInstanceId);
+
+		log.debug(" \n \n XXXXXXXXXXXXXXXXXXXXtaskidXXXXXXXXXXXXXXXXXXX"+myTasks.get(0).get("id"));
+		
+		String taskId=myTasks.get(0).get("id");     
+		initiateCancelation(result, taskId);
+		
         return result;
     }
 
@@ -148,7 +170,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 	
 
 
-	@Override
+	
 	public String initiate() {
 	
 		ProcessInstanceCreateRequest processInstanceCreateRequest=new ProcessInstanceCreateRequest();
@@ -161,15 +183,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
    		cancellationRequestRestVariable.setName("cancellationRequestRestVariable");
    		cancellationRequestRestVariable.setType("string");
    		cancellationRequestRestVariable.setValue("cancellationRequestRestVariable");
-   		variables.add(cancellationRequestRestVariable);
-//   		
-//   		RestVariable driverRestVariable=new RestVariable();
-//   		driverRestVariable.setName("driver");
-//   		driverRestVariable.setType("string");
-//   		driverRestVariable.setValue("driver");
-//   		
-//   		variables.add(driverRestVariable);
-   	
+   		variables.add(cancellationRequestRestVariable);   	
    		
    		
    		log.info("*****************************************************"+variables.size());
@@ -190,11 +204,10 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		
 	}
 	
-	@Override
-	public void initiateCancelation(InitiateCancelation initiateCancelation ,String taskId) {
+	public void initiateCancelation(CancellationRequestDTO cancellationRequestDTO ,String taskId) {
 		
 		log.debug("###########################################taskid="+taskId);
-		log.debug("###########################################initiateCancelation="+initiateCancelation);
+		log.debug("###########################################cancellationRequestDTO="+cancellationRequestDTO);
 
 
 		TaskActionRequest taskActionRequest=new TaskActionRequest();
@@ -206,7 +219,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		
 		RestVariable variable=new RestVariable();
 		variable.setName("cancellation");
-		variable.setValue(initiateCancelation);
+		variable.setValue(cancellationRequestDTO);
 		restVariables.add(variable);
 		taskActionRequest.setVariables(restVariables);
 		taskActionRequest.setAction("complete");
@@ -311,6 +324,14 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 
 		
 		 tasksApi.executeTaskAction(taskId, taskActionRequest);
+		
+	}
+
+	public String updateCancellationRequest(String orederId,RefoundDetails refoundDetails) {
+		
+		CancellationRequest cancellationRequest=this.cancellationRequestRepository.findByOrderId(orederId).get();
+		cancellationRequest.setRefoundDetails(refoundDetails);
+		return cancellationRequest.getReference();
 		
 	}
 	

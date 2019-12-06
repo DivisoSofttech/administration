@@ -1,25 +1,23 @@
-/**
- * Task Banner.
- * @author Neeraja.M.
- */
-entity Banner {
-	storeId String,
-    imageLink String,
-    startDate Instant,
-    expiryDate Instant,
-    cost Double
-    
-}
-
 entity CancellationRequest {
 	status String,
 	orderId String,
 	paymentId String,
+    phoneCode Integer,
 	customerEmail String,
 	customerPhone Long,
     storeEmail String,
     storePhone Long,
-    date Instant
+    date Instant,
+    amount Double,
+    reference String,
+
+  
+}
+
+entity CancelledOrderLine{
+
+oderLineId Long
+
 }
 
 entity RefoundDetails{
@@ -35,12 +33,17 @@ relationship OneToOne {
 
 }
 
+relationship OneToMany {
+
+    CancellationRequest{cancelledOrderLines} to CancelledOrderLine
+
+}
+
+
+paginate * with pagination
+
+// Use Data Transfert Objects (DTO)
+ dto * with mapstruct
+
+// Set service options to all except few
 service all with serviceImpl
-dto all with mapstruct
-paginate all with pagination
-
-
-
-	
-
-

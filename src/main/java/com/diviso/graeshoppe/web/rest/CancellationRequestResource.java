@@ -1,10 +1,10 @@
 package com.diviso.graeshoppe.web.rest;
 import com.diviso.graeshoppe.client.activiti.custom.InitiateCancelation;
 import com.diviso.graeshoppe.client.activiti.model.DataResponse;
-import com.diviso.graeshoppe.service.CancellationRequestService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
 import com.diviso.graeshoppe.web.rest.util.HeaderUtil;
 import com.diviso.graeshoppe.web.rest.util.PaginationUtil;
+import com.diviso.graeshoppe.service.CancellationRequestService;
 import com.diviso.graeshoppe.service.dto.CancellationRequestDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -145,19 +145,37 @@ public class CancellationRequestResource {
     ///////////////////////////////activity////////////////////////////////
     
     
-    @PostMapping("/initiate")
-	public String initiate(@RequestBody String ntg){
-		
-		return cancellationRequestService.initiate();
-		
-	}
-	
-	@PostMapping("/initiateCancelation/{taskId}")
-	public void initiateCancelation(@RequestBody InitiateCancelation initiateCancelation,@PathVariable String taskId){
-		
-		cancellationRequestService.initiateCancelation(initiateCancelation,taskId);
-		
-	}
+//    @PostMapping("/initiate")
+//	public ResponseEntity<DataResponse> initiate(@RequestBody CancellationRequestDTO cancellationRequestDTO) throws URISyntaxException{
+//		
+//		String processInstanceId = cancellationRequestService.initiate(cancellationRequestDTO);
+//		
+//		createCancellationRequest(cancellationRequestDTO);
+//		
+//		DataResponse dataResponse= getTasks(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null, null, null, processInstanceId, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null).getBody();
+//		
+//		
+//		
+//		List<LinkedHashMap<String, String>> myTasks = (List<LinkedHashMap<String, String>>)  dataResponse.getData();
+//		
+//
+//		log.debug(" \n \n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+myTasks.get(0).get("id"));
+//		
+//		String taskId=myTasks.get(0).get("id");
+//		
+//		initiateCancelation(cancellationRequestDTO,taskId);
+//		
+//		return new ResponseEntity<DataResponse>(dataResponse, HttpStatus.OK);
+//		
+//	}
+//	
+//	@PostMapping("/initiateCancelation/{taskId}")
+//	public void initiateCancelation(@RequestBody CancellationRequestDTO cancellationRequestDTO,@PathVariable String taskId){
+//		
+//		
+//		cancellationRequestService.initiateCancelation(cancellationRequestDTO,taskId);
+//		
+//	}
 	
 	@GetMapping("/tasks")
 	public ResponseEntity<DataResponse> getTasks(@RequestParam(value = "name", required = false) String name,

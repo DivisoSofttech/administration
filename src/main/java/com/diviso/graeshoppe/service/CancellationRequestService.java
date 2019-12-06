@@ -60,9 +60,7 @@ public interface CancellationRequestService {
      */
     Page<CancellationRequestDTO> search(String query, Pageable pageable);
 
-	String initiate();
 
-	void initiateCancelation(InitiateCancelation initiateCancelation,String taskId);
 
 	public  ResponseEntity<DataResponse> getTasks(String name, String nameLike, String description, String priority,
 			String minimumPriority, String maximumPriority, String assignee, String assigneeLike, String owner,

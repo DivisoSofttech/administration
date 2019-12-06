@@ -53,4 +53,6 @@ public interface RefoundDetailsService {
      * @return the list of entities
      */
     Page<RefoundDetailsDTO> search(String query, Pageable pageable);
+
+	RefoundDetailsDTO save(RefoundDetailsDTO refoundDetailsDTO, String oderId);
 }
