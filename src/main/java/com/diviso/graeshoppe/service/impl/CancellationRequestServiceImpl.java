@@ -255,78 +255,13 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		return tasksApi.getTasks(name, nameLike, description, priority, minimumPriority, maximumPriority, assignee, assigneeLike, owner, ownerLike, unassigned, delegationState, candidateUser, candidateGroup, candidateGroups, involvedUser, taskDefinitionKey, taskDefinitionKeyLike, processInstanceId, processInstanceBusinessKey, processInstanceBusinessKeyLike, processDefinitionId, processDefinitionKey, processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, executionId, createdOn, createdBefore, createdAfter, dueOn, dueBefore, dueAfter, withoutDueDate, excludeSubTasks, active, includeTaskLocalVariables, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId, candidateOrAssigned, category);
 	}
 
-	@Override
-	public void refundPending(String taskId) {
 	
 
-		log.debug("###########################################taskid="+taskId);
-
-
-		TaskActionRequest taskActionRequest=new TaskActionRequest();
-		
 	
-		
-		
-		List<RestVariable> restVariables=new ArrayList<RestVariable>();
-		
-		RestVariable variable=new RestVariable();
-		taskActionRequest.setVariables(restVariables);
-		taskActionRequest.setAction("complete");
-		
 
-		
-		 tasksApi.executeTaskAction(taskId, taskActionRequest);
-		
-		
-		
-	}
-
-	@Override
-	public void initiateRefund(String taskId) {
-		
-		log.debug("###########################################taskid="+taskId);
-
-
-		TaskActionRequest taskActionRequest=new TaskActionRequest();
-		
 	
-		
-		
-		List<RestVariable> restVariables=new ArrayList<RestVariable>();
-		
-		RestVariable variable=new RestVariable();
-		taskActionRequest.setVariables(restVariables);
-		taskActionRequest.setAction("complete");
-		
-
-		
-		 tasksApi.executeTaskAction(taskId, taskActionRequest);
-		
-	}
-
-	@Override
-	public void refundCompleted(String taskId) {
+/*method to update cancellation request with r id */
 	
-		log.debug("###########################################taskid="+taskId);
-
-
-		TaskActionRequest taskActionRequest=new TaskActionRequest();
-		
-	
-		
-		
-		List<RestVariable> restVariables=new ArrayList<RestVariable>();
-		
-		RestVariable variable=new RestVariable();
-		taskActionRequest.setVariables(restVariables);
-		taskActionRequest.setAction("complete");
-		
-
-		
-		 tasksApi.executeTaskAction(taskId, taskActionRequest);
-		
-	}
-
 	public String updateCancellationRequest(String orederId,RefoundDetails refoundDetails) {
 		
 		CancellationRequest cancellationRequest=this.cancellationRequestRepository.findByOrderId(orederId).get();

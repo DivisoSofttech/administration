@@ -233,26 +233,6 @@ public class CancellationRequestResource {
 	}
 	
 	
-	@PostMapping("/refundPending/{taskId}")
-	public void refundPending(@PathVariable String taskId){
-		
-		cancellationRequestService.refundPending(taskId);
-		
-	}
-	
-	@PostMapping("/initiateRefund/{taskId}")
-	public void initiateRefund(@PathVariable String taskId){
-		
-		cancellationRequestService.initiateRefund(taskId);
-		
-	}
-	
-	@PostMapping("/refundCompleted/{taskId}")
-	public void refundCompleted(@PathVariable String taskId){
-		
-		cancellationRequestService.refundCompleted(taskId);
-		
-	}
 	
 	
 

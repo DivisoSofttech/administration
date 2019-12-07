@@ -76,10 +76,6 @@ public interface CancellationRequestService {
 			@Valid String tenantId, @Valid String tenantIdLike, @Valid Boolean withoutTenantId,
 			@Valid String candidateOrAssigned, @Valid String category);
 
-	void refundPending(String taskId);
-
-	void initiateRefund(String taskId);
-
-	void refundCompleted(String taskId);
+	
 
 }
