@@ -34,6 +34,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="phone_code" type="integer">
+                <constraints nullable="true" />
+            </column>
+
             <column name="customer_email" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -51,6 +55,14 @@
             </column>
 
             <column name="jhi_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="amount" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="reference" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="refound_details_id" type="bigint">

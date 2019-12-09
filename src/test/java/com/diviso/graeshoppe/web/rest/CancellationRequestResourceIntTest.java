@@ -60,6 +60,9 @@ public class CancellationRequestResourceIntTest {
     private static final String DEFAULT_PAYMENT_ID = "AAAAAAAAAA";
     private static final String UPDATED_PAYMENT_ID = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_PHONE_CODE = 1;
+    private static final Integer UPDATED_PHONE_CODE = 2;
+
     private static final String DEFAULT_CUSTOMER_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_CUSTOMER_EMAIL = "BBBBBBBBBB";
 
@@ -74,6 +77,12 @@ public class CancellationRequestResourceIntTest {
 
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Double DEFAULT_AMOUNT = 1D;
+    private static final Double UPDATED_AMOUNT = 2D;
+
+    private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
+    private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
 
     @Autowired
     private CancellationRequestRepository cancellationRequestRepository;
@@ -134,11 +143,14 @@ public class CancellationRequestResourceIntTest {
             .status(DEFAULT_STATUS)
             .orderId(DEFAULT_ORDER_ID)
             .paymentId(DEFAULT_PAYMENT_ID)
+            .phoneCode(DEFAULT_PHONE_CODE)
             .customerEmail(DEFAULT_CUSTOMER_EMAIL)
             .customerPhone(DEFAULT_CUSTOMER_PHONE)
             .storeEmail(DEFAULT_STORE_EMAIL)
             .storePhone(DEFAULT_STORE_PHONE)
-            .date(DEFAULT_DATE);
+            .date(DEFAULT_DATE)
+            .amount(DEFAULT_AMOUNT)
+            .reference(DEFAULT_REFERENCE);
         return cancellationRequest;
     }
 
@@ -166,11 +178,14 @@ public class CancellationRequestResourceIntTest {
         assertThat(testCancellationRequest.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testCancellationRequest.getOrderId()).isEqualTo(DEFAULT_ORDER_ID);
         assertThat(testCancellationRequest.getPaymentId()).isEqualTo(DEFAULT_PAYMENT_ID);
+        assertThat(testCancellationRequest.getPhoneCode()).isEqualTo(DEFAULT_PHONE_CODE);
         assertThat(testCancellationRequest.getCustomerEmail()).isEqualTo(DEFAULT_CUSTOMER_EMAIL);
         assertThat(testCancellationRequest.getCustomerPhone()).isEqualTo(DEFAULT_CUSTOMER_PHONE);
         assertThat(testCancellationRequest.getStoreEmail()).isEqualTo(DEFAULT_STORE_EMAIL);
         assertThat(testCancellationRequest.getStorePhone()).isEqualTo(DEFAULT_STORE_PHONE);
         assertThat(testCancellationRequest.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testCancellationRequest.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testCancellationRequest.getReference()).isEqualTo(DEFAULT_REFERENCE);
 
         // Validate the CancellationRequest in Elasticsearch
         verify(mockCancellationRequestSearchRepository, times(1)).save(testCancellationRequest);
@@ -213,11 +228,14 @@ public class CancellationRequestResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].orderId").value(hasItem(DEFAULT_ORDER_ID.toString())))
             .andExpect(jsonPath("$.[*].paymentId").value(hasItem(DEFAULT_PAYMENT_ID.toString())))
+            .andExpect(jsonPath("$.[*].phoneCode").value(hasItem(DEFAULT_PHONE_CODE)))
             .andExpect(jsonPath("$.[*].customerEmail").value(hasItem(DEFAULT_CUSTOMER_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].customerPhone").value(hasItem(DEFAULT_CUSTOMER_PHONE.intValue())))
             .andExpect(jsonPath("$.[*].storeEmail").value(hasItem(DEFAULT_STORE_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].storePhone").value(hasItem(DEFAULT_STORE_PHONE.intValue())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())));
     }
     
     @Test
@@ -234,11 +252,14 @@ public class CancellationRequestResourceIntTest {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.orderId").value(DEFAULT_ORDER_ID.toString()))
             .andExpect(jsonPath("$.paymentId").value(DEFAULT_PAYMENT_ID.toString()))
+            .andExpect(jsonPath("$.phoneCode").value(DEFAULT_PHONE_CODE))
             .andExpect(jsonPath("$.customerEmail").value(DEFAULT_CUSTOMER_EMAIL.toString()))
             .andExpect(jsonPath("$.customerPhone").value(DEFAULT_CUSTOMER_PHONE.intValue()))
             .andExpect(jsonPath("$.storeEmail").value(DEFAULT_STORE_EMAIL.toString()))
             .andExpect(jsonPath("$.storePhone").value(DEFAULT_STORE_PHONE.intValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
+            .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()));
     }
 
     @Test
@@ -265,11 +286,14 @@ public class CancellationRequestResourceIntTest {
             .status(UPDATED_STATUS)
             .orderId(UPDATED_ORDER_ID)
             .paymentId(UPDATED_PAYMENT_ID)
+            .phoneCode(UPDATED_PHONE_CODE)
             .customerEmail(UPDATED_CUSTOMER_EMAIL)
             .customerPhone(UPDATED_CUSTOMER_PHONE)
             .storeEmail(UPDATED_STORE_EMAIL)
             .storePhone(UPDATED_STORE_PHONE)
-            .date(UPDATED_DATE);
+            .date(UPDATED_DATE)
+            .amount(UPDATED_AMOUNT)
+            .reference(UPDATED_REFERENCE);
         CancellationRequestDTO cancellationRequestDTO = cancellationRequestMapper.toDto(updatedCancellationRequest);
 
         restCancellationRequestMockMvc.perform(put("/api/cancellation-requests")
@@ -284,11 +308,14 @@ public class CancellationRequestResourceIntTest {
         assertThat(testCancellationRequest.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testCancellationRequest.getOrderId()).isEqualTo(UPDATED_ORDER_ID);
         assertThat(testCancellationRequest.getPaymentId()).isEqualTo(UPDATED_PAYMENT_ID);
+        assertThat(testCancellationRequest.getPhoneCode()).isEqualTo(UPDATED_PHONE_CODE);
         assertThat(testCancellationRequest.getCustomerEmail()).isEqualTo(UPDATED_CUSTOMER_EMAIL);
         assertThat(testCancellationRequest.getCustomerPhone()).isEqualTo(UPDATED_CUSTOMER_PHONE);
         assertThat(testCancellationRequest.getStoreEmail()).isEqualTo(UPDATED_STORE_EMAIL);
         assertThat(testCancellationRequest.getStorePhone()).isEqualTo(UPDATED_STORE_PHONE);
         assertThat(testCancellationRequest.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testCancellationRequest.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testCancellationRequest.getReference()).isEqualTo(UPDATED_REFERENCE);
 
         // Validate the CancellationRequest in Elasticsearch
         verify(mockCancellationRequestSearchRepository, times(1)).save(testCancellationRequest);
@@ -352,11 +379,14 @@ public class CancellationRequestResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].orderId").value(hasItem(DEFAULT_ORDER_ID)))
             .andExpect(jsonPath("$.[*].paymentId").value(hasItem(DEFAULT_PAYMENT_ID)))
+            .andExpect(jsonPath("$.[*].phoneCode").value(hasItem(DEFAULT_PHONE_CODE)))
             .andExpect(jsonPath("$.[*].customerEmail").value(hasItem(DEFAULT_CUSTOMER_EMAIL)))
             .andExpect(jsonPath("$.[*].customerPhone").value(hasItem(DEFAULT_CUSTOMER_PHONE.intValue())))
             .andExpect(jsonPath("$.[*].storeEmail").value(hasItem(DEFAULT_STORE_EMAIL)))
             .andExpect(jsonPath("$.[*].storePhone").value(hasItem(DEFAULT_STORE_PHONE.intValue())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE)));
     }
 
     @Test

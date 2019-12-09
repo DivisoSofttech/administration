@@ -16,6 +16,8 @@ public class CancellationRequestDTO implements Serializable {
 
     private String paymentId;
 
+    private Integer phoneCode;
+
     private String customerEmail;
 
     private Long customerPhone;
@@ -25,6 +27,10 @@ public class CancellationRequestDTO implements Serializable {
     private Long storePhone;
 
     private Instant date;
+
+    private Double amount;
+
+    private String reference;
 
 
     private Long refoundDetailsId;
@@ -59,6 +65,14 @@ public class CancellationRequestDTO implements Serializable {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public Integer getPhoneCode() {
+        return phoneCode;
+    }
+
+    public void setPhoneCode(Integer phoneCode) {
+        this.phoneCode = phoneCode;
     }
 
     public String getCustomerEmail() {
@@ -101,6 +115,22 @@ public class CancellationRequestDTO implements Serializable {
         this.date = date;
     }
 
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
     public Long getRefoundDetailsId() {
         return refoundDetailsId;
     }
@@ -137,11 +167,14 @@ public class CancellationRequestDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", orderId='" + getOrderId() + "'" +
             ", paymentId='" + getPaymentId() + "'" +
+            ", phoneCode=" + getPhoneCode() +
             ", customerEmail='" + getCustomerEmail() + "'" +
             ", customerPhone=" + getCustomerPhone() +
             ", storeEmail='" + getStoreEmail() + "'" +
             ", storePhone=" + getStorePhone() +
             ", date='" + getDate() + "'" +
+            ", amount=" + getAmount() +
+            ", reference='" + getReference() + "'" +
             ", refoundDetails=" + getRefoundDetailsId() +
             "}";
     }

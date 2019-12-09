@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,6 +10,8 @@ import javax.persistence.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -35,6 +38,9 @@ public class CancellationRequest implements Serializable {
     @Column(name = "payment_id")
     private String paymentId;
 
+    @Column(name = "phone_code")
+    private Integer phoneCode;
+
     @Column(name = "customer_email")
     private String customerEmail;
 
@@ -50,10 +56,19 @@ public class CancellationRequest implements Serializable {
     @Column(name = "jhi_date")
     private Instant date;
 
+    @Column(name = "amount")
+    private Double amount;
+
+    @Column(name = "reference")
+    private String reference;
+
     @OneToOne
     @JoinColumn(unique = true)
     private RefoundDetails refoundDetails;
 
+    @OneToMany(mappedBy = "cancellationRequest")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CancelledOrderLine> cancelledOrderLines = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -100,6 +115,19 @@ public class CancellationRequest implements Serializable {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public Integer getPhoneCode() {
+        return phoneCode;
+    }
+
+    public CancellationRequest phoneCode(Integer phoneCode) {
+        this.phoneCode = phoneCode;
+        return this;
+    }
+
+    public void setPhoneCode(Integer phoneCode) {
+        this.phoneCode = phoneCode;
     }
 
     public String getCustomerEmail() {
@@ -167,6 +195,32 @@ public class CancellationRequest implements Serializable {
         this.date = date;
     }
 
+    public Double getAmount() {
+        return amount;
+    }
+
+    public CancellationRequest amount(Double amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public CancellationRequest reference(String reference) {
+        this.reference = reference;
+        return this;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
     public RefoundDetails getRefoundDetails() {
         return refoundDetails;
     }
@@ -178,6 +232,31 @@ public class CancellationRequest implements Serializable {
 
     public void setRefoundDetails(RefoundDetails refoundDetails) {
         this.refoundDetails = refoundDetails;
+    }
+
+    public Set<CancelledOrderLine> getCancelledOrderLines() {
+        return cancelledOrderLines;
+    }
+
+    public CancellationRequest cancelledOrderLines(Set<CancelledOrderLine> cancelledOrderLines) {
+        this.cancelledOrderLines = cancelledOrderLines;
+        return this;
+    }
+
+    public CancellationRequest addCancelledOrderLines(CancelledOrderLine cancelledOrderLine) {
+        this.cancelledOrderLines.add(cancelledOrderLine);
+        cancelledOrderLine.setCancellationRequest(this);
+        return this;
+    }
+
+    public CancellationRequest removeCancelledOrderLines(CancelledOrderLine cancelledOrderLine) {
+        this.cancelledOrderLines.remove(cancelledOrderLine);
+        cancelledOrderLine.setCancellationRequest(null);
+        return this;
+    }
+
+    public void setCancelledOrderLines(Set<CancelledOrderLine> cancelledOrderLines) {
+        this.cancelledOrderLines = cancelledOrderLines;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -208,11 +287,14 @@ public class CancellationRequest implements Serializable {
             ", status='" + getStatus() + "'" +
             ", orderId='" + getOrderId() + "'" +
             ", paymentId='" + getPaymentId() + "'" +
+            ", phoneCode=" + getPhoneCode() +
             ", customerEmail='" + getCustomerEmail() + "'" +
             ", customerPhone=" + getCustomerPhone() +
             ", storeEmail='" + getStoreEmail() + "'" +
             ", storePhone=" + getStorePhone() +
             ", date='" + getDate() + "'" +
+            ", amount=" + getAmount() +
+            ", reference='" + getReference() + "'" +
             "}";
     }
 }

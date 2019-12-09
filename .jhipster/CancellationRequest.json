@@ -14,6 +14,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "phoneCode",
+            "fieldType": "Integer"
+        },
+        {
             "fieldName": "customerEmail",
             "fieldType": "String"
         },
@@ -32,6 +36,14 @@
         {
             "fieldName": "date",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
         }
     ],
     "relationships": [
@@ -42,6 +54,12 @@
             "relationshipName": "refoundDetails",
             "otherEntityField": "id",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "cancelledOrderLine",
+            "otherEntityRelationshipName": "cancellationRequest",
+            "relationshipName": "cancelledOrderLines"
         }
     ],
     "changelogDate": "20191203094340",

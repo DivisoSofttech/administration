@@ -15,6 +15,7 @@ public interface CancellationRequestMapper extends EntityMapper<CancellationRequ
     CancellationRequestDTO toDto(CancellationRequest cancellationRequest);
 
     @Mapping(source = "refoundDetailsId", target = "refoundDetails")
+    @Mapping(target = "cancelledOrderLines", ignore = true)
     CancellationRequest toEntity(CancellationRequestDTO cancellationRequestDTO);
 
     default CancellationRequest fromId(Long id) {
