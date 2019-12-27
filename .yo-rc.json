@@ -4,7 +4,7 @@
       "packageName": "com.diviso.graeshoppe",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "5.8.1",
+    "jhipsterVersion": "6.6.0",
     "applicationType": "microservice",
     "baseName": "Administration",
     "packageName": "com.diviso.graeshoppe",
@@ -31,11 +31,12 @@
     "enableTranslation": true,
     "clientPackageManager": "npm",
     "nativeLanguage": "en",
-    "languages": [
-      "en"
-    ],
+    "languages": ["en"],
     "skipClient": true,
-    "skipUserManagement": true
+    "skipUserManagement": true,
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1577425942938,
+    "blueprints": []
   },
   "generator-jhipster-swagger-cli": {
     "promptValues": {

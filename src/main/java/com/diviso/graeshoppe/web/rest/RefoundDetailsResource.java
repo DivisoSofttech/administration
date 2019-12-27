@@ -1,16 +1,20 @@
 package com.diviso.graeshoppe.web.rest;
+
 import com.diviso.graeshoppe.service.RefoundDetailsService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
-import com.diviso.graeshoppe.web.rest.util.HeaderUtil;
-import com.diviso.graeshoppe.web.rest.util.PaginationUtil;
 import com.diviso.graeshoppe.service.dto.RefoundDetailsDTO;
+
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +28,7 @@ import java.util.stream.StreamSupport;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * REST controller for managing RefoundDetails.
+ * REST controller for managing {@link com.diviso.graeshoppe.domain.RefoundDetails}.
  */
 @RestController
 @RequestMapping("/api")
@@ -34,6 +38,9 @@ public class RefoundDetailsResource {
 
     private static final String ENTITY_NAME = "administrationRefoundDetails";
 
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final RefoundDetailsService refoundDetailsService;
 
     public RefoundDetailsResource(RefoundDetailsService refoundDetailsService) {
@@ -41,11 +48,11 @@ public class RefoundDetailsResource {
     }
 
     /**
-     * POST  /refound-details : Create a new refoundDetails.
+     * {@code POST  /refound-details} : Create a new refoundDetails.
      *
-     * @param refoundDetailsDTO the refoundDetailsDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new refoundDetailsDTO, or with status 400 (Bad Request) if the refoundDetails has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param refoundDetailsDTO the refoundDetailsDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new refoundDetailsDTO, or with status {@code 400 (Bad Request)} if the refoundDetails has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/refound-details")
     public ResponseEntity<RefoundDetailsDTO> createRefoundDetails(@RequestBody RefoundDetailsDTO refoundDetailsDTO) throws URISyntaxException {
@@ -55,18 +62,18 @@ public class RefoundDetailsResource {
         }
         RefoundDetailsDTO result = refoundDetailsService.save(refoundDetailsDTO);
         return ResponseEntity.created(new URI("/api/refound-details/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /refound-details : Updates an existing refoundDetails.
+     * {@code PUT  /refound-details} : Updates an existing refoundDetails.
      *
-     * @param refoundDetailsDTO the refoundDetailsDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated refoundDetailsDTO,
-     * or with status 400 (Bad Request) if the refoundDetailsDTO is not valid,
-     * or with status 500 (Internal Server Error) if the refoundDetailsDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param refoundDetailsDTO the refoundDetailsDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated refoundDetailsDTO,
+     * or with status {@code 400 (Bad Request)} if the refoundDetailsDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the refoundDetailsDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/refound-details")
     public ResponseEntity<RefoundDetailsDTO> updateRefoundDetails(@RequestBody RefoundDetailsDTO refoundDetailsDTO) throws URISyntaxException {
@@ -76,29 +83,31 @@ public class RefoundDetailsResource {
         }
         RefoundDetailsDTO result = refoundDetailsService.save(refoundDetailsDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, refoundDetailsDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, refoundDetailsDTO.getId().toString()))
             .body(result);
     }
 
     /**
-     * GET  /refound-details : get all the refoundDetails.
+     * {@code GET  /refound-details} : get all the refoundDetails.
      *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of refoundDetails in body
+
+     * @param pageable the pagination information.
+
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of refoundDetails in body.
      */
     @GetMapping("/refound-details")
     public ResponseEntity<List<RefoundDetailsDTO>> getAllRefoundDetails(Pageable pageable) {
         log.debug("REST request to get a page of RefoundDetails");
         Page<RefoundDetailsDTO> page = refoundDetailsService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/refound-details");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
-     * GET  /refound-details/:id : get the "id" refoundDetails.
+     * {@code GET  /refound-details/:id} : get the "id" refoundDetails.
      *
-     * @param id the id of the refoundDetailsDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the refoundDetailsDTO, or with status 404 (Not Found)
+     * @param id the id of the refoundDetailsDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the refoundDetailsDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/refound-details/{id}")
     public ResponseEntity<RefoundDetailsDTO> getRefoundDetails(@PathVariable Long id) {
@@ -108,32 +117,31 @@ public class RefoundDetailsResource {
     }
 
     /**
-     * DELETE  /refound-details/:id : delete the "id" refoundDetails.
+     * {@code DELETE  /refound-details/:id} : delete the "id" refoundDetails.
      *
-     * @param id the id of the refoundDetailsDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @param id the id of the refoundDetailsDTO to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/refound-details/{id}")
     public ResponseEntity<Void> deleteRefoundDetails(@PathVariable Long id) {
         log.debug("REST request to delete RefoundDetails : {}", id);
         refoundDetailsService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
     /**
-     * SEARCH  /_search/refound-details?query=:query : search for the refoundDetails corresponding
+     * {@code SEARCH  /_search/refound-details?query=:query} : search for the refoundDetails corresponding
      * to the query.
      *
-     * @param query the query of the refoundDetails search
-     * @param pageable the pagination information
-     * @return the result of the search
+     * @param query the query of the refoundDetails search.
+     * @param pageable the pagination information.
+     * @return the result of the search.
      */
     @GetMapping("/_search/refound-details")
     public ResponseEntity<List<RefoundDetailsDTO>> searchRefoundDetails(@RequestParam String query, Pageable pageable) {
         log.debug("REST request to search for a page of RefoundDetails for query {}", query);
         Page<RefoundDetailsDTO> page = refoundDetailsService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/refound-details");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-
 }

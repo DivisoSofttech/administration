@@ -4,7 +4,7 @@ import com.diviso.graeshoppe.domain.Banner;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data Elasticsearch repository for the Banner entity.
+ * Spring Data Elasticsearch repository for the {@link Banner} entity.
  */
 public interface BannerSearchRepository extends ElasticsearchRepository<Banner, Long> {
 }

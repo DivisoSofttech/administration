@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing CancellationRequest.
+ * Service Implementation for managing {@link CancellationRequest}.
  */
 @Service
 @Transactional
@@ -42,8 +42,8 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
     /**
      * Save a cancellationRequest.
      *
-     * @param cancellationRequestDTO the entity to save
-     * @return the persisted entity
+     * @param cancellationRequestDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public CancellationRequestDTO save(CancellationRequestDTO cancellationRequestDTO) {
@@ -58,8 +58,8 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
     /**
      * Get all the cancellationRequests.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -73,8 +73,8 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
     /**
      * Get one cancellationRequest by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -87,20 +87,21 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
     /**
      * Delete the cancellationRequest by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete CancellationRequest : {}", id);        cancellationRequestRepository.deleteById(id);
+        log.debug("Request to delete CancellationRequest : {}", id);
+        cancellationRequestRepository.deleteById(id);
         cancellationRequestSearchRepository.deleteById(id);
     }
 
     /**
      * Search for the cancellationRequest corresponding to the query.
      *
-     * @param query the query of the search
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param query the query of the search.
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

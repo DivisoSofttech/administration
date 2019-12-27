@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the CancelledOrderLine entity.
+ * A DTO for the {@link com.diviso.graeshoppe.domain.CancelledOrderLine} entity.
  */
 public class CancelledOrderLineDTO implements Serializable {
 
@@ -64,7 +64,7 @@ public class CancelledOrderLineDTO implements Serializable {
         return "CancelledOrderLineDTO{" +
             "id=" + getId() +
             ", oderLineId=" + getOderLineId() +
-            ", cancellationRequest=" + getCancellationRequestId() +
+            ", cancellationRequestId=" + getCancellationRequestId() +
             "}";
     }
 }

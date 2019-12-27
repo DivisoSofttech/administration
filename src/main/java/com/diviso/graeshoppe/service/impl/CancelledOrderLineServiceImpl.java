@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing CancelledOrderLine.
+ * Service Implementation for managing {@link CancelledOrderLine}.
  */
 @Service
 @Transactional
@@ -42,8 +42,8 @@ public class CancelledOrderLineServiceImpl implements CancelledOrderLineService 
     /**
      * Save a cancelledOrderLine.
      *
-     * @param cancelledOrderLineDTO the entity to save
-     * @return the persisted entity
+     * @param cancelledOrderLineDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public CancelledOrderLineDTO save(CancelledOrderLineDTO cancelledOrderLineDTO) {
@@ -58,8 +58,8 @@ public class CancelledOrderLineServiceImpl implements CancelledOrderLineService 
     /**
      * Get all the cancelledOrderLines.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -73,8 +73,8 @@ public class CancelledOrderLineServiceImpl implements CancelledOrderLineService 
     /**
      * Get one cancelledOrderLine by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -87,20 +87,21 @@ public class CancelledOrderLineServiceImpl implements CancelledOrderLineService 
     /**
      * Delete the cancelledOrderLine by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete CancelledOrderLine : {}", id);        cancelledOrderLineRepository.deleteById(id);
+        log.debug("Request to delete CancelledOrderLine : {}", id);
+        cancelledOrderLineRepository.deleteById(id);
         cancelledOrderLineSearchRepository.deleteById(id);
     }
 
     /**
      * Search for the cancelledOrderLine corresponding to the query.
      *
-     * @param query the query of the search
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param query the query of the search.
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

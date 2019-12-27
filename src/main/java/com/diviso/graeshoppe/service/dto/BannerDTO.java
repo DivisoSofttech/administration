@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the Banner entity.
+ * A DTO for the {@link com.diviso.graeshoppe.domain.Banner} entity.
  */
 @ApiModel(description = "Task Banner. @author Neeraja.M.")
 public class BannerDTO implements Serializable {

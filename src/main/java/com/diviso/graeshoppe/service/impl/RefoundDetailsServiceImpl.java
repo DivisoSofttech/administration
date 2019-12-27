@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing RefoundDetails.
+ * Service Implementation for managing {@link RefoundDetails}.
  */
 @Service
 @Transactional
@@ -42,8 +42,8 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
     /**
      * Save a refoundDetails.
      *
-     * @param refoundDetailsDTO the entity to save
-     * @return the persisted entity
+     * @param refoundDetailsDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public RefoundDetailsDTO save(RefoundDetailsDTO refoundDetailsDTO) {
@@ -58,8 +58,8 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
     /**
      * Get all the refoundDetails.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -73,8 +73,8 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
     /**
      * Get one refoundDetails by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -87,20 +87,21 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
     /**
      * Delete the refoundDetails by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete RefoundDetails : {}", id);        refoundDetailsRepository.deleteById(id);
+        log.debug("Request to delete RefoundDetails : {}", id);
+        refoundDetailsRepository.deleteById(id);
         refoundDetailsSearchRepository.deleteById(id);
     }
 
     /**
      * Search for the refoundDetails corresponding to the query.
      *
-     * @param query the query of the search
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param query the query of the search.
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

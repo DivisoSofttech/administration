@@ -6,7 +6,7 @@ import com.diviso.graeshoppe.service.dto.CancellationRequestDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity CancellationRequest and its DTO CancellationRequestDTO.
+ * Mapper for the entity {@link CancellationRequest} and its DTO {@link CancellationRequestDTO}.
  */
 @Mapper(componentModel = "spring", uses = {RefoundDetailsMapper.class})
 public interface CancellationRequestMapper extends EntityMapper<CancellationRequestDTO, CancellationRequest> {
@@ -16,6 +16,7 @@ public interface CancellationRequestMapper extends EntityMapper<CancellationRequ
 
     @Mapping(source = "refoundDetailsId", target = "refoundDetails")
     @Mapping(target = "cancelledOrderLines", ignore = true)
+    @Mapping(target = "removeCancelledOrderLines", ignore = true)
     CancellationRequest toEntity(CancellationRequestDTO cancellationRequestDTO);
 
     default CancellationRequest fromId(Long id) {

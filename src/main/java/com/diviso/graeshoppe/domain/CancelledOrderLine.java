@@ -1,15 +1,12 @@
 package com.diviso.graeshoppe.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A CancelledOrderLine.
@@ -17,13 +14,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "cancelled_order_line")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "cancelledorderline")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "cancelledorderline")
 public class CancelledOrderLine implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "oder_line_id")
@@ -74,19 +72,15 @@ public class CancelledOrderLine implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof CancelledOrderLine)) {
             return false;
         }
-        CancelledOrderLine cancelledOrderLine = (CancelledOrderLine) o;
-        if (cancelledOrderLine.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), cancelledOrderLine.getId());
+        return id != null && id.equals(((CancelledOrderLine) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
