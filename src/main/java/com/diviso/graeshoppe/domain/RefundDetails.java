@@ -8,13 +8,13 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 
 /**
- * A RefoundDetails.
+ * A RefundDetails.
  */
 @Entity
-@Table(name = "refound_details")
+@Table(name = "refund_details")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "refounddetails")
-public class RefoundDetails implements Serializable {
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "refunddetails")
+public class RefundDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class RefoundDetails implements Serializable {
         return refundId;
     }
 
-    public RefoundDetails refundId(String refundId) {
+    public RefundDetails refundId(String refundId) {
         this.refundId = refundId;
         return this;
     }
@@ -55,7 +55,7 @@ public class RefoundDetails implements Serializable {
         return status;
     }
 
-    public RefoundDetails status(String status) {
+    public RefundDetails status(String status) {
         this.status = status;
         return this;
     }
@@ -70,10 +70,10 @@ public class RefoundDetails implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof RefoundDetails)) {
+        if (!(o instanceof RefundDetails)) {
             return false;
         }
-        return id != null && id.equals(((RefoundDetails) o).id);
+        return id != null && id.equals(((RefundDetails) o).id);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class RefoundDetails implements Serializable {
 
     @Override
     public String toString() {
-        return "RefoundDetails{" +
+        return "RefundDetails{" +
             "id=" + getId() +
             ", refundId='" + getRefundId() + "'" +
             ", status='" + getStatus() + "'" +

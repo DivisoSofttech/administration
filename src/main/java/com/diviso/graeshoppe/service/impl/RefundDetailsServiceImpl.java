@@ -1,15 +1,19 @@
 package com.diviso.graeshoppe.service.impl;
 
-import com.diviso.graeshoppe.service.RefoundDetailsService;
+import com.diviso.graeshoppe.service.RefundDetailsService;
 import com.diviso.graeshoppe.client.activiti.api.TasksApi;
 import com.diviso.graeshoppe.client.activiti.model.DataResponse;
 import com.diviso.graeshoppe.client.activiti.model.RestVariable;
 import com.diviso.graeshoppe.client.activiti.model.TaskActionRequest;
-import com.diviso.graeshoppe.domain.RefoundDetails;
-import com.diviso.graeshoppe.repository.RefoundDetailsRepository;
-import com.diviso.graeshoppe.repository.search.RefoundDetailsSearchRepository;
-import com.diviso.graeshoppe.service.dto.RefoundDetailsDTO;
-import com.diviso.graeshoppe.service.mapper.RefoundDetailsMapper;
+import com.diviso.graeshoppe.domain.RefundDetails;
+import com.diviso.graeshoppe.repository.RefundDetailsRepository;
+import com.diviso.graeshoppe.repository.RefundDetailsRepository;
+import com.diviso.graeshoppe.repository.search.RefundDetailsSearchRepository;
+import com.diviso.graeshoppe.repository.search.RefundDetailsSearchRepository;
+import com.diviso.graeshoppe.service.dto.RefundDetailsDTO;
+import com.diviso.graeshoppe.service.mapper.RefundDetailsMapper;
+import com.diviso.graeshoppe.service.mapper.RefundDetailsMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +34,15 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @Service
 @Transactional
-public class RefoundDetailsServiceImpl implements RefoundDetailsService {
+public class RefundDetailsServiceImpl implements RefundDetailsService {
 
-    private final Logger log = LoggerFactory.getLogger(RefoundDetailsServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(RefundDetailsServiceImpl.class);
 
-    private final RefoundDetailsRepository refoundDetailsRepository;
+    private final RefundDetailsRepository refundDetailsRepository;
 
-    private final RefoundDetailsMapper refoundDetailsMapper;
+    private final RefundDetailsMapper refundDetailsMapper;
 
-    private final RefoundDetailsSearchRepository refoundDetailsSearchRepository;
+    private final RefundDetailsSearchRepository refundDetailsSearchRepository;
     
     @Autowired
     CancellationRequestServiceImpl  cancellationRequestServiceImpl;
@@ -46,10 +50,10 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
     @Autowired
     TasksApi tasksApi;
 
-    public RefoundDetailsServiceImpl(RefoundDetailsRepository refoundDetailsRepository, RefoundDetailsMapper refoundDetailsMapper, RefoundDetailsSearchRepository refoundDetailsSearchRepository) {
-        this.refoundDetailsRepository = refoundDetailsRepository;
-        this.refoundDetailsMapper = refoundDetailsMapper;
-        this.refoundDetailsSearchRepository = refoundDetailsSearchRepository;
+    public RefundDetailsServiceImpl(RefundDetailsRepository refundDetailsRepository, RefundDetailsMapper refundDetailsMapper, RefundDetailsSearchRepository refundDetailsSearchRepository) {
+        this.refundDetailsRepository = refundDetailsRepository;
+        this.refundDetailsMapper = refundDetailsMapper;
+        this.refundDetailsSearchRepository = refundDetailsSearchRepository;
     }
 
     /**
@@ -59,12 +63,12 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
      * @return the persisted entity.
      */
     @Override
-    public RefoundDetailsDTO save(RefoundDetailsDTO refoundDetailsDTO) {
-        log.debug("Request to save RefoundDetails : {}", refoundDetailsDTO);
-        RefoundDetails refoundDetails = refoundDetailsMapper.toEntity(refoundDetailsDTO);
-        refoundDetails = refoundDetailsRepository.save(refoundDetails);
-        RefoundDetailsDTO result = refoundDetailsMapper.toDto(refoundDetails);
-        refoundDetailsSearchRepository.save(refoundDetails);
+    public RefundDetailsDTO save(RefundDetailsDTO refundDetailsDTO) {
+        log.debug("Request to save RefoundDetails : {}", refundDetailsDTO);
+        RefundDetails refundDetails = refundDetailsMapper.toEntity(refundDetailsDTO);
+        refundDetails = refundDetailsRepository.save(refundDetails);
+        RefundDetailsDTO result = refundDetailsMapper.toDto(refundDetails);
+        refundDetailsSearchRepository.save(refundDetails);
         
        
         
@@ -79,10 +83,10 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefoundDetailsDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all RefoundDetails");
-        return refoundDetailsRepository.findAll(pageable)
-            .map(refoundDetailsMapper::toDto);
+    public Page<RefundDetailsDTO> findAll(Pageable pageable) {
+        log.debug("Request to get all RefundDetails");
+        return refundDetailsRepository.findAll(pageable)
+            .map(refundDetailsMapper::toDto);
     }
 
 
@@ -94,10 +98,10 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<RefoundDetailsDTO> findOne(Long id) {
-        log.debug("Request to get RefoundDetails : {}", id);
-        return refoundDetailsRepository.findById(id)
-            .map(refoundDetailsMapper::toDto);
+    public Optional<RefundDetailsDTO> findOne(Long id) {
+        log.debug("Request to get RefundDetails : {}", id);
+        return refundDetailsRepository.findById(id)
+            .map(refundDetailsMapper::toDto);
     }
 
     /**
@@ -107,9 +111,9 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete RefoundDetails : {}", id);
-        refoundDetailsRepository.deleteById(id);
-        refoundDetailsSearchRepository.deleteById(id);
+        log.debug("Request to delete RefundDetails : {}", id);
+        refundDetailsRepository.deleteById(id);
+        refundDetailsSearchRepository.deleteById(id);
     }
 
     /**
@@ -121,10 +125,10 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<RefoundDetailsDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of RefoundDetails for query {}", query);
-        return refoundDetailsSearchRepository.search(queryStringQuery(query), pageable)
-            .map(refoundDetailsMapper::toDto);
+    public Page<RefundDetailsDTO> search(String query, Pageable pageable) {
+        log.debug("Request to search for a page of RefundDetails for query {}", query);
+        return refundDetailsSearchRepository.search(queryStringQuery(query), pageable)
+            .map(refundDetailsMapper::toDto);
     }
     
     
@@ -132,14 +136,14 @@ public class RefoundDetailsServiceImpl implements RefoundDetailsService {
     
     
     @Override
-    public RefoundDetailsDTO save(RefoundDetailsDTO refoundDetailsDTO,String orederId) {
-        log.debug("Request to save RefoundDetails : {}", refoundDetailsDTO);
-        RefoundDetails refoundDetails = refoundDetailsMapper.toEntity(refoundDetailsDTO);
-        refoundDetails = refoundDetailsRepository.save(refoundDetails);
-        RefoundDetailsDTO result = refoundDetailsMapper.toDto(refoundDetails);
-        refoundDetailsSearchRepository.save(refoundDetails);
+    public RefundDetailsDTO save(RefundDetailsDTO refundDetailsDTO,String orederId) {
+        log.debug("Request to save RefundDetails : {}", refundDetailsDTO);
+        RefundDetails refundDetails = refundDetailsMapper.toEntity(refundDetailsDTO);
+        refundDetails = refundDetailsRepository.save(refundDetails);
+        RefundDetailsDTO result = refundDetailsMapper.toDto(refundDetails);
+        refundDetailsSearchRepository.save(refundDetails);
         
-     String processInstanceId =  this.cancellationRequestServiceImpl.updateCancellationRequest(orederId,refoundDetails );
+     String processInstanceId =  this.cancellationRequestServiceImpl.updateCancellationRequest(orederId,refundDetails );
      log.debug("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT processinstance id ="+processInstanceId);
         initiateRefund(processInstanceId);
         

@@ -1,8 +1,8 @@
 package com.diviso.graeshoppe.web.rest;
 
-import com.diviso.graeshoppe.service.RefoundDetailsService;
+import com.diviso.graeshoppe.service.RefundDetailsService;
 import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
-import com.diviso.graeshoppe.service.dto.RefoundDetailsDTO;
+import com.diviso.graeshoppe.service.dto.RefundDetailsDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -32,19 +32,19 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-public class RefoundDetailsResource {
+public class RefundDetailsResource {
 
-    private final Logger log = LoggerFactory.getLogger(RefoundDetailsResource.class);
+    private final Logger log = LoggerFactory.getLogger(RefundDetailsResource.class);
 
     private static final String ENTITY_NAME = "administrationRefoundDetails";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final RefoundDetailsService refoundDetailsService;
+    private final RefundDetailsService refundDetailsService;
 
-    public RefoundDetailsResource(RefoundDetailsService refoundDetailsService) {
-        this.refoundDetailsService = refoundDetailsService;
+    public RefundDetailsResource(RefundDetailsService refundDetailsService) {
+        this.refundDetailsService = refundDetailsService;
     }
 
     /**
@@ -55,12 +55,12 @@ public class RefoundDetailsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/refound-details/{orderId}")
-    public ResponseEntity<RefoundDetailsDTO> createRefoundDetails(@RequestBody RefoundDetailsDTO refoundDetailsDTO,@PathVariable String orderId) throws URISyntaxException {
-        log.debug("REST request to save RefoundDetails : {}", refoundDetailsDTO);
-        if (refoundDetailsDTO.getId() != null) {
+    public ResponseEntity<RefundDetailsDTO> createRefoundDetails(@RequestBody RefundDetailsDTO refundDetailsDTO,@PathVariable String orderId) throws URISyntaxException {
+        log.debug("REST request to save RefundDetails : {}", refundDetailsDTO);
+        if (refundDetailsDTO.getId() != null) {
             throw new BadRequestAlertException("A new refoundDetails cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RefoundDetailsDTO result = refoundDetailsService.save(refoundDetailsDTO,orderId);
+        RefundDetailsDTO result = refundDetailsService.save(refundDetailsDTO,orderId);
         return ResponseEntity.created(new URI("/api/refound-details/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -76,14 +76,14 @@ public class RefoundDetailsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/refound-details")
-    public ResponseEntity<RefoundDetailsDTO> updateRefoundDetails(@RequestBody RefoundDetailsDTO refoundDetailsDTO) throws URISyntaxException {
-        log.debug("REST request to update RefoundDetails : {}", refoundDetailsDTO);
-        if (refoundDetailsDTO.getId() == null) {
+    public ResponseEntity<RefundDetailsDTO> updateRefundDetails(@RequestBody RefundDetailsDTO refundDetailsDTO) throws URISyntaxException {
+        log.debug("REST request to update RefoundDetails : {}", refundDetailsDTO);
+        if (refundDetailsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        RefoundDetailsDTO result = refoundDetailsService.save(refoundDetailsDTO);
+        RefundDetailsDTO result = refundDetailsService.save(refundDetailsDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, refoundDetailsDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, refundDetailsDTO.getId().toString()))
             .body(result);
     }
 
@@ -96,9 +96,9 @@ public class RefoundDetailsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of refoundDetails in body.
      */
     @GetMapping("/refound-details")
-    public ResponseEntity<List<RefoundDetailsDTO>> getAllRefoundDetails(Pageable pageable) {
-        log.debug("REST request to get a page of RefoundDetails");
-        Page<RefoundDetailsDTO> page = refoundDetailsService.findAll(pageable);
+    public ResponseEntity<List<RefundDetailsDTO>> getAllRefundDetails(Pageable pageable) {
+        log.debug("REST request to get a page of RefundDetails");
+        Page<RefundDetailsDTO> page = refundDetailsService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -110,9 +110,9 @@ public class RefoundDetailsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the refoundDetailsDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/refound-details/{id}")
-    public ResponseEntity<RefoundDetailsDTO> getRefoundDetails(@PathVariable Long id) {
+    public ResponseEntity<RefundDetailsDTO> getRefundDetails(@PathVariable Long id) {
         log.debug("REST request to get RefoundDetails : {}", id);
-        Optional<RefoundDetailsDTO> refoundDetailsDTO = refoundDetailsService.findOne(id);
+        Optional<RefundDetailsDTO> refoundDetailsDTO = refundDetailsService.findOne(id);
         return ResponseUtil.wrapOrNotFound(refoundDetailsDTO);
     }
 
@@ -123,9 +123,9 @@ public class RefoundDetailsResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/refound-details/{id}")
-    public ResponseEntity<Void> deleteRefoundDetails(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteRefundDetails(@PathVariable Long id) {
         log.debug("REST request to delete RefoundDetails : {}", id);
-        refoundDetailsService.delete(id);
+        refundDetailsService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -138,9 +138,9 @@ public class RefoundDetailsResource {
      * @return the result of the search.
      */
     @GetMapping("/_search/refound-details")
-    public ResponseEntity<List<RefoundDetailsDTO>> searchRefoundDetails(@RequestParam String query, Pageable pageable) {
+    public ResponseEntity<List<RefundDetailsDTO>> searchRefundDetails(@RequestParam String query, Pageable pageable) {
         log.debug("REST request to search for a page of RefoundDetails for query {}", query);
-        Page<RefoundDetailsDTO> page = refoundDetailsService.search(query, pageable);
+        Page<RefundDetailsDTO> page = refundDetailsService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -49,8 +49,8 @@
             <column name="reference" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="refound_details_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_cancellation_request_refound_details_id" />
+            <column name="refund_details_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_cancellation_request_refund_details_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>

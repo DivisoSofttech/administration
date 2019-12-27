@@ -14,6 +14,15 @@ entity CancellationRequest {
   
 }
 
+entity Banner {
+	storeId String,
+    imageLink String,
+    startDate Instant,
+    expiryDate Instant,
+    cost Double
+
+}
+
 entity Notification{
 	title String,
 	message String,
@@ -26,11 +35,11 @@ entity Notification{
 }
 entity CancelledOrderLine{
 
-oderLineId Long
+orderLineId Long
 
 }
 
-entity RefoundDetails{
+entity RefundDetails{
 
 refundId String,
 status String,
@@ -39,7 +48,7 @@ status String,
 
 relationship OneToOne {
 
-    CancellationRequest{refoundDetails} to RefoundDetails
+    CancellationRequest{refundDetails} to RefundDetails
 
 }
 

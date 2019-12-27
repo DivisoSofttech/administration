@@ -61,7 +61,7 @@ public class CancellationRequest implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private RefoundDetails refoundDetails;
+    private RefundDetails refundDetails;
 
     @OneToMany(mappedBy = "cancellationRequest")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -219,17 +219,17 @@ public class CancellationRequest implements Serializable {
         this.reference = reference;
     }
 
-    public RefoundDetails getRefoundDetails() {
-        return refoundDetails;
+    public RefundDetails getRefundDetails() {
+        return refundDetails;
     }
 
-    public CancellationRequest refoundDetails(RefoundDetails refoundDetails) {
-        this.refoundDetails = refoundDetails;
+    public CancellationRequest refundDetails(RefundDetails refundDetails) {
+        this.refundDetails = refundDetails;
         return this;
     }
 
-    public void setRefoundDetails(RefoundDetails refoundDetails) {
-        this.refoundDetails = refoundDetails;
+    public void setRefundDetails(RefundDetails refundDetails) {
+        this.refundDetails = refundDetails;
     }
 
     public Set<CancelledOrderLine> getCancelledOrderLines() {

@@ -32,7 +32,7 @@ import com.diviso.graeshoppe.client.activiti.model.SubmitFormRequest;
 import com.diviso.graeshoppe.client.activiti.model.TaskActionRequest;
 import com.diviso.graeshoppe.client.activiti.model.TaskRequest;
 import com.diviso.graeshoppe.domain.CancellationRequest;
-import com.diviso.graeshoppe.domain.RefoundDetails;
+import com.diviso.graeshoppe.domain.RefundDetails;
 import com.diviso.graeshoppe.repository.CancellationRequestRepository;
 import com.diviso.graeshoppe.repository.search.CancellationRequestSearchRepository;
 import com.diviso.graeshoppe.service.CancellationRequestService;
@@ -262,10 +262,10 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 	
 /*method to update cancellation request with r id */
 	
-	public String updateCancellationRequest(String orederId,RefoundDetails refoundDetails) {
+	public String updateCancellationRequest(String orederId,RefundDetails refundDetails) {
 		
 		CancellationRequest cancellationRequest=this.cancellationRequestRepository.findByOrderId(orederId).get();
-		cancellationRequest.setRefoundDetails(refoundDetails);
+		cancellationRequest.setRefundDetails(refundDetails);
 		return cancellationRequest.getReference();
 		
 	}

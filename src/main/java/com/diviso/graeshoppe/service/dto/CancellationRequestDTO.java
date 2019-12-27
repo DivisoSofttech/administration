@@ -33,7 +33,7 @@ public class CancellationRequestDTO implements Serializable {
     private String reference;
 
 
-    private Long refoundDetailsId;
+    private Long refundDetailsId;
 
     public Long getId() {
         return id;
@@ -131,12 +131,12 @@ public class CancellationRequestDTO implements Serializable {
         this.reference = reference;
     }
 
-    public Long getRefoundDetailsId() {
-        return refoundDetailsId;
+    public Long getRefundDetailsId() {
+        return refundDetailsId;
     }
 
-    public void setRefoundDetailsId(Long refoundDetailsId) {
-        this.refoundDetailsId = refoundDetailsId;
+    public void setRefundDetailsId(Long refundDetailsId) {
+        this.refundDetailsId = refundDetailsId;
     }
 
     @Override
@@ -175,7 +175,7 @@ public class CancellationRequestDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", amount=" + getAmount() +
             ", reference='" + getReference() + "'" +
-            ", refoundDetailsId=" + getRefoundDetailsId() +
+            ", refundDetailsId=" + getRefundDetailsId() +
             "}";
     }
 }

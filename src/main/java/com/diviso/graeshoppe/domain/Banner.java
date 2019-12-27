@@ -9,14 +9,12 @@ import java.io.Serializable;
 import java.time.Instant;
 
 /**
- * Task Banner.
- * @author Neeraja.M.
+ * A Banner.
  */
 @Entity
 @Table(name = "banner")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "premium_banner")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "banner")
 public class Banner implements Serializable {
 
     private static final long serialVersionUID = 1L;

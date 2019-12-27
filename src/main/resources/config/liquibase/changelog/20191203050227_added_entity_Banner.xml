@@ -12,7 +12,7 @@
         Added the entity Banner.
     -->
     <changeSet id="20191203050227-1" author="jhipster">
-        <createTable tableName="banner" remarks="Task Banner. @author Neeraja.M.">
+        <createTable tableName="banner">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

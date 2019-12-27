@@ -3,9 +3,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.diviso.graeshoppe.domain.RefoundDetails} entity.
+ * A DTO for the {@link com.diviso.graeshoppe.domain.RefundDetails} entity.
  */
-public class RefoundDetailsDTO implements Serializable {
+public class RefundDetailsDTO implements Serializable {
 
     private Long id;
 
@@ -47,11 +47,11 @@ public class RefoundDetailsDTO implements Serializable {
             return false;
         }
 
-        RefoundDetailsDTO refoundDetailsDTO = (RefoundDetailsDTO) o;
-        if (refoundDetailsDTO.getId() == null || getId() == null) {
+        RefundDetailsDTO refundDetailsDTO = (RefundDetailsDTO) o;
+        if (refundDetailsDTO.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), refoundDetailsDTO.getId());
+        return Objects.equals(getId(), refundDetailsDTO.getId());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class RefoundDetailsDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "RefoundDetailsDTO{" +
+        return "RefundDetailsDTO{" +
             "id=" + getId() +
             ", refundId='" + getRefundId() + "'" +
             ", status='" + getStatus() + "'" +

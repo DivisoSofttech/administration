@@ -1,15 +1,11 @@
 package com.diviso.graeshoppe.service.dto;
-import io.swagger.annotations.ApiModel;
 import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Lob;
-
 /**
  * A DTO for the {@link com.diviso.graeshoppe.domain.Banner} entity.
  */
-@ApiModel(description = "Task Banner. @author Neeraja.M.")
 public class BannerDTO implements Serializable {
 
     private Long id;
@@ -23,18 +19,16 @@ public class BannerDTO implements Serializable {
     private Instant expiryDate;
 
     private Double cost;
+
+private byte[] image;
     
-    @Lob
-    private byte[] image;
-
-
     public byte[] getImage() {
-		return image;
-	}
+	return image;
+}
 
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
+public void setImage(byte[] image) {
+	this.image = image;
+}
 
 	public Long getId() {
         return id;

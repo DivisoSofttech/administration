@@ -1,6 +1,6 @@
 package com.diviso.graeshoppe.repository;
 
-import com.diviso.graeshoppe.domain.RefoundDetails;
+import com.diviso.graeshoppe.domain.RefundDetails;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface RefoundDetailsRepository extends JpaRepository<RefoundDetails, Long> {
+public interface RefundDetailsRepository extends JpaRepository<RefundDetails, Long> {
 
 }

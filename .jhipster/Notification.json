@@ -45,5 +45,6 @@
     "fluentMethods": true,
     "clientRootFolder": "Administration",
     "applications": "*",
-    "microserviceName": "Administration"
+    "microserviceName": "Administration",
+    "readOnly": false
 }

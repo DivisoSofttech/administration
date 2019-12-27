@@ -8,13 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link CancellationRequest} and its DTO {@link CancellationRequestDTO}.
  */
-@Mapper(componentModel = "spring", uses = {RefoundDetailsMapper.class})
+@Mapper(componentModel = "spring", uses = {RefundDetailsMapper.class})
 public interface CancellationRequestMapper extends EntityMapper<CancellationRequestDTO, CancellationRequest> {
 
-    @Mapping(source = "refoundDetails.id", target = "refoundDetailsId")
+    @Mapping(source = "refundDetails.id", target = "refundDetailsId")
     CancellationRequestDTO toDto(CancellationRequest cancellationRequest);
 
-    @Mapping(source = "refoundDetailsId", target = "refoundDetails")
+    @Mapping(source = "refundDetailsId", target = "refundDetails")
     @Mapping(target = "cancelledOrderLines", ignore = true)
     @Mapping(target = "removeCancelledOrderLines", ignore = true)
     CancellationRequest toEntity(CancellationRequestDTO cancellationRequestDTO);

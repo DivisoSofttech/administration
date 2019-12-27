@@ -1,6 +1,6 @@
 package com.diviso.graeshoppe.service;
 
-import com.diviso.graeshoppe.service.dto.RefoundDetailsDTO;
+import com.diviso.graeshoppe.service.dto.RefundDetailsDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Service Interface for managing {@link com.diviso.graeshoppe.domain.RefoundDetails}.
  */
-public interface RefoundDetailsService {
+public interface RefundDetailsService {
 
     /**
      * Save a refoundDetails.
@@ -18,7 +18,7 @@ public interface RefoundDetailsService {
      * @param refoundDetailsDTO the entity to save.
      * @return the persisted entity.
      */
-    RefoundDetailsDTO save(RefoundDetailsDTO refoundDetailsDTO);
+    RefundDetailsDTO save(RefundDetailsDTO refoundDetailsDTO);
 
     /**
      * Get all the refoundDetails.
@@ -26,7 +26,7 @@ public interface RefoundDetailsService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<RefoundDetailsDTO> findAll(Pageable pageable);
+    Page<RefundDetailsDTO> findAll(Pageable pageable);
 
 
     /**
@@ -35,7 +35,7 @@ public interface RefoundDetailsService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<RefoundDetailsDTO> findOne(Long id);
+    Optional<RefundDetailsDTO> findOne(Long id);
 
     /**
      * Delete the "id" refoundDetails.
@@ -52,7 +52,7 @@ public interface RefoundDetailsService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<RefoundDetailsDTO> search(String query, Pageable pageable);
+    Page<RefundDetailsDTO> search(String query, Pageable pageable);
 
-	RefoundDetailsDTO save(RefoundDetailsDTO refoundDetailsDTO, String oderId);
+	RefundDetailsDTO save(RefundDetailsDTO refundDetailsDTO, String oderId);
 }

@@ -2,15 +2,16 @@
     "name": "CancelledOrderLine",
     "fields": [
         {
-            "fieldName": "oderLineId",
+            "fieldName": "orderLineId",
             "fieldType": "Long"
         }
     ],
     "relationships": [
         {
-            "relationshipName": "cancellationRequest",
-            "otherEntityName": "cancellationRequest",
             "relationshipType": "many-to-one",
+            "otherEntityName": "cancellationRequest",
+            "otherEntityRelationshipName": "cancelledOrderLines",
+            "relationshipName": "cancellationRequest",
             "otherEntityField": "id"
         }
     ],
@@ -23,5 +24,6 @@
     "fluentMethods": true,
     "clientRootFolder": "Administration",
     "applications": "*",
-    "microserviceName": "Administration"
+    "microserviceName": "Administration",
+    "readOnly": false
 }

@@ -24,7 +24,6 @@
     ],
     "relationships": [],
     "changelogDate": "20191203050227",
-    "javadoc": "Task Banner.\n@author Neeraja.M.",
     "entityTableName": "banner",
     "dto": "mapstruct",
     "pagination": "pagination",
@@ -33,5 +32,6 @@
     "fluentMethods": true,
     "clientRootFolder": "Administration",
     "applications": "*",
-    "microserviceName": "Administration"
+    "microserviceName": "Administration",
+    "readOnly": false
 }

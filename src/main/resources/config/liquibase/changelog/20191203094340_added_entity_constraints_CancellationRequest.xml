@@ -8,11 +8,11 @@
     -->
     <changeSet id="20191203094340-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="refound_details_id"
+        <addForeignKeyConstraint baseColumnNames="refund_details_id"
                                  baseTableName="cancellation_request"
-                                 constraintName="fk_cancellation_request_refound_details_id"
+                                 constraintName="fk_cancellation_request_refund_details_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="refound_details"/>
+                                 referencedTableName="refund_details"/>
 
     </changeSet>
 </databaseChangeLog>

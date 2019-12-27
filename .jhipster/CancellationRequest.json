@@ -49,9 +49,9 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "otherEntityName": "refoundDetails",
+            "otherEntityName": "refundDetails",
             "otherEntityRelationshipName": "cancellationRequest",
-            "relationshipName": "refoundDetails",
+            "relationshipName": "refundDetails",
             "otherEntityField": "id",
             "ownerSide": true
         },
@@ -71,5 +71,6 @@
     "fluentMethods": true,
     "clientRootFolder": "Administration",
     "applications": "*",
-    "microserviceName": "Administration"
+    "microserviceName": "Administration",
+    "readOnly": false
 }

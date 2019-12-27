@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class RefoundDetailsMapperTest {
+public class RefundDetailsMapperTest {
 
-    private RefoundDetailsMapper refoundDetailsMapper;
+    private RefundDetailsMapper refundDetailsMapper;
 
     @BeforeEach
     public void setUp() {
-        refoundDetailsMapper = new RefoundDetailsMapperImpl();
+        refundDetailsMapper = new RefundDetailsMapperImpl();
     }
 
     @Test
     public void testEntityFromId() {
         Long id = 2L;
-        assertThat(refoundDetailsMapper.fromId(id).getId()).isEqualTo(id);
-        assertThat(refoundDetailsMapper.fromId(null)).isNull();
+        assertThat(refundDetailsMapper.fromId(id).getId()).isEqualTo(id);
+        assertThat(refundDetailsMapper.fromId(null)).isNull();
     }
 }
