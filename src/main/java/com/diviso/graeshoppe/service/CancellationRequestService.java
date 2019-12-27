@@ -14,23 +14,23 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 /**
- * Service Interface for managing CancellationRequest.
+ * Service Interface for managing {@link com.diviso.graeshoppe.domain.CancellationRequest}.
  */
 public interface CancellationRequestService {
 
     /**
      * Save a cancellationRequest.
      *
-     * @param cancellationRequestDTO the entity to save
-     * @return the persisted entity
+     * @param cancellationRequestDTO the entity to save.
+     * @return the persisted entity.
      */
     CancellationRequestDTO save(CancellationRequestDTO cancellationRequestDTO);
 
     /**
      * Get all the cancellationRequests.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     Page<CancellationRequestDTO> findAll(Pageable pageable);
 
@@ -38,25 +38,25 @@ public interface CancellationRequestService {
     /**
      * Get the "id" cancellationRequest.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     Optional<CancellationRequestDTO> findOne(Long id);
 
     /**
      * Delete the "id" cancellationRequest.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     void delete(Long id);
 
     /**
      * Search for the cancellationRequest corresponding to the query.
      *
-     * @param query the query of the search
+     * @param query the query of the search.
      * 
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     Page<CancellationRequestDTO> search(String query, Pageable pageable);
 

@@ -6,7 +6,7 @@ import com.diviso.graeshoppe.service.dto.RefoundDetailsDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity RefoundDetails and its DTO RefoundDetailsDTO.
+ * Mapper for the entity {@link RefoundDetails} and its DTO {@link RefoundDetailsDTO}.
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface RefoundDetailsMapper extends EntityMapper<RefoundDetailsDTO, RefoundDetails> {

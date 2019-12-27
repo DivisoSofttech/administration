@@ -1,18 +1,14 @@
 package com.diviso.graeshoppe.domain;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A CancellationRequest.
@@ -20,13 +16,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "cancellation_request")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "cancellationrequest")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "cancellationrequest")
 public class CancellationRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "status")
@@ -53,7 +50,7 @@ public class CancellationRequest implements Serializable {
     @Column(name = "store_phone")
     private Long storePhone;
 
-    @Column(name = "jhi_date")
+    @Column(name = "date")
     private Instant date;
 
     @Column(name = "amount")
@@ -69,6 +66,7 @@ public class CancellationRequest implements Serializable {
     @OneToMany(mappedBy = "cancellationRequest")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CancelledOrderLine> cancelledOrderLines = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -265,19 +263,15 @@ public class CancellationRequest implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof CancellationRequest)) {
             return false;
         }
-        CancellationRequest cancellationRequest = (CancellationRequest) o;
-        if (cancellationRequest.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), cancellationRequest.getId());
+        return id != null && id.equals(((CancellationRequest) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

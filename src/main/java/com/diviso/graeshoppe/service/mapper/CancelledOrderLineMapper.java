@@ -6,7 +6,7 @@ import com.diviso.graeshoppe.service.dto.CancelledOrderLineDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity CancelledOrderLine and its DTO CancelledOrderLineDTO.
+ * Mapper for the entity {@link CancelledOrderLine} and its DTO {@link CancelledOrderLineDTO}.
  */
 @Mapper(componentModel = "spring", uses = {CancellationRequestMapper.class})
 public interface CancelledOrderLineMapper extends EntityMapper<CancelledOrderLineDTO, CancelledOrderLine> {

@@ -21,7 +21,7 @@ import java.util.UUID;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing Banner.
+ * Service Implementation for managing {@link Banner}.
  */
 @Service
 @Transactional
@@ -50,8 +50,8 @@ public class BannerServiceImpl implements BannerService {
     /**
      * Save a banner.
      *
-     * @param bannerDTO the entity to save
-     * @return the persisted entity
+     * @param bannerDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public BannerDTO save(BannerDTO bannerDTO) {
@@ -71,8 +71,8 @@ public class BannerServiceImpl implements BannerService {
     /**
      * Get all the banners.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -86,8 +86,8 @@ public class BannerServiceImpl implements BannerService {
     /**
      * Get one banner by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -100,20 +100,21 @@ public class BannerServiceImpl implements BannerService {
     /**
      * Delete the banner by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Banner : {}", id);        bannerRepository.deleteById(id);
+        log.debug("Request to delete Banner : {}", id);
+        bannerRepository.deleteById(id);
         bannerSearchRepository.deleteById(id);
     }
 
     /**
      * Search for the banner corresponding to the query.
      *
-     * @param query the query of the search
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param query the query of the search.
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

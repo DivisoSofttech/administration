@@ -6,7 +6,7 @@ import com.diviso.graeshoppe.service.dto.BannerDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity Banner and its DTO BannerDTO.
+ * Mapper for the entity {@link Banner} and its DTO {@link BannerDTO}.
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface BannerMapper extends EntityMapper<BannerDTO, Banner> {

@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing Notification.
+ * Service Implementation for managing {@link Notification}.
  */
 @Service
 @Transactional
@@ -42,8 +42,8 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Save a notification.
      *
-     * @param notificationDTO the entity to save
-     * @return the persisted entity
+     * @param notificationDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public NotificationDTO save(NotificationDTO notificationDTO) {
@@ -58,8 +58,8 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Get all the notifications.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -73,8 +73,8 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Get one notification by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -87,7 +87,7 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Delete the notification by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
@@ -99,9 +99,9 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Search for the notification corresponding to the query.
      *
-     * @param query the query of the search
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param query the query of the search.
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

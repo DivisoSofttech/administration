@@ -1,15 +1,12 @@
 package com.diviso.graeshoppe.domain;
-
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 /**
  * Task Banner.
@@ -18,13 +15,15 @@ import java.util.Objects;
 @Entity
 @Table(name = "banner")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "premium_banner")
+
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "premium_banner")
 public class Banner implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "store_id")
@@ -39,7 +38,7 @@ public class Banner implements Serializable {
     @Column(name = "expiry_date")
     private Instant expiryDate;
 
-    @Column(name = "jhi_cost")
+    @Column(name = "cost")
     private Double cost;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -122,19 +121,15 @@ public class Banner implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Banner)) {
             return false;
         }
-        Banner banner = (Banner) o;
-        if (banner.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), banner.getId());
+        return id != null && id.equals(((Banner) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

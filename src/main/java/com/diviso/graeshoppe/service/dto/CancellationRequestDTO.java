@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the CancellationRequest entity.
+ * A DTO for the {@link com.diviso.graeshoppe.domain.CancellationRequest} entity.
  */
 public class CancellationRequestDTO implements Serializable {
 
@@ -175,7 +175,7 @@ public class CancellationRequestDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", amount=" + getAmount() +
             ", reference='" + getReference() + "'" +
-            ", refoundDetails=" + getRefoundDetailsId() +
+            ", refoundDetailsId=" + getRefoundDetailsId() +
             "}";
     }
 }

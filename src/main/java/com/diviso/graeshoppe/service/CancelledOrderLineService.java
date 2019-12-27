@@ -8,23 +8,23 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 /**
- * Service Interface for managing CancelledOrderLine.
+ * Service Interface for managing {@link com.diviso.graeshoppe.domain.CancelledOrderLine}.
  */
 public interface CancelledOrderLineService {
 
     /**
      * Save a cancelledOrderLine.
      *
-     * @param cancelledOrderLineDTO the entity to save
-     * @return the persisted entity
+     * @param cancelledOrderLineDTO the entity to save.
+     * @return the persisted entity.
      */
     CancelledOrderLineDTO save(CancelledOrderLineDTO cancelledOrderLineDTO);
 
     /**
      * Get all the cancelledOrderLines.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     Page<CancelledOrderLineDTO> findAll(Pageable pageable);
 
@@ -32,25 +32,25 @@ public interface CancelledOrderLineService {
     /**
      * Get the "id" cancelledOrderLine.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     Optional<CancelledOrderLineDTO> findOne(Long id);
 
     /**
      * Delete the "id" cancelledOrderLine.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     void delete(Long id);
 
     /**
      * Search for the cancelledOrderLine corresponding to the query.
      *
-     * @param query the query of the search
+     * @param query the query of the search.
      * 
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     Page<CancelledOrderLineDTO> search(String query, Pageable pageable);
 }
