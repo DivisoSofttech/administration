@@ -1,0 +1,37 @@
+{
+    "name": "Banner",
+    "fields": [
+        {
+            "fieldName": "storeId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imageLink",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "expiryDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "cost",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20191203050227",
+    "javadoc": "Task Banner.\n@author Neeraja.M.",
+    "entityTableName": "banner",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}

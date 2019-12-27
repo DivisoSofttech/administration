@@ -1,0 +1,75 @@
+{
+    "name": "CancellationRequest",
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orderId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phoneCode",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "customerEmail",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerPhone",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "storeEmail",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "storePhone",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "refoundDetails",
+            "otherEntityRelationshipName": "cancellationRequest",
+            "relationshipName": "refoundDetails",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "cancelledOrderLine",
+            "otherEntityRelationshipName": "cancellationRequest",
+            "relationshipName": "cancelledOrderLines"
+        }
+    ],
+    "changelogDate": "20191203094340",
+    "entityTableName": "cancellation_request",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}
