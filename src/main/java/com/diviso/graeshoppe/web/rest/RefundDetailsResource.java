@@ -54,14 +54,14 @@ public class RefundDetailsResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new refoundDetailsDTO, or with status {@code 400 (Bad Request)} if the refoundDetails has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/refound-details/{orderId}")
-    public ResponseEntity<RefundDetailsDTO> createRefoundDetails(@RequestBody RefundDetailsDTO refundDetailsDTO,@PathVariable String orderId) throws URISyntaxException {
+    @PostMapping("/refund-details/{orderId}")
+    public ResponseEntity<RefundDetailsDTO> createRefundDetails(@RequestBody RefundDetailsDTO refundDetailsDTO,@PathVariable String orderId) throws URISyntaxException {
         log.debug("REST request to save RefundDetails : {}", refundDetailsDTO);
         if (refundDetailsDTO.getId() != null) {
-            throw new BadRequestAlertException("A new refoundDetails cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new refundDetails cannot already have an ID", ENTITY_NAME, "idexists");
         }
         RefundDetailsDTO result = refundDetailsService.save(refundDetailsDTO,orderId);
-        return ResponseEntity.created(new URI("/api/refound-details/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/refund-details/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
@@ -75,9 +75,9 @@ public class RefundDetailsResource {
      * or with status {@code 500 (Internal Server Error)} if the refoundDetailsDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/refound-details")
+    @PutMapping("/refund-details")
     public ResponseEntity<RefundDetailsDTO> updateRefundDetails(@RequestBody RefundDetailsDTO refundDetailsDTO) throws URISyntaxException {
-        log.debug("REST request to update RefoundDetails : {}", refundDetailsDTO);
+        log.debug("REST request to update RefundDetails : {}", refundDetailsDTO);
         if (refundDetailsDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -95,7 +95,7 @@ public class RefundDetailsResource {
 
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of refoundDetails in body.
      */
-    @GetMapping("/refound-details")
+    @GetMapping("/refund-details")
     public ResponseEntity<List<RefundDetailsDTO>> getAllRefundDetails(Pageable pageable) {
         log.debug("REST request to get a page of RefundDetails");
         Page<RefundDetailsDTO> page = refundDetailsService.findAll(pageable);
@@ -109,9 +109,9 @@ public class RefundDetailsResource {
      * @param id the id of the refoundDetailsDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the refoundDetailsDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/refound-details/{id}")
+    @GetMapping("/refund-details/{id}")
     public ResponseEntity<RefundDetailsDTO> getRefundDetails(@PathVariable Long id) {
-        log.debug("REST request to get RefoundDetails : {}", id);
+        log.debug("REST request to get RefundDetails : {}", id);
         Optional<RefundDetailsDTO> refoundDetailsDTO = refundDetailsService.findOne(id);
         return ResponseUtil.wrapOrNotFound(refoundDetailsDTO);
     }
