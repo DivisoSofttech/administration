@@ -112,8 +112,8 @@ public class RefundDetailsResource {
     @GetMapping("/refund-details/{id}")
     public ResponseEntity<RefundDetailsDTO> getRefundDetails(@PathVariable Long id) {
         log.debug("REST request to get RefundDetails : {}", id);
-        Optional<RefundDetailsDTO> refoundDetailsDTO = refundDetailsService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(refoundDetailsDTO);
+        Optional<RefundDetailsDTO> refundDetailsDTO = refundDetailsService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(refundDetailsDTO);
     }
 
     /**
@@ -122,9 +122,9 @@ public class RefundDetailsResource {
      * @param id the id of the refoundDetailsDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/refound-details/{id}")
+    @DeleteMapping("/refund-details/{id}")
     public ResponseEntity<Void> deleteRefundDetails(@PathVariable Long id) {
-        log.debug("REST request to delete RefoundDetails : {}", id);
+        log.debug("REST request to delete RefundDetails : {}", id);
         refundDetailsService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
@@ -137,9 +137,9 @@ public class RefundDetailsResource {
      * @param pageable the pagination information.
      * @return the result of the search.
      */
-    @GetMapping("/_search/refound-details")
+    @GetMapping("/_search/refund-details")
     public ResponseEntity<List<RefundDetailsDTO>> searchRefundDetails(@RequestParam String query, Pageable pageable) {
-        log.debug("REST request to search for a page of RefoundDetails for query {}", query);
+        log.debug("REST request to search for a page of RefundDetails for query {}", query);
         Page<RefundDetailsDTO> page = refundDetailsService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
