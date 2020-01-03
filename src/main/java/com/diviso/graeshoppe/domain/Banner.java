@@ -14,7 +14,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "banner")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "premium_banner")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "premiumbanner")
 public class Banner implements Serializable {
 
     private static final long serialVersionUID = 1L;
