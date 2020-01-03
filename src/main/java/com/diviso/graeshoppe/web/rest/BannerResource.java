@@ -81,7 +81,7 @@ public class BannerResource {
         if (bannerDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        BannerDTO result = bannerService.save(bannerDTO);
+        BannerDTO result = bannerService.update(bannerDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bannerDTO.getId().toString()))
             .body(result);

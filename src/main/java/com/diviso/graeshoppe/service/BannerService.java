@@ -53,4 +53,6 @@ public interface BannerService {
      * @return the list of entities.
      */
     Page<BannerDTO> search(String query, Pageable pageable);
+    
+    BannerDTO update(BannerDTO bannerDTO);
 }

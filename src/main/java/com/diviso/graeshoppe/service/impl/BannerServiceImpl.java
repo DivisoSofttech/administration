@@ -65,6 +65,36 @@ public class BannerServiceImpl implements BannerService {
         banner = bannerRepository.save(banner);
         BannerDTO result = bannerMapper.toDto(banner);
         bannerSearchRepository.save(banner);
+        return updateToEs(result);
+    }
+    
+    private BannerDTO updateToEs(BannerDTO bannerDTO) {
+        log.debug("Request to save Banner : {}", bannerDTO);
+        Banner banner = bannerMapper.toEntity(bannerDTO);
+        String uuid= UUID.randomUUID().toString();
+        if(bannerDTO.getImage()!=null) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+bannerDTO.getImage());
+        String imageLink= imageService.saveFile("banner", uuid, bannerDTO.getImage());
+        banner.setImageLink(imageLink);
+        }
+        banner = bannerRepository.save(banner);
+        BannerDTO result = bannerMapper.toDto(banner);
+        bannerSearchRepository.save(banner);
+        return result;
+    }
+    @Override
+    public BannerDTO update(BannerDTO bannerDTO) {
+        log.debug("Request to save Banner : {}", bannerDTO);
+        Banner banner = bannerMapper.toEntity(bannerDTO);
+        String uuid= UUID.randomUUID().toString();
+        if(bannerDTO.getImage()!=null) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+bannerDTO.getImage());
+        String imageLink= imageService.saveFile("banner", uuid, bannerDTO.getImage());
+        banner.setImageLink(imageLink);
+        }
+        banner = bannerRepository.save(banner);
+        BannerDTO result = bannerMapper.toDto(banner);
+        bannerSearchRepository.save(banner);
         return result;
     }
 
