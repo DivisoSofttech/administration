@@ -12,9 +12,9 @@ import java.time.Instant;
  * A Banner.
  */
 @Entity
-@Table(name = "premium_banner")
+@Table(name = "banner")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "banner")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "premium_banner")
 public class Banner implements Serializable {
 
     private static final long serialVersionUID = 1L;
