@@ -1,5 +1,5 @@
 {
-    "name": "CancelledOrderLine",
+    "name": "CancelledAuxilaryOrderLine",
     "fields": [
         {
             "fieldName": "orderLineId",
@@ -30,20 +30,20 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "cancellationRequest",
-            "otherEntityRelationshipName": "cancelledOrderLines",
+            "otherEntityRelationshipName": "cancelledAuxilaryOrderLine",
             "relationshipName": "cancellationRequest",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191206100118",
-    "entityTableName": "cancelled_order_line",
+    "changelogDate": "20200106044627",
+    "entityTableName": "cancelled_auxilary_order_line",
     "dto": "mapstruct",
     "pagination": "pagination",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
+    "readOnly": false,
     "clientRootFolder": "Administration",
     "applications": "*",
-    "microserviceName": "Administration",
-    "readOnly": false
+    "microserviceName": "Administration"
 }

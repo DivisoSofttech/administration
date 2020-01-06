@@ -1,11 +1,11 @@
-id;order_line_id
-1;83549
-2;83559
-3;54765
-4;57713
-5;24085
-6;39269
-7;19826
-8;93777
-9;13033
-10;97628
+id;order_line_id;price_per_unit;ammount;quantity;item_name;product_id
+1;83549;83559;54765;57713;reinvent;93777
+2;13033;97628;70324;88203;solution;32413
+3;81944;68440;76659;57387;Ranch Dominican Peso;4047
+4;56232;81411;27432;26028;Avon Surinam Dollar green;77932
+5;77499;78305;69967;70230;leading edge Personal Loan Account Rustic;9621
+6;17268;82601;63929;78898;Books;83911
+7;42676;81102;72149;71785;Balanced Bermudian Dollar (customarily known as Bermuda Dollar) navigate;17014
+8;46387;62799;52739;75332;motivating Soft value-added;85908
+9;86093;42133;86533;62350;granular;46792
+10;21466;11333;38481;57080;Advanced architect;35378

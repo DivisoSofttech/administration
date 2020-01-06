@@ -46,6 +46,21 @@ public class CancelledOrderLineResourceIT {
     private static final Long DEFAULT_ORDER_LINE_ID = 1L;
     private static final Long UPDATED_ORDER_LINE_ID = 2L;
 
+    private static final Double DEFAULT_PRICE_PER_UNIT = 1D;
+    private static final Double UPDATED_PRICE_PER_UNIT = 2D;
+
+    private static final Double DEFAULT_AMMOUNT = 1D;
+    private static final Double UPDATED_AMMOUNT = 2D;
+
+    private static final Long DEFAULT_QUANTITY = 1L;
+    private static final Long UPDATED_QUANTITY = 2L;
+
+    private static final String DEFAULT_ITEM_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_ITEM_NAME = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_PRODUCT_ID = 1L;
+    private static final Long UPDATED_PRODUCT_ID = 2L;
+
     @Autowired
     private CancelledOrderLineRepository cancelledOrderLineRepository;
 
@@ -102,7 +117,12 @@ public class CancelledOrderLineResourceIT {
      */
     public static CancelledOrderLine createEntity(EntityManager em) {
         CancelledOrderLine cancelledOrderLine = new CancelledOrderLine()
-            .orderLineId(DEFAULT_ORDER_LINE_ID);
+            .orderLineId(DEFAULT_ORDER_LINE_ID)
+            .pricePerUnit(DEFAULT_PRICE_PER_UNIT)
+            .ammount(DEFAULT_AMMOUNT)
+            .quantity(DEFAULT_QUANTITY)
+            .itemName(DEFAULT_ITEM_NAME)
+            .productId(DEFAULT_PRODUCT_ID);
         return cancelledOrderLine;
     }
     /**
@@ -113,7 +133,12 @@ public class CancelledOrderLineResourceIT {
      */
     public static CancelledOrderLine createUpdatedEntity(EntityManager em) {
         CancelledOrderLine cancelledOrderLine = new CancelledOrderLine()
-            .orderLineId(UPDATED_ORDER_LINE_ID);
+            .orderLineId(UPDATED_ORDER_LINE_ID)
+            .pricePerUnit(UPDATED_PRICE_PER_UNIT)
+            .ammount(UPDATED_AMMOUNT)
+            .quantity(UPDATED_QUANTITY)
+            .itemName(UPDATED_ITEM_NAME)
+            .productId(UPDATED_PRODUCT_ID);
         return cancelledOrderLine;
     }
 
@@ -139,6 +164,11 @@ public class CancelledOrderLineResourceIT {
         assertThat(cancelledOrderLineList).hasSize(databaseSizeBeforeCreate + 1);
         CancelledOrderLine testCancelledOrderLine = cancelledOrderLineList.get(cancelledOrderLineList.size() - 1);
         assertThat(testCancelledOrderLine.getOrderLineId()).isEqualTo(DEFAULT_ORDER_LINE_ID);
+        assertThat(testCancelledOrderLine.getPricePerUnit()).isEqualTo(DEFAULT_PRICE_PER_UNIT);
+        assertThat(testCancelledOrderLine.getAmmount()).isEqualTo(DEFAULT_AMMOUNT);
+        assertThat(testCancelledOrderLine.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
+        assertThat(testCancelledOrderLine.getItemName()).isEqualTo(DEFAULT_ITEM_NAME);
+        assertThat(testCancelledOrderLine.getProductId()).isEqualTo(DEFAULT_PRODUCT_ID);
 
         // Validate the CancelledOrderLine in Elasticsearch
         verify(mockCancelledOrderLineSearchRepository, times(1)).save(testCancelledOrderLine);
@@ -179,7 +209,12 @@ public class CancelledOrderLineResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cancelledOrderLine.getId().intValue())))
-            .andExpect(jsonPath("$.[*].orderLineId").value(hasItem(DEFAULT_ORDER_LINE_ID.intValue())));
+            .andExpect(jsonPath("$.[*].orderLineId").value(hasItem(DEFAULT_ORDER_LINE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].pricePerUnit").value(hasItem(DEFAULT_PRICE_PER_UNIT.doubleValue())))
+            .andExpect(jsonPath("$.[*].ammount").value(hasItem(DEFAULT_AMMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
+            .andExpect(jsonPath("$.[*].itemName").value(hasItem(DEFAULT_ITEM_NAME)))
+            .andExpect(jsonPath("$.[*].productId").value(hasItem(DEFAULT_PRODUCT_ID.intValue())));
     }
     
     @Test
@@ -193,7 +228,12 @@ public class CancelledOrderLineResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(cancelledOrderLine.getId().intValue()))
-            .andExpect(jsonPath("$.orderLineId").value(DEFAULT_ORDER_LINE_ID.intValue()));
+            .andExpect(jsonPath("$.orderLineId").value(DEFAULT_ORDER_LINE_ID.intValue()))
+            .andExpect(jsonPath("$.pricePerUnit").value(DEFAULT_PRICE_PER_UNIT.doubleValue()))
+            .andExpect(jsonPath("$.ammount").value(DEFAULT_AMMOUNT.doubleValue()))
+            .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY.intValue()))
+            .andExpect(jsonPath("$.itemName").value(DEFAULT_ITEM_NAME))
+            .andExpect(jsonPath("$.productId").value(DEFAULT_PRODUCT_ID.intValue()));
     }
 
     @Test
@@ -217,7 +257,12 @@ public class CancelledOrderLineResourceIT {
         // Disconnect from session so that the updates on updatedCancelledOrderLine are not directly saved in db
         em.detach(updatedCancelledOrderLine);
         updatedCancelledOrderLine
-            .orderLineId(UPDATED_ORDER_LINE_ID);
+            .orderLineId(UPDATED_ORDER_LINE_ID)
+            .pricePerUnit(UPDATED_PRICE_PER_UNIT)
+            .ammount(UPDATED_AMMOUNT)
+            .quantity(UPDATED_QUANTITY)
+            .itemName(UPDATED_ITEM_NAME)
+            .productId(UPDATED_PRODUCT_ID);
         CancelledOrderLineDTO cancelledOrderLineDTO = cancelledOrderLineMapper.toDto(updatedCancelledOrderLine);
 
         restCancelledOrderLineMockMvc.perform(put("/api/cancelled-order-lines")
@@ -230,6 +275,11 @@ public class CancelledOrderLineResourceIT {
         assertThat(cancelledOrderLineList).hasSize(databaseSizeBeforeUpdate);
         CancelledOrderLine testCancelledOrderLine = cancelledOrderLineList.get(cancelledOrderLineList.size() - 1);
         assertThat(testCancelledOrderLine.getOrderLineId()).isEqualTo(UPDATED_ORDER_LINE_ID);
+        assertThat(testCancelledOrderLine.getPricePerUnit()).isEqualTo(UPDATED_PRICE_PER_UNIT);
+        assertThat(testCancelledOrderLine.getAmmount()).isEqualTo(UPDATED_AMMOUNT);
+        assertThat(testCancelledOrderLine.getQuantity()).isEqualTo(UPDATED_QUANTITY);
+        assertThat(testCancelledOrderLine.getItemName()).isEqualTo(UPDATED_ITEM_NAME);
+        assertThat(testCancelledOrderLine.getProductId()).isEqualTo(UPDATED_PRODUCT_ID);
 
         // Validate the CancelledOrderLine in Elasticsearch
         verify(mockCancelledOrderLineSearchRepository, times(1)).save(testCancelledOrderLine);
@@ -290,6 +340,11 @@ public class CancelledOrderLineResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cancelledOrderLine.getId().intValue())))
-            .andExpect(jsonPath("$.[*].orderLineId").value(hasItem(DEFAULT_ORDER_LINE_ID.intValue())));
+            .andExpect(jsonPath("$.[*].orderLineId").value(hasItem(DEFAULT_ORDER_LINE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].pricePerUnit").value(hasItem(DEFAULT_PRICE_PER_UNIT.doubleValue())))
+            .andExpect(jsonPath("$.[*].ammount").value(hasItem(DEFAULT_AMMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
+            .andExpect(jsonPath("$.[*].itemName").value(hasItem(DEFAULT_ITEM_NAME)))
+            .andExpect(jsonPath("$.[*].productId").value(hasItem(DEFAULT_PRODUCT_ID.intValue())));
     }
 }

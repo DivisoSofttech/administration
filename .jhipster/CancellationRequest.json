@@ -60,6 +60,12 @@
             "otherEntityName": "cancelledOrderLine",
             "otherEntityRelationshipName": "cancellationRequest",
             "relationshipName": "cancelledOrderLines"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "cancelledAuxilaryOrderLine",
+            "otherEntityRelationshipName": "cancellationRequest",
+            "relationshipName": "cancelledAuxilaryOrderLine"
         }
     ],
     "changelogDate": "20191203094340",

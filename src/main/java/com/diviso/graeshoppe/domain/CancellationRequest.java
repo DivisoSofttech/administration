@@ -67,6 +67,10 @@ public class CancellationRequest implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CancelledOrderLine> cancelledOrderLines = new HashSet<>();
 
+    @OneToMany(mappedBy = "cancellationRequest")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CancelledAuxilaryOrderLine> cancelledAuxilaryOrderLines = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -255,6 +259,31 @@ public class CancellationRequest implements Serializable {
 
     public void setCancelledOrderLines(Set<CancelledOrderLine> cancelledOrderLines) {
         this.cancelledOrderLines = cancelledOrderLines;
+    }
+
+    public Set<CancelledAuxilaryOrderLine> getCancelledAuxilaryOrderLines() {
+        return cancelledAuxilaryOrderLines;
+    }
+
+    public CancellationRequest cancelledAuxilaryOrderLines(Set<CancelledAuxilaryOrderLine> cancelledAuxilaryOrderLines) {
+        this.cancelledAuxilaryOrderLines = cancelledAuxilaryOrderLines;
+        return this;
+    }
+
+    public CancellationRequest addCancelledAuxilaryOrderLine(CancelledAuxilaryOrderLine cancelledAuxilaryOrderLine) {
+        this.cancelledAuxilaryOrderLines.add(cancelledAuxilaryOrderLine);
+        cancelledAuxilaryOrderLine.setCancellationRequest(this);
+        return this;
+    }
+
+    public CancellationRequest removeCancelledAuxilaryOrderLine(CancelledAuxilaryOrderLine cancelledAuxilaryOrderLine) {
+        this.cancelledAuxilaryOrderLines.remove(cancelledAuxilaryOrderLine);
+        cancelledAuxilaryOrderLine.setCancellationRequest(null);
+        return this;
+    }
+
+    public void setCancelledAuxilaryOrderLines(Set<CancelledAuxilaryOrderLine> cancelledAuxilaryOrderLines) {
+        this.cancelledAuxilaryOrderLines = cancelledAuxilaryOrderLines;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

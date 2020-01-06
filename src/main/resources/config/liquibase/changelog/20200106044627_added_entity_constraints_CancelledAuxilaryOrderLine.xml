@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity CancelledAuxilaryOrderLine.
+    -->
+    <changeSet id="20200106044627-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="cancellation_request_id"
+                                 baseTableName="cancelled_auxilary_order_line"
+                                 constraintName="fk_cancelled_auxilary_order_line_cancellation_request_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cancellation_request"/>
+
+    </changeSet>
+</databaseChangeLog>

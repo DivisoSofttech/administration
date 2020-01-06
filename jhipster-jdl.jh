@@ -35,7 +35,23 @@ entity Notification{
 }
 entity CancelledOrderLine{
 
-orderLineId Long
+orderLineId Long,
+pricePerUnit Double,
+ammount Double,
+quantity Long,
+itemName String,
+productId Long,
+
+}
+
+entity CancelledAuxilaryOrderLine{
+
+orderLineId Long,
+pricePerUnit Double,
+ammount Double,
+quantity Long,
+itemName String,
+productId Long,
 
 }
 
@@ -55,7 +71,7 @@ relationship OneToOne {
 relationship OneToMany {
 
     CancellationRequest{cancelledOrderLines} to CancelledOrderLine
-
+	CancellationRequest{cancelledAuxilaryOrderLine} to CancelledAuxilaryOrderLine
 }
 
 

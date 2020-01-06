@@ -9,13 +9,13 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 
 /**
- * A CancelledOrderLine.
+ * A CancelledAuxilaryOrderLine.
  */
 @Entity
-@Table(name = "cancelled_order_line")
+@Table(name = "cancelled_auxilary_order_line")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "cancelledorderline")
-public class CancelledOrderLine implements Serializable {
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "cancelledauxilaryorderline")
+public class CancelledAuxilaryOrderLine implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class CancelledOrderLine implements Serializable {
     private Long productId;
 
     @ManyToOne
-    @JsonIgnoreProperties("cancelledOrderLines")
+    @JsonIgnoreProperties("cancelledAuxilaryOrderLines")
     private CancellationRequest cancellationRequest;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -59,7 +59,7 @@ public class CancelledOrderLine implements Serializable {
         return orderLineId;
     }
 
-    public CancelledOrderLine orderLineId(Long orderLineId) {
+    public CancelledAuxilaryOrderLine orderLineId(Long orderLineId) {
         this.orderLineId = orderLineId;
         return this;
     }
@@ -72,7 +72,7 @@ public class CancelledOrderLine implements Serializable {
         return pricePerUnit;
     }
 
-    public CancelledOrderLine pricePerUnit(Double pricePerUnit) {
+    public CancelledAuxilaryOrderLine pricePerUnit(Double pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
         return this;
     }
@@ -85,7 +85,7 @@ public class CancelledOrderLine implements Serializable {
         return ammount;
     }
 
-    public CancelledOrderLine ammount(Double ammount) {
+    public CancelledAuxilaryOrderLine ammount(Double ammount) {
         this.ammount = ammount;
         return this;
     }
@@ -98,7 +98,7 @@ public class CancelledOrderLine implements Serializable {
         return quantity;
     }
 
-    public CancelledOrderLine quantity(Long quantity) {
+    public CancelledAuxilaryOrderLine quantity(Long quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -111,7 +111,7 @@ public class CancelledOrderLine implements Serializable {
         return itemName;
     }
 
-    public CancelledOrderLine itemName(String itemName) {
+    public CancelledAuxilaryOrderLine itemName(String itemName) {
         this.itemName = itemName;
         return this;
     }
@@ -124,7 +124,7 @@ public class CancelledOrderLine implements Serializable {
         return productId;
     }
 
-    public CancelledOrderLine productId(Long productId) {
+    public CancelledAuxilaryOrderLine productId(Long productId) {
         this.productId = productId;
         return this;
     }
@@ -137,7 +137,7 @@ public class CancelledOrderLine implements Serializable {
         return cancellationRequest;
     }
 
-    public CancelledOrderLine cancellationRequest(CancellationRequest cancellationRequest) {
+    public CancelledAuxilaryOrderLine cancellationRequest(CancellationRequest cancellationRequest) {
         this.cancellationRequest = cancellationRequest;
         return this;
     }
@@ -152,10 +152,10 @@ public class CancelledOrderLine implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof CancelledOrderLine)) {
+        if (!(o instanceof CancelledAuxilaryOrderLine)) {
             return false;
         }
-        return id != null && id.equals(((CancelledOrderLine) o).id);
+        return id != null && id.equals(((CancelledAuxilaryOrderLine) o).id);
     }
 
     @Override
@@ -165,7 +165,7 @@ public class CancelledOrderLine implements Serializable {
 
     @Override
     public String toString() {
-        return "CancelledOrderLine{" +
+        return "CancelledAuxilaryOrderLine{" +
             "id=" + getId() +
             ", orderLineId=" + getOrderLineId() +
             ", pricePerUnit=" + getPricePerUnit() +

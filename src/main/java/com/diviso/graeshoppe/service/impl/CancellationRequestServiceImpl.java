@@ -266,6 +266,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		
 		CancellationRequest cancellationRequest=this.cancellationRequestRepository.findByOrderId(orederId).get();
 		cancellationRequest.setRefundDetails(refundDetails);
+		cancellationRequest.setStatus("accepted");
 		return cancellationRequest.getReference();
 		
 	}

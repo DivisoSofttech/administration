@@ -3,9 +3,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.diviso.graeshoppe.domain.CancelledOrderLine} entity.
+ * A DTO for the {@link com.diviso.graeshoppe.domain.CancelledAuxilaryOrderLine} entity.
  */
-public class CancelledOrderLineDTO implements Serializable {
+public class CancelledAuxilaryOrderLineDTO implements Serializable {
 
     private Long id;
 
@@ -97,11 +97,11 @@ public class CancelledOrderLineDTO implements Serializable {
             return false;
         }
 
-        CancelledOrderLineDTO cancelledOrderLineDTO = (CancelledOrderLineDTO) o;
-        if (cancelledOrderLineDTO.getId() == null || getId() == null) {
+        CancelledAuxilaryOrderLineDTO cancelledAuxilaryOrderLineDTO = (CancelledAuxilaryOrderLineDTO) o;
+        if (cancelledAuxilaryOrderLineDTO.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), cancelledOrderLineDTO.getId());
+        return Objects.equals(getId(), cancelledAuxilaryOrderLineDTO.getId());
     }
 
     @Override
@@ -111,7 +111,7 @@ public class CancelledOrderLineDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "CancelledOrderLineDTO{" +
+        return "CancelledAuxilaryOrderLineDTO{" +
             "id=" + getId() +
             ", orderLineId=" + getOrderLineId() +
             ", pricePerUnit=" + getPricePerUnit() +
