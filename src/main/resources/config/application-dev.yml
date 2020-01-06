@@ -100,7 +100,7 @@ spring:
       uri: https://ac309b81b27849d0b1af4969ff1aede3.us-central1.gcp.cloud.es.io:9243  
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: dev
   mail:
     host: localhost
     port: 25
