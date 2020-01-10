@@ -76,6 +76,8 @@ public interface CancellationRequestService {
 			@Valid String tenantId, @Valid String tenantIdLike, @Valid Boolean withoutTenantId,
 			@Valid String candidateOrAssigned, @Valid String category);
 
+	void publishMesssage(String orderId);
+
 	
 
 }

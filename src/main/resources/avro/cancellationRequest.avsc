@@ -1,6 +1,4 @@
-
-  	
-	{
+	[{
 	"namespace":"com.diviso.graeshoppe.avro",
 	"type":"record",
 	"name":"CancelledOrderLine",
@@ -20,12 +18,13 @@
 	"type":"record",
 	"fields":[
 		
-			   {"name":"status","type":["null","string"]},
-			   {"name":"orderId","type":["null","string"]},
-			   {"name":"paymentId","type":["null","string"]},
-    		   {"name":"date", "type":"long","logicalType":"date"},
-    		   {"name":"amount", "type":["null","double"],"default":0.0},
-    		   {"name":"reference","type":["null","string"]},
-    		    {"name":"cancelledOrderLine","type":{"type":"array","items":"com.diviso.graeshoppe.avro.CancelledOrderLine"}}
-			]
+	    {"name":"status","type":["null","string"]},
+		{"name":"orderId","type":["null","string"]},
+		{"name":"paymentId","type":["null","string"]},
+    	{"name":"date", "type":"long","logicalType":"date"},
+    	{"name":"amount", "type":["null","double"],"default":0.0},
+    	{"name":"reference","type":["null","string"]},
+    	{"name":"cancelledOrderLine","type":{"type":"array","items":"com.diviso.graeshoppe.avro.CancelledOrderLine"}}
+		]
 	}
+	]

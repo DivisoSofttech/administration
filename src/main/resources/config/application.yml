@@ -246,3 +246,8 @@ activiti:
     basicAuth:
        username: kermit
        password: kermit
+
+topic:
+   cancellation:
+      destination: cancellation
+

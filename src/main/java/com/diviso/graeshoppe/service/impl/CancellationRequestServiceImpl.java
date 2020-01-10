@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,22 +19,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.diviso.graeshoppe.avro.CancellationRequest.Builder;
 import com.diviso.graeshoppe.client.activiti.api.FormsApi;
 import com.diviso.graeshoppe.client.activiti.api.ProcessInstancesApi;
 import com.diviso.graeshoppe.client.activiti.api.TasksApi;
-import com.diviso.graeshoppe.client.activiti.custom.InitiateCancelation;
 import com.diviso.graeshoppe.client.activiti.model.DataResponse;
 import com.diviso.graeshoppe.client.activiti.model.ProcessInstanceCreateRequest;
 import com.diviso.graeshoppe.client.activiti.model.ProcessInstanceResponse;
-import com.diviso.graeshoppe.client.activiti.model.RestFormProperty;
 import com.diviso.graeshoppe.client.activiti.model.RestVariable;
-import com.diviso.graeshoppe.client.activiti.model.SubmitFormRequest;
 import com.diviso.graeshoppe.client.activiti.model.TaskActionRequest;
-import com.diviso.graeshoppe.client.activiti.model.TaskRequest;
 import com.diviso.graeshoppe.domain.CancellationRequest;
+import com.diviso.graeshoppe.domain.CancelledOrderLine;
 import com.diviso.graeshoppe.domain.RefundDetails;
+
 import com.diviso.graeshoppe.repository.CancellationRequestRepository;
+import com.diviso.graeshoppe.repository.CancelledOrderLineRepository;
 import com.diviso.graeshoppe.repository.search.CancellationRequestSearchRepository;
 import com.diviso.graeshoppe.service.CancellationRequestService;
 import com.diviso.graeshoppe.service.dto.CancellationRequestDTO;
@@ -51,24 +51,22 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 	
 	@Autowired
 	FormsApi formsApi;
-	
-	
-	
-	
-	
-	
+
 	@Autowired
 	ProcessInstancesApi	processInstanceApi;
     private final Logger log = LoggerFactory.getLogger(CancellationRequestServiceImpl.class);
 
     private final CancellationRequestRepository cancellationRequestRepository;
+    
+    private final CancelledOrderLineRepository cancelledOrderLineRepository;
 
     private final CancellationRequestMapper cancellationRequestMapper;
 
     private final CancellationRequestSearchRepository cancellationRequestSearchRepository;
 
-    public CancellationRequestServiceImpl(CancellationRequestRepository cancellationRequestRepository, CancellationRequestMapper cancellationRequestMapper, CancellationRequestSearchRepository cancellationRequestSearchRepository) {
+    public CancellationRequestServiceImpl(CancellationRequestRepository cancellationRequestRepository, CancellationRequestMapper cancellationRequestMapper, CancellationRequestSearchRepository cancellationRequestSearchRepository, CancelledOrderLineRepository cancelledOrderLineRepository) {
         this.cancellationRequestRepository = cancellationRequestRepository;
+        this.cancelledOrderLineRepository = cancelledOrderLineRepository;
         this.cancellationRequestMapper = cancellationRequestMapper;
         this.cancellationRequestSearchRepository = cancellationRequestSearchRepository;
     }
@@ -108,6 +106,41 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		
         return result;
     }
+    
+    
+	@Override
+	public void publishMesssage(String orderId) {
+		CancellationRequest cancellationRequest = cancellationRequestRepository.findByOrderId(orderId).get();
+		cancellationRequest.setCancelledOrderLines(cancelledOrderLineRepository.findByCancellationRequest_OrderId(cancellationRequest.getOrderId()));
+		
+		
+		Builder cancellationRequestAvro = com.diviso.graeshoppe.avro.CancellationRequest.newBuilder().setOrderId(cancellationRequest.getOrderId())
+				.setAmount(cancellationRequest.getAmount())
+				.setOrderId(cancellationRequest.getOrderId())
+				.setPaymentId(cancellationRequest.getPaymentId())
+				.setReference(cancellationRequest.getReference())
+				.setStatus(cancellationRequest.getStatus())
+				.setCancelledOrderLine
+				(cancellationRequest.getCancelledOrderLines().stream()
+						.map(this::toAvroCancelledOrderLine).collect(Collectors.toList()));
+				if (cancellationRequest.getDate() != null) {
+					cancellationRequestAvro.setDate(cancellationRequest.getDate().toEpochMilli());
+
+				}
+	}
+
+	
+	
+	private com.diviso.graeshoppe.avro.CancelledOrderLine toAvroCancelledOrderLine(CancelledOrderLine cancelledOrderLine) {
+		return com.diviso.graeshoppe.avro.CancelledOrderLine.newBuilder().setAmmount(cancelledOrderLine.getAmmount())
+								.setItemName(cancelledOrderLine.getItemName())
+								.setAmmount(cancelledOrderLine.getAmmount())
+								.setPricePerUnit(cancelledOrderLine.getPricePerUnit())
+								.setProductId(cancelledOrderLine.getProductId())
+								.setQuantity(cancelledOrderLine.getQuantity())
+				.build();
+	}
+	
 
     /**
      * Get all the cancellationRequests.
