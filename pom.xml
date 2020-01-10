@@ -10,7 +10,17 @@
     <name>Administration</name>
 
     <repositories>
-        <!-- jhipster-needle-maven-repository -->
+        		<repository>
+			<id>confluent</id>
+			<url>http://packages.confluent.io/maven/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<!-- jhipster-needle-maven-repository -->
     </repositories>
 
     <pluginRepositories>
@@ -21,6 +31,8 @@
 
     <properties>
         <!-- Build properties -->
+        <avro.version>1.8.2</avro.version>
+		<confluent.version>5.3.0</confluent.version>
         <maven.version>3.3.9</maven.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -321,15 +333,34 @@
             <version>${archunit-junit5.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>kafka</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<!-- Kafka Avro Support -->
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+			<version>${avro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-streams-avro-serde</artifactId>
+			<version>${confluent.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>kafka</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Kafka Support End -->
+
         <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>problem-spring-web</artifactId>
@@ -410,6 +441,46 @@
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
+        <!-- Kafka plgins avro -->
+			<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>add-source</goal>
+            </goals>
+            <configuration>
+                <sources>
+                    <source>${project.build.directory}/generated-sources/java/</source>
+                </sources>
+            </configuration>
+        </execution>
+    </executions>
+ </plugin>
+
+			<plugin>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+				<version>${avro.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>schema</goal>
+						</goals>
+						<configuration>
+							<stringType>String</stringType>
+							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+							<sourceDirectory>src/main/resources/avro</sourceDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Kafka Avro Plugins end Here -->
+        
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

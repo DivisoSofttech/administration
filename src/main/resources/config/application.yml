@@ -206,15 +206,18 @@ jhipster:
         - account
         - api://default
 kafka:
-  bootstrap-servers: localhost:9092
-  consumer:
-    key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    group.id: administration
-    auto.offset.reset: earliest
+  #consumer:
+    #key.deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    #value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+    #bootstrap.servers: dev.servers.divisosofttech.com:9092
+    #group.id: ordergroup
+    #specific.avro.reader: true
+    #auto.offset.reset: earliest
+    #schema.registry.url: http://dev.servers.divisosofttech.com:8081
   producer:
     key.serializer: org.apache.kafka.common.serialization.StringSerializer
-    value.serializer: org.apache.kafka.common.serialization.StringSerializer
+    value.serializer: com.diviso.graeshoppe.order.config.SerdeConfig
+    bootstrap.servers: dev.servers.divisosofttech.com:9092
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
