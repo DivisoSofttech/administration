@@ -216,7 +216,7 @@ kafka:
     #schema.registry.url: http://dev.servers.divisosofttech.com:8081
   producer:
     key.serializer: org.apache.kafka.common.serialization.StringSerializer
-    value.serializer: com.diviso.graeshoppe.order.config.SerdeConfig
+    value.serializer: com.diviso.graeshoppe.config.SerdeConfig
     bootstrap.servers: dev.servers.divisosofttech.com:9092
 # ===================================================================
 # Application specific properties
