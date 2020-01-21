@@ -73,13 +73,15 @@ public class CancellationRequestResource {
         }
         CancellationRequestDTO result = cancellationRequestService.save(cancellationRequestDTO);
 
-        if (result.getId() == null) {
-            throw new BadRequestAlertException("A new cancellationRequest cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        CancellationRequestDTO result2 = cancellationRequestService.save(result);
-        return ResponseEntity.created(new URI("/api/cancellation-requests/" + result2.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result2.getId().toString()))
-            .body(result2);
+		/*
+		 * if (result.getId() == null) { throw new
+		 * BadRequestAlertException("A new cancellationRequest cannot already have an ID"
+		 * , ENTITY_NAME, "idexists"); } CancellationRequestDTO result2 =
+		 * cancellationRequestService.save(result);
+		 */
+        return ResponseEntity.created(new URI("/api/cancellation-requests/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
         
     }
 

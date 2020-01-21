@@ -1,0 +1,1 @@
+mvn -Dmaven.repo.local=c:\repo spring-boot:run

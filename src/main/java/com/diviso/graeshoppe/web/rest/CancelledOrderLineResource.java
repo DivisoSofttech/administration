@@ -60,10 +60,14 @@ public class CancelledOrderLineResource {
         if (cancelledOrderLineDTO.getId() != null) {
             throw new BadRequestAlertException("A new cancelledOrderLine cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        CancelledOrderLineDTO result = cancelledOrderLineService.save(cancelledOrderLineDTO);
-        return ResponseEntity.created(new URI("/api/cancelled-order-lines/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        CancelledOrderLineDTO result1 = cancelledOrderLineService.save(cancelledOrderLineDTO);
+        if (result1.getId() == null) {
+            throw new BadRequestAlertException("A new cancelledOrderLine cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        CancelledOrderLineDTO result2 = cancelledOrderLineService.save(result1);
+        return ResponseEntity.created(new URI("/api/cancelled-order-lines/" + result2.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result2.getId().toString()))
+            .body(result2);
     }
 
     /**
