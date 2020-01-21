@@ -52,7 +52,15 @@ public class CancelledAuxilaryOrderLineServiceImpl implements CancelledAuxilaryO
         cancelledAuxilaryOrderLine = cancelledAuxilaryOrderLineRepository.save(cancelledAuxilaryOrderLine);
         CancelledAuxilaryOrderLineDTO result = cancelledAuxilaryOrderLineMapper.toDto(cancelledAuxilaryOrderLine);
         cancelledAuxilaryOrderLineSearchRepository.save(cancelledAuxilaryOrderLine);
-        return result;
+        return updateToEs(result);
+    }
+    
+    private CancelledAuxilaryOrderLineDTO updateToEs(CancelledAuxilaryOrderLineDTO cancelledAuxilaryOrderLineDTO) {
+    	log.debug("<<<<<<<<<<< updateToEs >>>>>>>>>{}",cancelledAuxilaryOrderLineDTO);
+    	CancelledAuxilaryOrderLine cancelledAuxilaryOrderLine = cancelledAuxilaryOrderLineMapper.toEntity(cancelledAuxilaryOrderLineDTO);
+    	cancelledAuxilaryOrderLine = cancelledAuxilaryOrderLineRepository.save(cancelledAuxilaryOrderLine);
+    	CancelledAuxilaryOrderLineDTO result = cancelledAuxilaryOrderLineMapper.toDto(cancelledAuxilaryOrderLine);
+		return result;
     }
 
     /**

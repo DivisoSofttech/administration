@@ -94,10 +94,10 @@ spring:
           logs: target/elasticsearch/log
           data: target/elasticsearch/data
     jest:
-      password: akIDuOABc0GKvHjxjRhSKEgC 
+      password: akIDuOABc0GKvHjxjRhSKEgC
       username: elastic
       readTimeout: 10000
-      uri: https://7817d4bf6d2b4100a5f86c3187b78e21.us-central1.gcp.cloud.es.io:9243  
+      uri: https://7817d4bf6d2b4100a5f86c3187b78e21.us-central1.gcp.cloud.es.io:9243 
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev
