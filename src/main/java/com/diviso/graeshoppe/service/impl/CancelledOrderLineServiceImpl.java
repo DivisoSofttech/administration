@@ -52,7 +52,15 @@ public class CancelledOrderLineServiceImpl implements CancelledOrderLineService 
         cancelledOrderLine = cancelledOrderLineRepository.save(cancelledOrderLine);
         CancelledOrderLineDTO result = cancelledOrderLineMapper.toDto(cancelledOrderLine);
         cancelledOrderLineSearchRepository.save(cancelledOrderLine);
-        return result;
+        return updateToEs(result);
+    }
+    private CancelledOrderLineDTO updateToEs(CancelledOrderLineDTO cancelledOrderLineDTO) {
+    	log.debug("<<<<<<<<<<  updateToEs >>>>>>>>>{}",cancelledOrderLineDTO);
+    	CancelledOrderLine cancelledOrderLine = cancelledOrderLineMapper.toEntity(cancelledOrderLineDTO);
+    	cancelledOrderLine = cancelledOrderLineRepository.save(cancelledOrderLine);
+    	CancelledOrderLineDTO result = cancelledOrderLineMapper.toDto(cancelledOrderLine);
+		return result;
+    	
     }
 
     /**
