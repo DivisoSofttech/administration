@@ -1,12 +1,12 @@
 package com.diviso.graeshoppe.service.impl;
 
-
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -36,6 +36,8 @@ import com.diviso.graeshoppe.repository.CancellationRequestRepository;
 import com.diviso.graeshoppe.repository.CancelledOrderLineRepository;
 import com.diviso.graeshoppe.repository.search.CancellationRequestSearchRepository;
 import com.diviso.graeshoppe.service.CancellationRequestService;
+import com.diviso.graeshoppe.service.KafkaMessagingService;
+import com.diviso.graeshoppe.service.KafkaMessagingService.PublishResult;
 import com.diviso.graeshoppe.service.dto.CancellationRequestDTO;
 import com.diviso.graeshoppe.service.mapper.CancellationRequestMapper;
 
@@ -48,224 +50,221 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 
 	@Autowired
 	TasksApi tasksApi;
-	
+
 	@Autowired
 	FormsApi formsApi;
 
 	@Autowired
-	ProcessInstancesApi	processInstanceApi;
-    private final Logger log = LoggerFactory.getLogger(CancellationRequestServiceImpl.class);
+	ProcessInstancesApi processInstanceApi;
+	private final Logger log = LoggerFactory.getLogger(CancellationRequestServiceImpl.class);
 
-    private final CancellationRequestRepository cancellationRequestRepository;
-    
-    private final CancelledOrderLineRepository cancelledOrderLineRepository;
+	private final CancellationRequestRepository cancellationRequestRepository;
 
-    private final CancellationRequestMapper cancellationRequestMapper;
+	private final CancelledOrderLineRepository cancelledOrderLineRepository;
 
-    private final CancellationRequestSearchRepository cancellationRequestSearchRepository;
+	private final CancellationRequestMapper cancellationRequestMapper;
 
-    public CancellationRequestServiceImpl(CancellationRequestRepository cancellationRequestRepository, CancellationRequestMapper cancellationRequestMapper, CancellationRequestSearchRepository cancellationRequestSearchRepository, CancelledOrderLineRepository cancelledOrderLineRepository) {
-        this.cancellationRequestRepository = cancellationRequestRepository;
-        this.cancelledOrderLineRepository = cancelledOrderLineRepository;
-        this.cancellationRequestMapper = cancellationRequestMapper;
-        this.cancellationRequestSearchRepository = cancellationRequestSearchRepository;
-    }
+	@Autowired
+	private KafkaMessagingService kafkaMessagingService;
 
-    /**
-     * Save a cancellationRequest.
-     *
-     * @param cancellationRequestDTO the entity to save.
-     * @return the persisted entity.
-     */
-    @Override
-    public CancellationRequestDTO save(CancellationRequestDTO cancellationRequestDTO) {
-        log.debug("Request to save CancellationRequest : {}", cancellationRequestDTO);
-        
-        /*initiating workflow and setting processInstance id into the reference variable */
-        String processInstanceId= initiate(); 
-        cancellationRequestDTO.setReference(processInstanceId);
-        
-       
-        CancellationRequest cancellationRequest = cancellationRequestMapper.toEntity(cancellationRequestDTO);
-        cancellationRequest = cancellationRequestRepository.save(cancellationRequest);
-        CancellationRequestDTO result = cancellationRequestMapper.toDto(cancellationRequest);
-        cancellationRequestSearchRepository.save(cancellationRequest);
-        
-        
-        /*initiating workflow and setting processInstance id into the reference variable */
+	private final CancellationRequestSearchRepository cancellationRequestSearchRepository;
 
-        ResponseEntity<DataResponse> dataResponse=tasksApi.getTasks(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, processInstanceId, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-        List<LinkedHashMap<String, String>> myTasks = (List<LinkedHashMap<String, String>>)  dataResponse.getBody().getData();
-    	
-		log.debug(" \n \n XXXXXXXXXXXXXXXXXXXXProcessInstanceIDXXXXXXXXXXXXXXXXXXX"+processInstanceId);
+	public CancellationRequestServiceImpl(CancellationRequestRepository cancellationRequestRepository,
+			CancellationRequestMapper cancellationRequestMapper,
+			CancellationRequestSearchRepository cancellationRequestSearchRepository,
+			CancelledOrderLineRepository cancelledOrderLineRepository) {
+		this.cancellationRequestRepository = cancellationRequestRepository;
+		this.cancelledOrderLineRepository = cancelledOrderLineRepository;
+		this.cancellationRequestMapper = cancellationRequestMapper;
+		this.cancellationRequestSearchRepository = cancellationRequestSearchRepository;
+	}
 
-		log.debug(" \n \n XXXXXXXXXXXXXXXXXXXXtaskidXXXXXXXXXXXXXXXXXXX"+myTasks.get(0).get("id"));
-		
-		String taskId=myTasks.get(0).get("id");     
+	/**
+	 * Save a cancellationRequest.
+	 *
+	 * @param cancellationRequestDTO the entity to save.
+	 * @return the persisted entity.
+	 */
+	@Override
+	public CancellationRequestDTO save(CancellationRequestDTO cancellationRequestDTO) {
+		log.debug("Request to save CancellationRequest : {}", cancellationRequestDTO);
+
+		/*
+		 * initiating workflow and setting processInstance id into the reference
+		 * variable
+		 */
+		String processInstanceId = initiate();
+		cancellationRequestDTO.setReference(processInstanceId);
+
+		CancellationRequest cancellationRequest = cancellationRequestMapper.toEntity(cancellationRequestDTO);
+		cancellationRequest = cancellationRequestRepository.save(cancellationRequest);
+		CancellationRequestDTO result = cancellationRequestMapper.toDto(cancellationRequest);
+		cancellationRequestSearchRepository.save(cancellationRequest);
+
+		/*
+		 * initiating workflow and setting processInstance id into the reference
+		 * variable
+		 */
+
+		ResponseEntity<DataResponse> dataResponse = tasksApi.getTasks(null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null, processInstanceId, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+				null, null, null);
+		List<LinkedHashMap<String, String>> myTasks = (List<LinkedHashMap<String, String>>) dataResponse.getBody()
+				.getData();
+
+		log.debug(" \n \n XXXXXXXXXXXXXXXXXXXXProcessInstanceIDXXXXXXXXXXXXXXXXXXX" + processInstanceId);
+
+		log.debug(" \n \n XXXXXXXXXXXXXXXXXXXXtaskidXXXXXXXXXXXXXXXXXXX" + myTasks.get(0).get("id"));
+
+		String taskId = myTasks.get(0).get("id");
 		initiateCancelation(result, taskId);
 		publishMesssage(cancellationRequest.getOrderId());
-		
-        return result;
-    }
-    
-    
+
+		return result;
+	}
+
 	@Override
 	public void publishMesssage(String orderId) {
+		log.info("Publish method called with ref " + orderId);
 		CancellationRequest cancellationRequest = cancellationRequestRepository.findByOrderId(orderId).get();
-		cancellationRequest.setCancelledOrderLines(cancelledOrderLineRepository.findByCancellationRequest_OrderId(cancellationRequest.getOrderId()));
-		
-		
-		Builder cancellationRequestAvro = com.diviso.graeshoppe.avro.CancellationRequest.newBuilder().setOrderId(cancellationRequest.getOrderId())
-				.setAmount(cancellationRequest.getAmount())
-				.setId(cancellationRequest.getId())
-				.setOrderId(cancellationRequest.getOrderId())
-				.setPaymentId(cancellationRequest.getPaymentId())
-				.setReference(cancellationRequest.getReference())
+		cancellationRequest.setCancelledOrderLines(
+				cancelledOrderLineRepository.findByCancellationRequest_OrderId(cancellationRequest.getOrderId()));
+
+		Builder cancellationRequestAvro = com.diviso.graeshoppe.avro.CancellationRequest.newBuilder()
+				.setOrderId(cancellationRequest.getOrderId()).setAmount(cancellationRequest.getAmount())
+				.setId(cancellationRequest.getId()).setOrderId(cancellationRequest.getOrderId())
+				.setPaymentId(cancellationRequest.getPaymentId()).setReference(cancellationRequest.getReference())
 				.setStatus(cancellationRequest.getStatus())
-				.setCancelledOrderLine
-				(cancellationRequest.getCancelledOrderLines().stream()
+				.setCancelledOrderLine(cancellationRequest.getCancelledOrderLines().stream()
 						.map(this::toAvroCancelledOrderLine).collect(Collectors.toList()));
-				if (cancellationRequest.getDate() != null) {
-					cancellationRequestAvro.setDate(cancellationRequest.getDate().toEpochMilli());
+		if (cancellationRequest.getDate() != null) {
+			cancellationRequestAvro.setDate(cancellationRequest.getDate().toEpochMilli());
 
-				}
+		}
+
+		try {
+			PublishResult result = kafkaMessagingService.publishCancellationRequest(cancellationRequestAvro.build());
+			log.info("Message publish result is "+result);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
-	
-	
-	private com.diviso.graeshoppe.avro.CancelledOrderLine toAvroCancelledOrderLine(CancelledOrderLine cancelledOrderLine) {
+	private com.diviso.graeshoppe.avro.CancelledOrderLine toAvroCancelledOrderLine(
+			CancelledOrderLine cancelledOrderLine) {
 		return com.diviso.graeshoppe.avro.CancelledOrderLine.newBuilder().setAmount(cancelledOrderLine.getAmmount())
-								.setItemName(cancelledOrderLine.getItemName())
-								.setAmount(cancelledOrderLine.getAmmount())
-								.setPricePerUnit(cancelledOrderLine.getPricePerUnit())
-								.setProductId(cancelledOrderLine.getProductId())
-								.setQuantity(cancelledOrderLine.getQuantity())
-				.build();
+				.setItemName(cancelledOrderLine.getItemName()).setAmount(cancelledOrderLine.getAmmount())
+				.setPricePerUnit(cancelledOrderLine.getPricePerUnit()).setProductId(cancelledOrderLine.getProductId())
+				.setQuantity(cancelledOrderLine.getQuantity()).build();
 	}
-	
 
-    /**
-     * Get all the cancellationRequests.
-     *value
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<CancellationRequestDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all CancellationRequests");
-        return cancellationRequestRepository.findAll(pageable)
-            .map(cancellationRequestMapper::toDto);
-    }
+	/**
+	 * Get all the cancellationRequests. value
+	 * 
+	 * @param pageable the pagination information.
+	 * @return the list of entities.
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Page<CancellationRequestDTO> findAll(Pageable pageable) {
+		log.debug("Request to get all CancellationRequests");
+		return cancellationRequestRepository.findAll(pageable).map(cancellationRequestMapper::toDto);
+	}
 
+	/**
+	 * Get one cancellationRequest by id.
+	 *
+	 * @param id the id of the entity.
+	 * @return the entity.
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<CancellationRequestDTO> findOne(Long id) {
+		log.debug("Request to get CancellationRequest : {}", id);
+		return cancellationRequestRepository.findById(id).map(cancellationRequestMapper::toDto);
+	}
 
-    /**
-     * Get one cancellationRequest by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<CancellationRequestDTO> findOne(Long id) {
-        log.debug("Request to get CancellationRequest : {}", id);
-        return cancellationRequestRepository.findById(id)
-            .map(cancellationRequestMapper::toDto);
-    }
+	/**
+	 * Delete the cancellationRequest by id.
+	 *
+	 * @param id the id of the entity.
+	 */
+	@Override
+	public void delete(Long id) {
+		log.debug("Request to delete CancellationRequest : {}", id);
+		cancellationRequestRepository.deleteById(id);
+		cancellationRequestSearchRepository.deleteById(id);
+	}
 
-    /**
-     * Delete the cancellationRequest by id.
-     *
-     * @param id the id of the entity.
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete CancellationRequest : {}", id);
-        cancellationRequestRepository.deleteById(id);
-        cancellationRequestSearchRepository.deleteById(id);
-    }
+	/**
+	 * Search for the cancellationRequest corresponding to the query.
+	 *
+	 * @param query    the query of the search.
+	 * @param pageable the pagination information.
+	 * @return the list of entities.
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Page<CancellationRequestDTO> search(String query, Pageable pageable) {
+		log.debug("Request to search for a page of CancellationRequests for query {}", query);
+		return cancellationRequestSearchRepository.search(queryStringQuery(query), pageable)
+				.map(cancellationRequestMapper::toDto);
+	}
 
-    /**
-     * Search for the cancellationRequest corresponding to the query.
-     *
-     * @param query the query of the search.
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<CancellationRequestDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of CancellationRequests for query {}", query);
-        return cancellationRequestSearchRepository.search(queryStringQuery(query), pageable)
-            .map(cancellationRequestMapper::toDto);
-    }
+	////////////////////////////// activiti//////////////////////////////
 
-
-	//////////////////////////////activiti//////////////////////////////
-	
-
-
-    
 	public String initiate() {
-	
-		ProcessInstanceCreateRequest processInstanceCreateRequest=new ProcessInstanceCreateRequest();
-   		List<RestVariable> variables=new ArrayList<RestVariable>();
-   		
 
-   		processInstanceCreateRequest.setProcessDefinitionId("oderCancel:3:60004");
-   		log.info("*****************************************************"+processInstanceCreateRequest.getProcessDefinitionId());
-   		RestVariable cancellationRequestRestVariable=new RestVariable();
-   		cancellationRequestRestVariable.setName("cancellationRequestRestVariable");
-   		cancellationRequestRestVariable.setType("string");
-   		cancellationRequestRestVariable.setValue("cancellationRequestRestVariable");
-   		variables.add(cancellationRequestRestVariable);   	
-   		
-   		
-   		log.info("*****************************************************"+variables.size());
-   		processInstanceCreateRequest.setVariables(variables);
-   		log.info("*****************************************************"+processInstanceCreateRequest.getVariables());
-   		
-   		ResponseEntity<ProcessInstanceResponse> processInstanceResponse = processInstanceApi
+		ProcessInstanceCreateRequest processInstanceCreateRequest = new ProcessInstanceCreateRequest();
+		List<RestVariable> variables = new ArrayList<RestVariable>();
+
+		processInstanceCreateRequest.setProcessDefinitionId("oderCancel:3:60004");
+		log.info("*****************************************************"
+				+ processInstanceCreateRequest.getProcessDefinitionId());
+		RestVariable cancellationRequestRestVariable = new RestVariable();
+		cancellationRequestRestVariable.setName("cancellationRequestRestVariable");
+		cancellationRequestRestVariable.setType("string");
+		cancellationRequestRestVariable.setValue("cancellationRequestRestVariable");
+		variables.add(cancellationRequestRestVariable);
+
+		log.info("*****************************************************" + variables.size());
+		processInstanceCreateRequest.setVariables(variables);
+		log.info("*****************************************************" + processInstanceCreateRequest.getVariables());
+
+		ResponseEntity<ProcessInstanceResponse> processInstanceResponse = processInstanceApi
 				.createProcessInstance(processInstanceCreateRequest);
 		String processInstanceId = processInstanceResponse.getBody().getId();
 		String processDefinitionId = processInstanceCreateRequest.getProcessDefinitionId();
-		log.info("++++++++++++++++processDefinitionId++++++++++++++++++"+ processDefinitionId);
+		log.info("++++++++++++++++processDefinitionId++++++++++++++++++" + processDefinitionId);
 		log.info("++++++++++++++++ProcessInstanceId is+++++++++++++ " + processInstanceId);
-		
-   		processInstanceApi.createProcessInstance(processInstanceCreateRequest);
-   		
-		
+
+		processInstanceApi.createProcessInstance(processInstanceCreateRequest);
+
 		return processInstanceId;
-		
+
 	}
-	
-	public void initiateCancelation(CancellationRequestDTO cancellationRequestDTO ,String taskId) {
-		
-		log.debug("###########################################taskid="+taskId);
-		log.debug("###########################################cancellationRequestDTO="+cancellationRequestDTO);
 
+	public void initiateCancelation(CancellationRequestDTO cancellationRequestDTO, String taskId) {
 
-		TaskActionRequest taskActionRequest=new TaskActionRequest();
-		
-	
-		
-		
-		List<RestVariable> restVariables=new ArrayList<RestVariable>();
-		
-		RestVariable variable=new RestVariable();
+		log.debug("###########################################taskid=" + taskId);
+		log.debug("###########################################cancellationRequestDTO=" + cancellationRequestDTO);
+
+		TaskActionRequest taskActionRequest = new TaskActionRequest();
+
+		List<RestVariable> restVariables = new ArrayList<RestVariable>();
+
+		RestVariable variable = new RestVariable();
 		variable.setName("cancellation");
 		variable.setValue(cancellationRequestDTO);
 		restVariables.add(variable);
 		taskActionRequest.setVariables(restVariables);
 		taskActionRequest.setAction("complete");
-		
 
-		
-		 tasksApi.executeTaskAction(taskId, taskActionRequest);
-		
-		
-		
-		
+		tasksApi.executeTaskAction(taskId, taskActionRequest);
+
 	}
 
 	@Override
@@ -282,31 +281,30 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 			@Valid Boolean active, @Valid Boolean includeTaskLocalVariables, @Valid Boolean includeProcessVariables,
 			@Valid String tenantId, @Valid String tenantIdLike, @Valid Boolean withoutTenantId,
 			@Valid String candidateOrAssigned, @Valid String category) {
-		
-		log.debug("########################################### processs instance id="+processInstanceId);
 
-		
-		return tasksApi.getTasks(name, nameLike, description, priority, minimumPriority, maximumPriority, assignee, assigneeLike, owner, ownerLike, unassigned, delegationState, candidateUser, candidateGroup, candidateGroups, involvedUser, taskDefinitionKey, taskDefinitionKeyLike, processInstanceId, processInstanceBusinessKey, processInstanceBusinessKeyLike, processDefinitionId, processDefinitionKey, processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, executionId, createdOn, createdBefore, createdAfter, dueOn, dueBefore, dueAfter, withoutDueDate, excludeSubTasks, active, includeTaskLocalVariables, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId, candidateOrAssigned, category);
+		log.debug("########################################### processs instance id=" + processInstanceId);
+
+		return tasksApi.getTasks(name, nameLike, description, priority, minimumPriority, maximumPriority, assignee,
+				assigneeLike, owner, ownerLike, unassigned, delegationState, candidateUser, candidateGroup,
+				candidateGroups, involvedUser, taskDefinitionKey, taskDefinitionKeyLike, processInstanceId,
+				processInstanceBusinessKey, processInstanceBusinessKeyLike, processDefinitionId, processDefinitionKey,
+				processDefinitionKeyLike, processDefinitionName, processDefinitionNameLike, executionId, createdOn,
+				createdBefore, createdAfter, dueOn, dueBefore, dueAfter, withoutDueDate, excludeSubTasks, active,
+				includeTaskLocalVariables, includeProcessVariables, tenantId, tenantIdLike, withoutTenantId,
+				candidateOrAssigned, category);
 	}
 
-	
+	/* method to update cancellation request with r id */
 
-	
+	public String updateCancellationRequest(String orederId, RefundDetails refundDetails) {
 
-	
-/*method to update cancellation request with r id */
-	
-	public String updateCancellationRequest(String orederId,RefundDetails refundDetails) {
-		
-		CancellationRequest cancellationRequest=this.cancellationRequestRepository.findByOrderId(orederId).get();
+		CancellationRequest cancellationRequest = this.cancellationRequestRepository.findByOrderId(orederId).get();
 		cancellationRequest.setRefundDetails(refundDetails);
 		cancellationRequest.setStatus("accepted");
 		cancellationRequestRepository.save(cancellationRequest);
-		 cancellationRequestSearchRepository.save(cancellationRequest);
+		cancellationRequestSearchRepository.save(cancellationRequest);
 		return cancellationRequest.getReference();
-		
+
 	}
-	
-	
-	
+
 }

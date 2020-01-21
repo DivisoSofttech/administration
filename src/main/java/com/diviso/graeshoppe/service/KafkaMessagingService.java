@@ -52,6 +52,12 @@ public class KafkaMessagingService {
 		public final String topic;
 		public final int partition;
 		public final long offset;
+		@Override
+		public String toString() {
+			return String.format("PublishResult [topic=%s,\n partition=%s,\n offset=%s,\n timestamp=%s]", topic,
+					partition, offset, timestamp);
+		}
+
 		public final Instant timestamp;
 
 		private PublishResult(String topic, int partition, long offset, Instant timestamp) {
