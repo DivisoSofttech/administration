@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 7371185544647427387L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CancelledOrderLine\",\"namespace\":\"com.diviso.graeshoppe.avro\",\"fields\":[{\"name\":\"productId\",\"type\":\"long\"},{\"name\":\"itemName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"quantity\",\"type\":\"long\"},{\"name\":\"pricePerUnit\",\"type\":\"double\"},{\"name\":\"ammount\",\"type\":\"double\"}]}");
+  private static final long serialVersionUID = -4940178405801930215L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CancelledOrderLine\",\"namespace\":\"com.diviso.graeshoppe.avro\",\"fields\":[{\"name\":\"productId\",\"type\":\"long\"},{\"name\":\"itemName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"quantity\",\"type\":\"long\"},{\"name\":\"pricePerUnit\",\"type\":\"double\"},{\"name\":\"amount\",\"type\":\"double\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -55,7 +55,7 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
   @Deprecated public java.lang.String itemName;
   @Deprecated public long quantity;
   @Deprecated public double pricePerUnit;
-  @Deprecated public double ammount;
+  @Deprecated public double amount;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -70,14 +70,14 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
    * @param itemName The new value for itemName
    * @param quantity The new value for quantity
    * @param pricePerUnit The new value for pricePerUnit
-   * @param ammount The new value for ammount
+   * @param amount The new value for amount
    */
-  public CancelledOrderLine(java.lang.Long productId, java.lang.String itemName, java.lang.Long quantity, java.lang.Double pricePerUnit, java.lang.Double ammount) {
+  public CancelledOrderLine(java.lang.Long productId, java.lang.String itemName, java.lang.Long quantity, java.lang.Double pricePerUnit, java.lang.Double amount) {
     this.productId = productId;
     this.itemName = itemName;
     this.quantity = quantity;
     this.pricePerUnit = pricePerUnit;
-    this.ammount = ammount;
+    this.amount = amount;
   }
 
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
@@ -88,7 +88,7 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
     case 1: return itemName;
     case 2: return quantity;
     case 3: return pricePerUnit;
-    case 4: return ammount;
+    case 4: return amount;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -101,7 +101,7 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
     case 1: itemName = (java.lang.String)value$; break;
     case 2: quantity = (java.lang.Long)value$; break;
     case 3: pricePerUnit = (java.lang.Double)value$; break;
-    case 4: ammount = (java.lang.Double)value$; break;
+    case 4: amount = (java.lang.Double)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -171,19 +171,19 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
   }
 
   /**
-   * Gets the value of the 'ammount' field.
-   * @return The value of the 'ammount' field.
+   * Gets the value of the 'amount' field.
+   * @return The value of the 'amount' field.
    */
-  public java.lang.Double getAmmount() {
-    return ammount;
+  public java.lang.Double getAmount() {
+    return amount;
   }
 
   /**
-   * Sets the value of the 'ammount' field.
+   * Sets the value of the 'amount' field.
    * @param value the value to set.
    */
-  public void setAmmount(java.lang.Double value) {
-    this.ammount = value;
+  public void setAmount(java.lang.Double value) {
+    this.amount = value;
   }
 
   /**
@@ -222,7 +222,7 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
     private java.lang.String itemName;
     private long quantity;
     private double pricePerUnit;
-    private double ammount;
+    private double amount;
 
     /** Creates a new Builder */
     private Builder() {
@@ -251,8 +251,8 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
         this.pricePerUnit = data().deepCopy(fields()[3].schema(), other.pricePerUnit);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.ammount)) {
-        this.ammount = data().deepCopy(fields()[4].schema(), other.ammount);
+      if (isValidValue(fields()[4], other.amount)) {
+        this.amount = data().deepCopy(fields()[4].schema(), other.amount);
         fieldSetFlags()[4] = true;
       }
     }
@@ -279,8 +279,8 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
         this.pricePerUnit = data().deepCopy(fields()[3].schema(), other.pricePerUnit);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.ammount)) {
-        this.ammount = data().deepCopy(fields()[4].schema(), other.ammount);
+      if (isValidValue(fields()[4], other.amount)) {
+        this.amount = data().deepCopy(fields()[4].schema(), other.amount);
         fieldSetFlags()[4] = true;
       }
     }
@@ -439,39 +439,39 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
     }
 
     /**
-      * Gets the value of the 'ammount' field.
+      * Gets the value of the 'amount' field.
       * @return The value.
       */
-    public java.lang.Double getAmmount() {
-      return ammount;
+    public java.lang.Double getAmount() {
+      return amount;
     }
 
     /**
-      * Sets the value of the 'ammount' field.
-      * @param value The value of 'ammount'.
+      * Sets the value of the 'amount' field.
+      * @param value The value of 'amount'.
       * @return This builder.
       */
-    public com.diviso.graeshoppe.avro.CancelledOrderLine.Builder setAmmount(double value) {
+    public com.diviso.graeshoppe.avro.CancelledOrderLine.Builder setAmount(double value) {
       validate(fields()[4], value);
-      this.ammount = value;
+      this.amount = value;
       fieldSetFlags()[4] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'ammount' field has been set.
-      * @return True if the 'ammount' field has been set, false otherwise.
+      * Checks whether the 'amount' field has been set.
+      * @return True if the 'amount' field has been set, false otherwise.
       */
-    public boolean hasAmmount() {
+    public boolean hasAmount() {
       return fieldSetFlags()[4];
     }
 
 
     /**
-      * Clears the value of the 'ammount' field.
+      * Clears the value of the 'amount' field.
       * @return This builder.
       */
-    public com.diviso.graeshoppe.avro.CancelledOrderLine.Builder clearAmmount() {
+    public com.diviso.graeshoppe.avro.CancelledOrderLine.Builder clearAmount() {
       fieldSetFlags()[4] = false;
       return this;
     }
@@ -485,7 +485,7 @@ public class CancelledOrderLine extends org.apache.avro.specific.SpecificRecordB
         record.itemName = fieldSetFlags()[1] ? this.itemName : (java.lang.String) defaultValue(fields()[1]);
         record.quantity = fieldSetFlags()[2] ? this.quantity : (java.lang.Long) defaultValue(fields()[2]);
         record.pricePerUnit = fieldSetFlags()[3] ? this.pricePerUnit : (java.lang.Double) defaultValue(fields()[3]);
-        record.ammount = fieldSetFlags()[4] ? this.ammount : (java.lang.Double) defaultValue(fields()[4]);
+        record.amount = fieldSetFlags()[4] ? this.amount : (java.lang.Double) defaultValue(fields()[4]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

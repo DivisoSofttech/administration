@@ -103,6 +103,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		
 		String taskId=myTasks.get(0).get("id");     
 		initiateCancelation(result, taskId);
+		publishMesssage(cancellationRequest.getOrderId());
 		
         return result;
     }
@@ -116,6 +117,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		
 		Builder cancellationRequestAvro = com.diviso.graeshoppe.avro.CancellationRequest.newBuilder().setOrderId(cancellationRequest.getOrderId())
 				.setAmount(cancellationRequest.getAmount())
+				.setId(cancellationRequest.getId())
 				.setOrderId(cancellationRequest.getOrderId())
 				.setPaymentId(cancellationRequest.getPaymentId())
 				.setReference(cancellationRequest.getReference())
@@ -132,9 +134,9 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 	
 	
 	private com.diviso.graeshoppe.avro.CancelledOrderLine toAvroCancelledOrderLine(CancelledOrderLine cancelledOrderLine) {
-		return com.diviso.graeshoppe.avro.CancelledOrderLine.newBuilder().setAmmount(cancelledOrderLine.getAmmount())
+		return com.diviso.graeshoppe.avro.CancelledOrderLine.newBuilder().setAmount(cancelledOrderLine.getAmmount())
 								.setItemName(cancelledOrderLine.getItemName())
-								.setAmmount(cancelledOrderLine.getAmmount())
+								.setAmount(cancelledOrderLine.getAmmount())
 								.setPricePerUnit(cancelledOrderLine.getPricePerUnit())
 								.setProductId(cancelledOrderLine.getProductId())
 								.setQuantity(cancelledOrderLine.getQuantity())
@@ -144,7 +146,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 
     /**
      * Get all the cancellationRequests.
-     *
+     *value
      * @param pageable the pagination information.
      * @return the list of entities.
      */
@@ -203,7 +205,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 	
 
 
-	
+    
 	public String initiate() {
 	
 		ProcessInstanceCreateRequest processInstanceCreateRequest=new ProcessInstanceCreateRequest();
@@ -280,7 +282,6 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 			@Valid Boolean active, @Valid Boolean includeTaskLocalVariables, @Valid Boolean includeProcessVariables,
 			@Valid String tenantId, @Valid String tenantIdLike, @Valid Boolean withoutTenantId,
 			@Valid String candidateOrAssigned, @Valid String category) {
-		// TODO Auto-generated method stub
 		
 		log.debug("########################################### processs instance id="+processInstanceId);
 

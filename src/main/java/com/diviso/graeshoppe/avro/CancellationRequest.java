@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class CancellationRequest extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 2387376670036710381L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CancellationRequest\",\"namespace\":\"com.diviso.graeshoppe.avro\",\"fields\":[{\"name\":\"status\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"orderId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"paymentId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"date\",\"type\":\"long\",\"logicalType\":\"date\"},{\"name\":\"amount\",\"type\":[\"null\",\"double\"],\"default\":0.0},{\"name\":\"reference\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"cancelledOrderLine\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"CancelledOrderLine\",\"fields\":[{\"name\":\"productId\",\"type\":\"long\"},{\"name\":\"itemName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"quantity\",\"type\":\"long\"},{\"name\":\"pricePerUnit\",\"type\":\"double\"},{\"name\":\"ammount\",\"type\":\"double\"}]}}}]}");
+  private static final long serialVersionUID = 8112733879926909896L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CancellationRequest\",\"namespace\":\"com.diviso.graeshoppe.avro\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"status\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"orderId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"paymentId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"date\",\"type\":\"long\",\"logicalType\":\"date\"},{\"name\":\"amount\",\"type\":[\"null\",\"double\"],\"default\":0.0},{\"name\":\"reference\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"cancelledOrderLine\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"CancelledOrderLine\",\"fields\":[{\"name\":\"productId\",\"type\":\"long\"},{\"name\":\"itemName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"quantity\",\"type\":\"long\"},{\"name\":\"pricePerUnit\",\"type\":\"double\"},{\"name\":\"amount\",\"type\":\"double\"}]}}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -51,6 +51,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
     return DECODER.decode(b);
   }
 
+  @Deprecated public long id;
   @Deprecated public java.lang.String status;
   @Deprecated public java.lang.String orderId;
   @Deprecated public java.lang.String paymentId;
@@ -68,6 +69,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
 
   /**
    * All-args constructor.
+   * @param id The new value for id
    * @param status The new value for status
    * @param orderId The new value for orderId
    * @param paymentId The new value for paymentId
@@ -76,7 +78,8 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
    * @param reference The new value for reference
    * @param cancelledOrderLine The new value for cancelledOrderLine
    */
-  public CancellationRequest(java.lang.String status, java.lang.String orderId, java.lang.String paymentId, java.lang.Long date, java.lang.Double amount, java.lang.String reference, java.util.List<com.diviso.graeshoppe.avro.CancelledOrderLine> cancelledOrderLine) {
+  public CancellationRequest(java.lang.Long id, java.lang.String status, java.lang.String orderId, java.lang.String paymentId, java.lang.Long date, java.lang.Double amount, java.lang.String reference, java.util.List<com.diviso.graeshoppe.avro.CancelledOrderLine> cancelledOrderLine) {
+    this.id = id;
     this.status = status;
     this.orderId = orderId;
     this.paymentId = paymentId;
@@ -90,13 +93,14 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return status;
-    case 1: return orderId;
-    case 2: return paymentId;
-    case 3: return date;
-    case 4: return amount;
-    case 5: return reference;
-    case 6: return cancelledOrderLine;
+    case 0: return id;
+    case 1: return status;
+    case 2: return orderId;
+    case 3: return paymentId;
+    case 4: return date;
+    case 5: return amount;
+    case 6: return reference;
+    case 7: return cancelledOrderLine;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -105,15 +109,32 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: status = (java.lang.String)value$; break;
-    case 1: orderId = (java.lang.String)value$; break;
-    case 2: paymentId = (java.lang.String)value$; break;
-    case 3: date = (java.lang.Long)value$; break;
-    case 4: amount = (java.lang.Double)value$; break;
-    case 5: reference = (java.lang.String)value$; break;
-    case 6: cancelledOrderLine = (java.util.List<com.diviso.graeshoppe.avro.CancelledOrderLine>)value$; break;
+    case 0: id = (java.lang.Long)value$; break;
+    case 1: status = (java.lang.String)value$; break;
+    case 2: orderId = (java.lang.String)value$; break;
+    case 3: paymentId = (java.lang.String)value$; break;
+    case 4: date = (java.lang.Long)value$; break;
+    case 5: amount = (java.lang.Double)value$; break;
+    case 6: reference = (java.lang.String)value$; break;
+    case 7: cancelledOrderLine = (java.util.List<com.diviso.graeshoppe.avro.CancelledOrderLine>)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
+  }
+
+  /**
+   * Gets the value of the 'id' field.
+   * @return The value of the 'id' field.
+   */
+  public java.lang.Long getId() {
+    return id;
+  }
+
+  /**
+   * Sets the value of the 'id' field.
+   * @param value the value to set.
+   */
+  public void setId(java.lang.Long value) {
+    this.id = value;
   }
 
   /**
@@ -260,6 +281,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<CancellationRequest>
     implements org.apache.avro.data.RecordBuilder<CancellationRequest> {
 
+    private long id;
     private java.lang.String status;
     private java.lang.String orderId;
     private java.lang.String paymentId;
@@ -279,33 +301,37 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
      */
     private Builder(com.diviso.graeshoppe.avro.CancellationRequest.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.status)) {
-        this.status = data().deepCopy(fields()[0].schema(), other.status);
+      if (isValidValue(fields()[0], other.id)) {
+        this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.orderId)) {
-        this.orderId = data().deepCopy(fields()[1].schema(), other.orderId);
+      if (isValidValue(fields()[1], other.status)) {
+        this.status = data().deepCopy(fields()[1].schema(), other.status);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.paymentId)) {
-        this.paymentId = data().deepCopy(fields()[2].schema(), other.paymentId);
+      if (isValidValue(fields()[2], other.orderId)) {
+        this.orderId = data().deepCopy(fields()[2].schema(), other.orderId);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.date)) {
-        this.date = data().deepCopy(fields()[3].schema(), other.date);
+      if (isValidValue(fields()[3], other.paymentId)) {
+        this.paymentId = data().deepCopy(fields()[3].schema(), other.paymentId);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.amount)) {
-        this.amount = data().deepCopy(fields()[4].schema(), other.amount);
+      if (isValidValue(fields()[4], other.date)) {
+        this.date = data().deepCopy(fields()[4].schema(), other.date);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.reference)) {
-        this.reference = data().deepCopy(fields()[5].schema(), other.reference);
+      if (isValidValue(fields()[5], other.amount)) {
+        this.amount = data().deepCopy(fields()[5].schema(), other.amount);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.cancelledOrderLine)) {
-        this.cancelledOrderLine = data().deepCopy(fields()[6].schema(), other.cancelledOrderLine);
+      if (isValidValue(fields()[6], other.reference)) {
+        this.reference = data().deepCopy(fields()[6].schema(), other.reference);
         fieldSetFlags()[6] = true;
+      }
+      if (isValidValue(fields()[7], other.cancelledOrderLine)) {
+        this.cancelledOrderLine = data().deepCopy(fields()[7].schema(), other.cancelledOrderLine);
+        fieldSetFlags()[7] = true;
       }
     }
 
@@ -315,34 +341,76 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
      */
     private Builder(com.diviso.graeshoppe.avro.CancellationRequest other) {
             super(SCHEMA$);
-      if (isValidValue(fields()[0], other.status)) {
-        this.status = data().deepCopy(fields()[0].schema(), other.status);
+      if (isValidValue(fields()[0], other.id)) {
+        this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.orderId)) {
-        this.orderId = data().deepCopy(fields()[1].schema(), other.orderId);
+      if (isValidValue(fields()[1], other.status)) {
+        this.status = data().deepCopy(fields()[1].schema(), other.status);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.paymentId)) {
-        this.paymentId = data().deepCopy(fields()[2].schema(), other.paymentId);
+      if (isValidValue(fields()[2], other.orderId)) {
+        this.orderId = data().deepCopy(fields()[2].schema(), other.orderId);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.date)) {
-        this.date = data().deepCopy(fields()[3].schema(), other.date);
+      if (isValidValue(fields()[3], other.paymentId)) {
+        this.paymentId = data().deepCopy(fields()[3].schema(), other.paymentId);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.amount)) {
-        this.amount = data().deepCopy(fields()[4].schema(), other.amount);
+      if (isValidValue(fields()[4], other.date)) {
+        this.date = data().deepCopy(fields()[4].schema(), other.date);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.reference)) {
-        this.reference = data().deepCopy(fields()[5].schema(), other.reference);
+      if (isValidValue(fields()[5], other.amount)) {
+        this.amount = data().deepCopy(fields()[5].schema(), other.amount);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.cancelledOrderLine)) {
-        this.cancelledOrderLine = data().deepCopy(fields()[6].schema(), other.cancelledOrderLine);
+      if (isValidValue(fields()[6], other.reference)) {
+        this.reference = data().deepCopy(fields()[6].schema(), other.reference);
         fieldSetFlags()[6] = true;
       }
+      if (isValidValue(fields()[7], other.cancelledOrderLine)) {
+        this.cancelledOrderLine = data().deepCopy(fields()[7].schema(), other.cancelledOrderLine);
+        fieldSetFlags()[7] = true;
+      }
+    }
+
+    /**
+      * Gets the value of the 'id' field.
+      * @return The value.
+      */
+    public java.lang.Long getId() {
+      return id;
+    }
+
+    /**
+      * Sets the value of the 'id' field.
+      * @param value The value of 'id'.
+      * @return This builder.
+      */
+    public com.diviso.graeshoppe.avro.CancellationRequest.Builder setId(long value) {
+      validate(fields()[0], value);
+      this.id = value;
+      fieldSetFlags()[0] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'id' field has been set.
+      * @return True if the 'id' field has been set, false otherwise.
+      */
+    public boolean hasId() {
+      return fieldSetFlags()[0];
+    }
+
+
+    /**
+      * Clears the value of the 'id' field.
+      * @return This builder.
+      */
+    public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearId() {
+      fieldSetFlags()[0] = false;
+      return this;
     }
 
     /**
@@ -359,9 +427,9 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder setStatus(java.lang.String value) {
-      validate(fields()[0], value);
+      validate(fields()[1], value);
       this.status = value;
-      fieldSetFlags()[0] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -370,7 +438,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return True if the 'status' field has been set, false otherwise.
       */
     public boolean hasStatus() {
-      return fieldSetFlags()[0];
+      return fieldSetFlags()[1];
     }
 
 
@@ -380,7 +448,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearStatus() {
       status = null;
-      fieldSetFlags()[0] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -398,9 +466,9 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder setOrderId(java.lang.String value) {
-      validate(fields()[1], value);
+      validate(fields()[2], value);
       this.orderId = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -409,7 +477,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return True if the 'orderId' field has been set, false otherwise.
       */
     public boolean hasOrderId() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[2];
     }
 
 
@@ -419,7 +487,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearOrderId() {
       orderId = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -437,9 +505,9 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder setPaymentId(java.lang.String value) {
-      validate(fields()[2], value);
+      validate(fields()[3], value);
       this.paymentId = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -448,7 +516,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return True if the 'paymentId' field has been set, false otherwise.
       */
     public boolean hasPaymentId() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[3];
     }
 
 
@@ -458,7 +526,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearPaymentId() {
       paymentId = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -476,9 +544,9 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder setDate(long value) {
-      validate(fields()[3], value);
+      validate(fields()[4], value);
       this.date = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -487,7 +555,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return True if the 'date' field has been set, false otherwise.
       */
     public boolean hasDate() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[4];
     }
 
 
@@ -496,7 +564,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearDate() {
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -514,9 +582,9 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder setAmount(java.lang.Double value) {
-      validate(fields()[4], value);
+      validate(fields()[5], value);
       this.amount = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[5] = true;
       return this;
     }
 
@@ -525,7 +593,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return True if the 'amount' field has been set, false otherwise.
       */
     public boolean hasAmount() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[5];
     }
 
 
@@ -535,7 +603,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearAmount() {
       amount = null;
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[5] = false;
       return this;
     }
 
@@ -553,9 +621,9 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder setReference(java.lang.String value) {
-      validate(fields()[5], value);
+      validate(fields()[6], value);
       this.reference = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[6] = true;
       return this;
     }
 
@@ -564,7 +632,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return True if the 'reference' field has been set, false otherwise.
       */
     public boolean hasReference() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[6];
     }
 
 
@@ -574,7 +642,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearReference() {
       reference = null;
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -592,9 +660,9 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return This builder.
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder setCancelledOrderLine(java.util.List<com.diviso.graeshoppe.avro.CancelledOrderLine> value) {
-      validate(fields()[6], value);
+      validate(fields()[7], value);
       this.cancelledOrderLine = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -603,7 +671,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       * @return True if the 'cancelledOrderLine' field has been set, false otherwise.
       */
     public boolean hasCancelledOrderLine() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[7];
     }
 
 
@@ -613,7 +681,7 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
       */
     public com.diviso.graeshoppe.avro.CancellationRequest.Builder clearCancelledOrderLine() {
       cancelledOrderLine = null;
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
@@ -622,13 +690,14 @@ public class CancellationRequest extends org.apache.avro.specific.SpecificRecord
     public CancellationRequest build() {
       try {
         CancellationRequest record = new CancellationRequest();
-        record.status = fieldSetFlags()[0] ? this.status : (java.lang.String) defaultValue(fields()[0]);
-        record.orderId = fieldSetFlags()[1] ? this.orderId : (java.lang.String) defaultValue(fields()[1]);
-        record.paymentId = fieldSetFlags()[2] ? this.paymentId : (java.lang.String) defaultValue(fields()[2]);
-        record.date = fieldSetFlags()[3] ? this.date : (java.lang.Long) defaultValue(fields()[3]);
-        record.amount = fieldSetFlags()[4] ? this.amount : (java.lang.Double) defaultValue(fields()[4]);
-        record.reference = fieldSetFlags()[5] ? this.reference : (java.lang.String) defaultValue(fields()[5]);
-        record.cancelledOrderLine = fieldSetFlags()[6] ? this.cancelledOrderLine : (java.util.List<com.diviso.graeshoppe.avro.CancelledOrderLine>) defaultValue(fields()[6]);
+        record.id = fieldSetFlags()[0] ? this.id : (java.lang.Long) defaultValue(fields()[0]);
+        record.status = fieldSetFlags()[1] ? this.status : (java.lang.String) defaultValue(fields()[1]);
+        record.orderId = fieldSetFlags()[2] ? this.orderId : (java.lang.String) defaultValue(fields()[2]);
+        record.paymentId = fieldSetFlags()[3] ? this.paymentId : (java.lang.String) defaultValue(fields()[3]);
+        record.date = fieldSetFlags()[4] ? this.date : (java.lang.Long) defaultValue(fields()[4]);
+        record.amount = fieldSetFlags()[5] ? this.amount : (java.lang.Double) defaultValue(fields()[5]);
+        record.reference = fieldSetFlags()[6] ? this.reference : (java.lang.String) defaultValue(fields()[6]);
+        record.cancelledOrderLine = fieldSetFlags()[7] ? this.cancelledOrderLine : (java.util.List<com.diviso.graeshoppe.avro.CancelledOrderLine>) defaultValue(fields()[7]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
