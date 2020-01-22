@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.service.impl;
 
 import com.diviso.graeshoppe.service.CancellationRequestService;
+import com.diviso.graeshoppe.service.KafkaMessagingService;
 import com.diviso.graeshoppe.service.RefundDetailsService;
 import com.diviso.graeshoppe.client.activiti.api.TasksApi;
 import com.diviso.graeshoppe.client.activiti.model.DataResponse;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -46,8 +48,7 @@ public class RefundDetailsServiceImpl implements RefundDetailsService {
 	private final RefundDetailsSearchRepository refundDetailsSearchRepository;
 
 	@Autowired
-	private CancellationRequestService cancellationRequestService;
-	
+	private KafkaMessagingService kafkaMessagingService;
 	@Autowired
 	CancellationRequestServiceImpl cancellationRequestServiceImpl;
 
@@ -144,8 +145,21 @@ public class RefundDetailsServiceImpl implements RefundDetailsService {
 				refundDetails);
 		log.debug("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT processinstance id =" + processInstanceId);
 		initiateRefund(processInstanceId);
-		cancellationRequestService.publishMesssage(orderId);
+		publishRefundDetails(refundDetailsDTO, orderId);
 		return result;
+	}
+
+	public void publishRefundDetails(RefundDetailsDTO refundDetailsDTO, String orderId) {
+		com.diviso.graeshoppe.avro.RefundDetails refundDetails = com.diviso.graeshoppe.avro.RefundDetails.newBuilder()
+				.setOrderId(orderId).setRefundId(refundDetailsDTO.getRefundId()).setStatus(refundDetailsDTO.getStatus())
+				.build();
+		try {
+			kafkaMessagingService.publishrefundDetails(refundDetails);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void initiateRefund(String processInstanceId) {
