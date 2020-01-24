@@ -20,6 +20,8 @@
     <include file="config/liquibase/changelog/20191207062401_added_entity_Notification.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191227080029_added_entity_RefundDetails.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200106044627_added_entity_CancelledAuxilaryOrderLine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200124052023_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200124052024_added_entity_TicketIdGenerator.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20191203094340_added_entity_constraints_CancellationRequest.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191206100118_added_entity_constraints_CancelledOrderLine.xml" relativeToChangelogFile="false"/>

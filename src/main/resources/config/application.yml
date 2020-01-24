@@ -188,7 +188,9 @@ jhipster:
   #     allow-credentials: true
   #     max-age: 1800
   mail:
-    from: Administration@localhost
+    
+    from: abilash.s@lxisoft.com
+    
   swagger:
     default-include-pattern: /api/.*
     title: Administration API

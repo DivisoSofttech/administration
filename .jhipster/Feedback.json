@@ -1,0 +1,37 @@
+{
+    "name": "Feedback",
+    "fields": [
+        {
+            "fieldName": "ticketId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "query",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "subject",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerEmail",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200124052023",
+    "entityTableName": "feedback",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}

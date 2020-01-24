@@ -1,10 +1,10 @@
 entity CancellationRequest {
-	status String,
-	orderId String,
-	paymentId String,
+    status String,
+    orderId String,
+    paymentId String,
     phoneCode Integer,
-	customerEmail String,
-	customerPhone Long,
+    customerEmail String,
+    customerPhone Long,
     storeEmail String,
     storePhone Long,
     date Instant,
@@ -15,7 +15,7 @@ entity CancellationRequest {
 }
 
 entity Banner {
-	storeId String,
+    storeId String,
     imageLink String,
     startDate Instant,
     expiryDate Instant,
@@ -59,6 +59,23 @@ entity RefundDetails{
 
 refundId String,
 status String,
+
+}
+
+
+entity Feedback{
+
+ticketId String,
+query String,
+subject String,
+customerEmail String,
+date Instant
+
+}
+
+entity TicketIdGenerator
+{
+
 
 }
 

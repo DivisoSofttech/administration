@@ -1,0 +1,16 @@
+{
+    "name": "TicketIdGenerator",
+    "fields": [],
+    "relationships": [],
+    "changelogDate": "20200124052024",
+    "entityTableName": "ticket_id_generator",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}
