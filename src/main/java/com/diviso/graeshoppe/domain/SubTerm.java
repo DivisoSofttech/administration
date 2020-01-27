@@ -24,7 +24,7 @@ public class SubTerm implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @Column(name = "term_description")
+    @Column(name = "term_description", length=500)
     private String termDescription;
 
     @ManyToOne

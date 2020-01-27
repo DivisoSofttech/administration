@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -23,7 +24,7 @@ public class About implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @Column(name = "description")
+    @Column(name = "description" ,length=1500)
     private String description;
 
     @Column(name = "support_mail")
