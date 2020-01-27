@@ -52,8 +52,18 @@ public class SubTermServiceImpl implements SubTermService {
         subTerm = subTermRepository.save(subTerm);
         SubTermDTO result = subTermMapper.toDto(subTerm);
         subTermSearchRepository.save(subTerm);
+        return  updateToEs(result);
+    }
+    
+    private SubTermDTO updateToEs(SubTermDTO subTermDTO) {
+        log.debug("Request to save SubTerm : {}", subTermDTO);
+        SubTerm subTerm = subTermMapper.toEntity(subTermDTO);
+        subTerm = subTermRepository.save(subTerm);
+        SubTermDTO result = subTermMapper.toDto(subTerm);
+        subTermSearchRepository.save(subTerm);
         return result;
     }
+    
 
     /**
      * Get all the subTerms.
