@@ -22,9 +22,13 @@
     <include file="config/liquibase/changelog/20200106044627_added_entity_CancelledAuxilaryOrderLine.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200124052023_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200124052024_added_entity_TicketIdGenerator.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200127045931_added_entity_About.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200127045932_added_entity_Term.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200127045933_added_entity_SubTerm.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20191203094340_added_entity_constraints_CancellationRequest.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191206100118_added_entity_constraints_CancelledOrderLine.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200106044627_added_entity_constraints_CancelledAuxilaryOrderLine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200127045933_added_entity_constraints_SubTerm.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

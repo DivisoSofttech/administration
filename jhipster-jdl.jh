@@ -79,6 +79,27 @@ entity TicketIdGenerator
 
 }
 
+entity About{
+description String,
+supportMail String,
+supportPhone Long,
+addOn1 String,
+addOn2 String,
+addOn3 String
+
+}
+
+entity Term{
+title String
+}
+
+entity SubTerm{
+termDescription String
+
+}
+
+
+
 relationship OneToOne {
 
     CancellationRequest{refundDetails} to RefundDetails
@@ -87,8 +108,10 @@ relationship OneToOne {
 
 relationship OneToMany {
 
-    	CancellationRequest{cancelledOrderLines} to CancelledOrderLine
-	CancellationRequest{cancelledAuxilaryOrderLine} to CancelledAuxilaryOrderLine
+    	CancellationRequest{cancelledOrderLines} to CancelledOrderLine,
+	CancellationRequest{cancelledAuxilaryOrderLine} to CancelledAuxilaryOrderLine,
+	Term{subTerm} to SubTerm
+
 }
 
 
