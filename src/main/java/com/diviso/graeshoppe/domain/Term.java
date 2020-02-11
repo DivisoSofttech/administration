@@ -28,7 +28,7 @@ public class Term implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "term", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "term")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SubTerm> subTerms = new HashSet<>();
 

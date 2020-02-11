@@ -1,0 +1,28 @@
+{
+    "name": "Term",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "subTerm",
+            "otherEntityRelationshipName": "term",
+            "relationshipName": "subTerm"
+        }
+    ],
+    "changelogDate": "20200211050208",
+    "entityTableName": "term",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}

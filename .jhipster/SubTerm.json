@@ -1,0 +1,29 @@
+{
+    "name": "SubTerm",
+    "fields": [
+        {
+            "fieldName": "termDescription",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "term",
+            "otherEntityRelationshipName": "subTerm",
+            "relationshipName": "term",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200211050209",
+    "entityTableName": "sub_term",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}
