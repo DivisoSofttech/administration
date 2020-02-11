@@ -9,6 +9,8 @@ public class SubTermDTO implements Serializable {
 
     private Long id;
 
+    private Long subTermId;
+
     private String termDescription;
 
 
@@ -20,6 +22,14 @@ public class SubTermDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getSubTermId() {
+        return subTermId;
+    }
+
+    public void setSubTermId(Long subTermId) {
+        this.subTermId = subTermId;
     }
 
     public String getTermDescription() {
@@ -63,6 +73,7 @@ public class SubTermDTO implements Serializable {
     public String toString() {
         return "SubTermDTO{" +
             "id=" + getId() +
+            ", subTermId=" + getSubTermId() +
             ", termDescription='" + getTermDescription() + "'" +
             ", termId=" + getTermId() +
             "}";

@@ -1,7 +1,5 @@
 package com.diviso.graeshoppe.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import org.checkerframework.checker.units.qual.Length;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,7 +24,10 @@ public class SubTerm implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @Column(name = "term_description", length = 500)
+    @Column(name = "sub_term_id")
+    private Long subTermId;
+
+    @Column(name = "term_description")
     private String termDescription;
 
     @ManyToOne
@@ -40,6 +41,19 @@ public class SubTerm implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getSubTermId() {
+        return subTermId;
+    }
+
+    public SubTerm subTermId(Long subTermId) {
+        this.subTermId = subTermId;
+        return this;
+    }
+
+    public void setSubTermId(Long subTermId) {
+        this.subTermId = subTermId;
     }
 
     public String getTermDescription() {
@@ -89,6 +103,7 @@ public class SubTerm implements Serializable {
     public String toString() {
         return "SubTerm{" +
             "id=" + getId() +
+            ", subTermId=" + getSubTermId() +
             ", termDescription='" + getTermDescription() + "'" +
             "}";
     }

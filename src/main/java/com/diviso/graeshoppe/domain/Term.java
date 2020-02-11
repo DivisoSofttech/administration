@@ -25,10 +25,13 @@ public class Term implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
+    @Column(name = "term_id")
+    private Long termId;
+
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "term", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "term")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SubTerm> subTerms = new HashSet<>();
 
@@ -39,6 +42,19 @@ public class Term implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public Term termId(Long termId) {
+        this.termId = termId;
+        return this;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
     }
 
     public String getTitle() {
@@ -100,6 +116,7 @@ public class Term implements Serializable {
     public String toString() {
         return "Term{" +
             "id=" + getId() +
+            ", termId=" + getTermId() +
             ", title='" + getTitle() + "'" +
             "}";
     }

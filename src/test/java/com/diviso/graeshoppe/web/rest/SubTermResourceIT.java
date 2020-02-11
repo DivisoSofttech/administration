@@ -43,6 +43,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {AdministrationApp.class, TestSecurityConfiguration.class})
 public class SubTermResourceIT {
 
+    private static final Long DEFAULT_SUB_TERM_ID = 1L;
+    private static final Long UPDATED_SUB_TERM_ID = 2L;
+
     private static final String DEFAULT_TERM_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_TERM_DESCRIPTION = "BBBBBBBBBB";
 
@@ -102,6 +105,7 @@ public class SubTermResourceIT {
      */
     public static SubTerm createEntity(EntityManager em) {
         SubTerm subTerm = new SubTerm()
+            .subTermId(DEFAULT_SUB_TERM_ID)
             .termDescription(DEFAULT_TERM_DESCRIPTION);
         return subTerm;
     }
@@ -113,6 +117,7 @@ public class SubTermResourceIT {
      */
     public static SubTerm createUpdatedEntity(EntityManager em) {
         SubTerm subTerm = new SubTerm()
+            .subTermId(UPDATED_SUB_TERM_ID)
             .termDescription(UPDATED_TERM_DESCRIPTION);
         return subTerm;
     }
@@ -138,6 +143,7 @@ public class SubTermResourceIT {
         List<SubTerm> subTermList = subTermRepository.findAll();
         assertThat(subTermList).hasSize(databaseSizeBeforeCreate + 1);
         SubTerm testSubTerm = subTermList.get(subTermList.size() - 1);
+        assertThat(testSubTerm.getSubTermId()).isEqualTo(DEFAULT_SUB_TERM_ID);
         assertThat(testSubTerm.getTermDescription()).isEqualTo(DEFAULT_TERM_DESCRIPTION);
 
         // Validate the SubTerm in Elasticsearch
@@ -179,6 +185,7 @@ public class SubTermResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(subTerm.getId().intValue())))
+            .andExpect(jsonPath("$.[*].subTermId").value(hasItem(DEFAULT_SUB_TERM_ID.intValue())))
             .andExpect(jsonPath("$.[*].termDescription").value(hasItem(DEFAULT_TERM_DESCRIPTION)));
     }
     
@@ -193,6 +200,7 @@ public class SubTermResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(subTerm.getId().intValue()))
+            .andExpect(jsonPath("$.subTermId").value(DEFAULT_SUB_TERM_ID.intValue()))
             .andExpect(jsonPath("$.termDescription").value(DEFAULT_TERM_DESCRIPTION));
     }
 
@@ -217,6 +225,7 @@ public class SubTermResourceIT {
         // Disconnect from session so that the updates on updatedSubTerm are not directly saved in db
         em.detach(updatedSubTerm);
         updatedSubTerm
+            .subTermId(UPDATED_SUB_TERM_ID)
             .termDescription(UPDATED_TERM_DESCRIPTION);
         SubTermDTO subTermDTO = subTermMapper.toDto(updatedSubTerm);
 
@@ -229,6 +238,7 @@ public class SubTermResourceIT {
         List<SubTerm> subTermList = subTermRepository.findAll();
         assertThat(subTermList).hasSize(databaseSizeBeforeUpdate);
         SubTerm testSubTerm = subTermList.get(subTermList.size() - 1);
+        assertThat(testSubTerm.getSubTermId()).isEqualTo(UPDATED_SUB_TERM_ID);
         assertThat(testSubTerm.getTermDescription()).isEqualTo(UPDATED_TERM_DESCRIPTION);
 
         // Validate the SubTerm in Elasticsearch
@@ -290,6 +300,7 @@ public class SubTermResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(subTerm.getId().intValue())))
+            .andExpect(jsonPath("$.[*].subTermId").value(hasItem(DEFAULT_SUB_TERM_ID.intValue())))
             .andExpect(jsonPath("$.[*].termDescription").value(hasItem(DEFAULT_TERM_DESCRIPTION)));
     }
 }

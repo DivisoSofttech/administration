@@ -43,6 +43,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {AdministrationApp.class, TestSecurityConfiguration.class})
 public class TermResourceIT {
 
+    private static final Long DEFAULT_TERM_ID = 1L;
+    private static final Long UPDATED_TERM_ID = 2L;
+
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
@@ -102,6 +105,7 @@ public class TermResourceIT {
      */
     public static Term createEntity(EntityManager em) {
         Term term = new Term()
+            .termId(DEFAULT_TERM_ID)
             .title(DEFAULT_TITLE);
         return term;
     }
@@ -113,6 +117,7 @@ public class TermResourceIT {
      */
     public static Term createUpdatedEntity(EntityManager em) {
         Term term = new Term()
+            .termId(UPDATED_TERM_ID)
             .title(UPDATED_TITLE);
         return term;
     }
@@ -138,6 +143,7 @@ public class TermResourceIT {
         List<Term> termList = termRepository.findAll();
         assertThat(termList).hasSize(databaseSizeBeforeCreate + 1);
         Term testTerm = termList.get(termList.size() - 1);
+        assertThat(testTerm.getTermId()).isEqualTo(DEFAULT_TERM_ID);
         assertThat(testTerm.getTitle()).isEqualTo(DEFAULT_TITLE);
 
         // Validate the Term in Elasticsearch
@@ -179,6 +185,7 @@ public class TermResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(term.getId().intValue())))
+            .andExpect(jsonPath("$.[*].termId").value(hasItem(DEFAULT_TERM_ID.intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
     }
     
@@ -193,6 +200,7 @@ public class TermResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(term.getId().intValue()))
+            .andExpect(jsonPath("$.termId").value(DEFAULT_TERM_ID.intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
     }
 
@@ -217,6 +225,7 @@ public class TermResourceIT {
         // Disconnect from session so that the updates on updatedTerm are not directly saved in db
         em.detach(updatedTerm);
         updatedTerm
+            .termId(UPDATED_TERM_ID)
             .title(UPDATED_TITLE);
         TermDTO termDTO = termMapper.toDto(updatedTerm);
 
@@ -229,6 +238,7 @@ public class TermResourceIT {
         List<Term> termList = termRepository.findAll();
         assertThat(termList).hasSize(databaseSizeBeforeUpdate);
         Term testTerm = termList.get(termList.size() - 1);
+        assertThat(testTerm.getTermId()).isEqualTo(UPDATED_TERM_ID);
         assertThat(testTerm.getTitle()).isEqualTo(UPDATED_TITLE);
 
         // Validate the Term in Elasticsearch
@@ -290,6 +300,7 @@ public class TermResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(term.getId().intValue())))
+            .andExpect(jsonPath("$.[*].termId").value(hasItem(DEFAULT_TERM_ID.intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
     }
 }

@@ -9,6 +9,8 @@ public class TermDTO implements Serializable {
 
     private Long id;
 
+    private Long termId;
+
     private String title;
 
 
@@ -18,6 +20,14 @@ public class TermDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
     }
 
     public String getTitle() {
@@ -53,6 +63,7 @@ public class TermDTO implements Serializable {
     public String toString() {
         return "TermDTO{" +
             "id=" + getId() +
+            ", termId=" + getTermId() +
             ", title='" + getTitle() + "'" +
             "}";
     }
