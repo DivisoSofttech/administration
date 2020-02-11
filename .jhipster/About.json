@@ -1,0 +1,41 @@
+{
+    "name": "About",
+    "fields": [
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supportMail",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supportPhone",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "addOn1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "addOn2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "addOn3",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200211050207",
+    "entityTableName": "about",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Administration",
+    "applications": "*",
+    "microserviceName": "Administration"
+}

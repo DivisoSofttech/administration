@@ -90,12 +90,15 @@ addOn3 String
 }
 
 entity Term{
+
 termId Long,
+id Long,
 title String
 }
 
 entity SubTerm{
 subTermId Long,
+id Long,
 termDescription String
 
 }
