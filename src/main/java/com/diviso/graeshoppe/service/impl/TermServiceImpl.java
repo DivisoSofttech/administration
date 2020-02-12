@@ -49,6 +49,7 @@ public class TermServiceImpl implements TermService {
     public TermDTO save(TermDTO termDTO) {
         log.debug("Request to save Term : {}", termDTO);
         Term term = termMapper.toEntity(termDTO);
+        term.setTermId(termDTO.getTermId());
         term = termRepository.save(term);
         TermDTO result = termMapper.toDto(term);
         termSearchRepository.save(term);
