@@ -2,6 +2,10 @@
     "name": "Term",
     "fields": [
         {
+            "fieldName": "termId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "title",
             "fieldType": "String"
         }

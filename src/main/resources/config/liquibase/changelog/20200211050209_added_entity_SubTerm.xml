@@ -16,6 +16,9 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="sub_term_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="term_description" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -45,6 +48,7 @@
                   separator=";"
                   tableName="sub_term">
             <column name="id" type="numeric"/>
+            <column name="sub_term_id" type="numeric"/>
             <column name="term_description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

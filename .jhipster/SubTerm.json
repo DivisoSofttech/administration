@@ -2,6 +2,10 @@
     "name": "SubTerm",
     "fields": [
         {
+            "fieldName": "subTermId",
+            "fieldType": "Long"
+        },
+        {
             "fieldName": "termDescription",
             "fieldType": "String"
         }
