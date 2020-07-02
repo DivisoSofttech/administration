@@ -248,9 +248,12 @@ activiti:
     basicAuth:
        username: kermit
        password: kermit
-
+  cancellationProcessDefinitionId: oderCancel:3:60004
+  
 topic:
    cancellation:
       destination: cancellationrequest
    refund:
      destination: refunddetails 
+    
+   

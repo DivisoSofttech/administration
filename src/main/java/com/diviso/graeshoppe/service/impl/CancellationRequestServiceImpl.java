@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,9 @@ import com.diviso.graeshoppe.service.mapper.CancellationRequestMapper;
 @Transactional
 public class CancellationRequestServiceImpl implements CancellationRequestService {
 
+	@Value("${activiti.cancellationProcessDefinitionId:}")
+	private String cancellationProcessDefinitionId;
+	
 	@Autowired
 	TasksApi tasksApi;
 
@@ -221,7 +225,7 @@ public class CancellationRequestServiceImpl implements CancellationRequestServic
 		ProcessInstanceCreateRequest processInstanceCreateRequest = new ProcessInstanceCreateRequest();
 		List<RestVariable> variables = new ArrayList<RestVariable>();
 
-		processInstanceCreateRequest.setProcessDefinitionId("oderCancel:3:60004");
+		processInstanceCreateRequest.setProcessDefinitionId(this.cancellationProcessDefinitionId);
 		log.info("*****************************************************"
 				+ processInstanceCreateRequest.getProcessDefinitionId());
 		RestVariable cancellationRequestRestVariable = new RestVariable();
