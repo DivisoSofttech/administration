@@ -243,12 +243,12 @@ minio:
 
 
 activiti:
-  url: http://dev.servers.divisosofttech.com/activiti-rest/service
+  url: http://ec2-52-15-174-35.us-east-2.compute.amazonaws.com:8080/activiti-rest/service
   security:
     basicAuth:
        username: kermit
        password: kermit
-  cancellationProcessDefinitionId: oderCancel:3:60004
+  cancellationProcessDefinitionId: oderCancel:1:43
   
 topic:
    cancellation:
